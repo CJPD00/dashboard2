@@ -6,7 +6,8 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 
-import clientRouter from "./routes/clientRouter.js";
+//imports Routers
+import userRouter from "./routes/userRouter.js";
 import generalRouter from "./routes/generalRouter.js";
 import managementRouter from "./routes/managementRouter.js";
 import salesRouter from "./routes/salesRouter.js";
@@ -23,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
 //Routers
-app.use("/client", clientRouter);
+app.use("/user", userRouter);
 app.use("/general", generalRouter);
 app.use("/management", managementRouter);
 app.use("/sales", salesRouter);
