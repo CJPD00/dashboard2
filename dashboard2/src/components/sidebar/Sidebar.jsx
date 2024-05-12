@@ -32,6 +32,65 @@ import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "../FlexBetween";
 import profileImage from "../../assets/Designer (1).png";
 
+const navItems = [
+  {
+    text: "Dashboard",
+    icon: <HomeOutlined />,
+  },
+  {
+    text: "Client Facing",
+    icon: null,
+  },
+  {
+    text: "Products",
+    icon: <DataObjectOutlined />,
+  },
+  {
+    text: "Customers",
+    icon: <Groups2Outlined />,
+  },
+  {
+    text: "Transactions",
+    icon: <ReceiptLongOutlined />,
+  },
+  {
+    text: "Geography",
+    icon: <PublicOutlined />,
+  },
+  {
+    text: "Sales",
+    icon: null,
+  },
+  {
+    text: "Overview",
+    icon: <PointOfSaleOutlined />,
+  },
+  {
+    text: "Daily",
+    icon: <TodayOutlined />,
+  },
+  {
+    text: "Monthly",
+    icon: <CalendarMonthOutlined />,
+  },
+  {
+    text: "Breakdown",
+    icon: <PieChartOutline />,
+  },
+  {
+    text: "Management",
+    icon: null,
+  },
+  {
+    text: "Admin",
+    icon: <AdminPanelSettingsOutlined />,
+  },
+  {
+    text: "Performance",
+    icon: <TrendingUpOutlined />,
+  },
+];
+
 const Sidebar = ({
   drawerWidth,
   isSidebarOpen,
@@ -69,7 +128,20 @@ const Sidebar = ({
           }}
         >
           <Box width={"100%"}>
-            <Box m="1.5rem 2rem 2rem 3rem"></Box>
+            <Box m="1.5rem 2rem 2rem 3rem">
+              <FlexBetween color={theme.palette.secondary.main}>
+                <Box display="flex" alignItems="center" gap="0.5rem">
+                  <Typography variant="h4" fontWeight="bold">
+                    ECOMVISION
+                  </Typography>
+                </Box>
+                {!isMobile && (
+                  <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                    <ChevronLeftOutlined />
+                  </IconButton>
+                )}
+              </FlexBetween>
+            </Box>
           </Box>
         </Drawer>
       )}
