@@ -19,6 +19,7 @@ import {
   InputBase,
 } from "@mui/material";
 
+// eslint-disable-next-line react/prop-types
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const theme = useTheme();

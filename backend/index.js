@@ -6,6 +6,9 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import User from "./models/user.js";
+import { fakeUserData } from "./data/dataUser.js";
+
 //imports Routers
 import userRouter from "./routes/userRouter.js";
 import generalRouter from "./routes/generalRouter.js";
@@ -36,6 +39,14 @@ mongoose
       console.log(`Backend server is running on port ${process.env.PORT}`);
     });
     console.log("MongoDB connected");
+
+    // User.insertMany(fakeUserData)
+    //   .then(() => {
+    //     console.log("Data inserted");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   })
   .catch((err) => {
     console.log(err);

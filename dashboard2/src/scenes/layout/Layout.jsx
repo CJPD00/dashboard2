@@ -10,14 +10,15 @@ const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <Box width={"100%"} height={"100%"} display={isMobile ? "flex" : "block"}>
+    <Box width={"100%"} height={"100%"} display={isMobile ? "block" : "flex"}>
       <Sidebar
         isMobile={isMobile}
-        drawerWidth={"250"}
+        drawerWidth={"250px"}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
       ></Sidebar>
-      <Box>
+      <Box width={"100%"} height={"100%"} 
+      >
         <Navbar
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
