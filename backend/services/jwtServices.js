@@ -23,7 +23,7 @@ export const createRefreshToken = (user) => {
     iat: moment().unix(),
     exp: moment().add(30, "days").unix(),
   };
-  return jwt.sign(payload, process.env.SECRET_JWT_REFRESH_SEED);
+  return jwt.sign(payload, process.env.SECRET_JWT_SEED);
 };
 
 export const decodeToken = (token) => {

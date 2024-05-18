@@ -45,8 +45,7 @@ export const signUp = async (req, res) => {
       email,
       password,
     });
-    const salt = bcrypt.genSaltSync();
-    newUser.password = bcrypt.hashSync(password, salt);
+    newUser.password = bcrypt.hashSync(password, 10);
     await newUser.save();
     const token = createToken(newUser);
     const refreshToken = createRefreshToken(newUser);
@@ -58,6 +57,7 @@ export const signUp = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: error.message,
+      code: 500,
     });
   }
 };
@@ -69,14 +69,14 @@ export const login = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({
-        message: "Invalid credentials",
+        message: "User not found",
         code: 401,
       });
     }
-    const isMatch = bcrypt.compareSync(password, user.password);
-    if (!isMatch) {
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
       return res.status(401).json({
-        message: "Invalid credentials",
+        message: "Invalid password",
         code: 401,
       });
     }
@@ -90,6 +90,7 @@ export const login = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: error.message,
+      code: 500,
     });
   }
 };

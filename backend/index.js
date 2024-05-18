@@ -6,8 +6,8 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 
-import User from "./models/user.js";
-import { fakeUserData } from "./data/dataUser.js";
+// import User from "./models/user.js";
+// import { fakeUserData } from "./data/dataUser.js";
 
 //imports Routers
 import userRouter from "./routes/userRouter.js";
@@ -32,6 +32,7 @@ app.use("/general", generalRouter);
 app.use("/management", managementRouter);
 app.use("/sales", salesRouter);
 
+//connect to mongodb
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {

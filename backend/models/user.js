@@ -30,7 +30,6 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      select: false,
       minlength: 6,
       maxlength: 100,
     },
@@ -62,5 +61,8 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
+
+// Set strict to false
+userSchema.set('strict', false);
 
 export default model("User", userSchema);
