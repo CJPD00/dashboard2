@@ -11,9 +11,8 @@ import morgan from "morgan";
 
 //imports Routers
 import userRouter from "./routes/userRouter.js";
-import generalRouter from "./routes/generalRouter.js";
-import managementRouter from "./routes/managementRouter.js";
-import salesRouter from "./routes/salesRouter.js";
+import departamentoRouter from "./routes/departamentoRouter.js";
+import carreraRouter from "./routes/carreraRouter.js";
 
 // configuracion de la aplicacion
 dotenv.config();
@@ -28,9 +27,8 @@ app.use(express.json());
 
 //Routers
 app.use("/user", userRouter);
-app.use("/general", generalRouter);
-app.use("/management", managementRouter);
-app.use("/sales", salesRouter);
+app.use("/departamento", departamentoRouter);
+app.use("/carrera", carreraRouter);
 
 //connect to mongodb
 mongoose
