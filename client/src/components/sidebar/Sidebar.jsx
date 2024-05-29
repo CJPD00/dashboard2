@@ -42,7 +42,7 @@ const navItems = [
     icon: null,
   },
   {
-    text: "Products",
+    text: "departments",
     icon: <DataObjectOutlined />,
   },
   {
