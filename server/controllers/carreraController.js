@@ -46,6 +46,7 @@ export const postCarrera = async (req, res) => {
 
     await newCarrera.save();
     departamento.carreras.push(newCarrera._id);
+
     await departamento.save();
 
     res.status(201).json({

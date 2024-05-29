@@ -15,6 +15,11 @@ const departamentoSchema = new Schema(
       default: 0,
     },
 
+    description: {
+      type: String,
+      required: true,
+    },
+
     carreras: [
       {
         type: mongoose.Schema.Types.ObjectId,
