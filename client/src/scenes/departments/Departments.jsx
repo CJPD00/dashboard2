@@ -18,7 +18,7 @@ import Header from "../../components/Header";
 
 const Departments = () => {
   const { data, isLoading } = useGetDepartmentsQuery();
-  console.log(data);
+  //console.log(data);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
@@ -53,7 +53,7 @@ const Department = ({ nombre, cantidadProfesores, description }) => {
   const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
 
-  console.log(description);
+  //console.log(description);
 
   return (
     <Card
@@ -79,7 +79,7 @@ const Department = ({ nombre, cantidadProfesores, description }) => {
         >
           {isExpanded ? "Ver Menos" : "Ver Mas"}
         </Button>
-      </CardActions>
+      </CardActions>  
       <Collapse
         in={isExpanded}
         timeout="auto"

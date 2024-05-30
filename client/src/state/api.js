@@ -7,7 +7,7 @@ export const api = createApi({
   tagTypes: [
     "User",
     "Departments",
-    "Customers",
+    "Users",
     "Transactions",
     "Geography",
     "Sales",
@@ -24,10 +24,10 @@ export const api = createApi({
       query: () => "departamento",
       providesTags: ["Departments"],
     }),
-    // getCustomers: build.query({
-    //   query: () => "client/customers",
-    //   providesTags: ["Customers"],
-    // }),
+    getUsers: build.query({
+      query: () => "user",
+      providesTags: ["Users"],
+    }),
     // getTransactions: build.query({
     //   query: ({ page, pageSize, sort, search }) => ({
     //     url: "client/transactions",
@@ -67,7 +67,7 @@ export const api = createApi({
 export const {
   useGetUserQuery,
   useGetDepartmentsQuery,
-  // useGetCustomersQuery,
+  useGetUsersQuery,
   // useGetTransactionsQuery,
   // useGetGeographyQuery,
   // useGetSalesQuery,

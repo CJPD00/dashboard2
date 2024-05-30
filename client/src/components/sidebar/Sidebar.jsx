@@ -42,11 +42,11 @@ const navItems = [
     icon: null,
   },
   {
-    text: "departments",
+    text: "Departamentos",
     icon: <DataObjectOutlined />,
   },
   {
-    text: "Customers",
+    text: "Usuarios",
     icon: <Groups2Outlined />,
   },
   {
