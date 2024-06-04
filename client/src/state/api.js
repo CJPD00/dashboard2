@@ -8,7 +8,7 @@ export const api = createApi({
     "User",
     "Departments",
     "Users",
-    "Transactions",
+    "Projects",
     "Geography",
     "Sales",
     "Admins",
@@ -28,19 +28,19 @@ export const api = createApi({
       query: () => "user",
       providesTags: ["Users"],
     }),
-    // getTransactions: build.query({
-    //   query: ({ page, pageSize, sort, search }) => ({
-    //     url: "client/transactions",
-    //     method: "GET",
-    //     params: {
-    //       page,
-    //       pageSize,
-    //       sort,
-    //       search,
-    //     },
-    //   }),
-    //   providesTags: ["Transactions"],
-    // }),
+    getProjects: build.query({
+      query: ({ page, limit, sort, search }) => ({
+        url: "projecto",
+        method: "GET",
+        params: {
+          page,
+          limit,
+          sort,
+          search,
+        },
+      }),
+      providesTags: ["Projects"],
+    }),
     // getGeography: build.query({
     //   query: () => "client/geography",
     //   providesTags: ["Geography"],
@@ -68,7 +68,7 @@ export const {
   useGetUserQuery,
   useGetDepartmentsQuery,
   useGetUsersQuery,
-  // useGetTransactionsQuery,
+  useGetProjectsQuery,
   // useGetGeographyQuery,
   // useGetSalesQuery,
   // useGetAdminsQuery,

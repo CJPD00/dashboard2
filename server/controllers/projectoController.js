@@ -50,8 +50,39 @@ export const createProjecto = async (req, res) => {
 
 export const getProjectos = async (req, res) => {
   try {
-    const projectos = await Projecto.find().populate("idCarrera");
-    res.status(200).json({ projectos, code: 200 });
+    //pagination
+    const { page = 1, limit = 20, sort = null, search = "" } = req.query;
+
+    const generateSort = () => {
+      const sortParsed = JSON.parse(sort);
+      const sortFormatted = {
+        [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
+      };
+      console.log(sortFormatted);
+      return sortFormatted;
+    };
+
+    const sortFormatted = sort ? generateSort() : {};
+
+    const projectos = await Projecto.find({
+      $or: [
+        { titulo: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ],
+    })
+      .sort(sortFormatted)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .populate("idCarrera");
+
+    const total = await Projecto.countDocuments({
+      $or: [
+        { titulo: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ],
+    });
+
+    res.status(200).json({ projectos, code: 200, total });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
