@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const projectoSchema = new Schema(
   {
     titulo: {
+      
       type: String,
       unique: true,
       required: true,

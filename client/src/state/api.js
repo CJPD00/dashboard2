@@ -35,7 +35,7 @@ export const api = createApi({
         params: {
           page,
           limit,
-          sort,
+          sort: JSON.stringify(sort),
           search,
         },
       }),

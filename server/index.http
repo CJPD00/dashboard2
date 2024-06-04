@@ -70,3 +70,6 @@ Content-Type: application/json
 
 ###
 GET http://localhost:5001/carrera HTTP/1.1
+
+###
+GET http://localhost:5001/projecto?page=1&limit=20&sort=%5Bobject+Object%5D&search= HTTP/1.1
