@@ -4,7 +4,9 @@ import Departamento from "../models/departamento.js";
 //get allCarreras
 export const getAllCarreras = async (req, res) => {
   try {
-    const carreras = await Carrera.find();
+    const carreras = await Carrera.find()
+      .populate("idDepartamento")
+      .populate("projectos");
     res.status(200).json({ carreras, code: 200 });
   } catch (error) {
     res.status(500).json({
@@ -17,7 +19,9 @@ export const getAllCarreras = async (req, res) => {
 export const getCarrerasByIdDepartamento = async (req, res) => {
   try {
     const { id } = req.params;
-    const carreras = await Carrera.find({ idDepartamento: id });
+    const carreras = await Carrera.find({ idDepartamento: id }).populate(
+      "projectos"
+    );
     res.status(200).json({ carreras, code: 200 });
   } catch (error) {
     res.status(500).json({

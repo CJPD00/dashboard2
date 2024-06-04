@@ -6,7 +6,7 @@ import { useGetUsersQuery } from "../../state/api";
 const Users = () => {
   const theme = useTheme();
   const { data, isLoading } = useGetUsersQuery();
-  console.log(data);
+  //console.log(data);
 
   const columns = [
     {

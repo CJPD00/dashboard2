@@ -13,6 +13,7 @@ import morgan from "morgan";
 import userRouter from "./routes/userRouter.js";
 import departamentoRouter from "./routes/departamentoRouter.js";
 import carreraRouter from "./routes/carreraRouter.js";
+import projectoRouter from "./routes/projectoRouter.js";
 
 // configuracion de la aplicacion
 dotenv.config();
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/departamento", departamentoRouter);
 app.use("/carrera", carreraRouter);
+app.use("/projecto", projectoRouter);
 
 //connect to mongodb
 mongoose

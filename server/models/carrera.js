@@ -18,6 +18,12 @@ const carreraSchema = new Schema(
       ref: "Departamento",
       required: true,
     },
+    projectos: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Projecto",
+      },
+    ],
   },
   {
     timestamps: true,
