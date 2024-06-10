@@ -18,6 +18,10 @@ const carreraSchema = new Schema(
       ref: "Departamento",
       required: true,
     },
+    departamento: {
+      type: String,
+      required: true,
+    },
     projectos: [
       {
         type: mongoose.Schema.Types.ObjectId,

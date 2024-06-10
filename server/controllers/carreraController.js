@@ -48,10 +48,11 @@ export const postCarrera = async (req, res) => {
       });
     }
 
-    await newCarrera.save();
     departamento.carreras.push(newCarrera._id);
+    newCarrera.departamento = departamento.nombre;
 
     await departamento.save();
+    await newCarrera.save();
 
     res.status(201).json({
       message: "Carrera creada exitosamente",

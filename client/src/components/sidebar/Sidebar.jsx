@@ -16,10 +16,10 @@ import {
   ChevronLeftOutlined,
   ChevronRightOutlined,
   HomeOutlined,
-  DataObjectOutlined,
+  ApartmentOutlined,
   Groups2Outlined,
   ReceiptLongOutlined,
-  PublicOutlined,
+  BuildOutlined,
   PointOfSaleOutlined,
   TodayOutlined,
   CalendarMonthOutlined,
@@ -43,7 +43,11 @@ const navItems = [
   },
   {
     text: "Departamentos",
-    icon: <DataObjectOutlined />,
+    icon: <ApartmentOutlined />,
+  },
+  {
+    text: "Carreras",
+    icon: <BuildOutlined />,
   },
   {
     text: "Usuarios",
@@ -52,10 +56,6 @@ const navItems = [
   {
     text: "Proyectos",
     icon: <ReceiptLongOutlined />,
-  },
-  {
-    text: "Geography",
-    icon: <PublicOutlined />,
   },
   {
     text: "Sales",

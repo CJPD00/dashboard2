@@ -3,7 +3,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useGetProjectsQuery } from "../../state/api";
 import Header from "../../components/Header";
 import { useTheme, Box } from "@mui/material";
-import { render } from "react-dom";
 import DataGridCustomToolbar from "../../components/dataGridCustomToolbar/DataGridCustomToolbar";
 
 const Projects = () => {
@@ -104,7 +103,7 @@ const Projects = () => {
           rowCount={data ? data.total : 0}
           rowsPerPageOptions={[20, 50, 100]}
           pagination
-          page={page} 
+          page={page}
           pageSize={limit}
           paginationMode="server"
           sortingMode="server"

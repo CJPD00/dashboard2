@@ -48,8 +48,8 @@ POST http://localhost:5001/carrera HTTP/1.1
 Content-Type: application/json
 
 {
-   "nombre":"mecanica",
-   "description":"no tienen mujeres",
+   "nombre":"industrial",
+   "description":"aprueban todos",
    "idDepartamento":"664e57a1d94882e2ace128c1"
 }
 
