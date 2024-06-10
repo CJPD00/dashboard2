@@ -4,6 +4,7 @@ import { useGetProjectsQuery } from "../../state/api";
 import Header from "../../components/Header";
 import { useTheme, Box } from "@mui/material";
 import { render } from "react-dom";
+import DataGridCustomToolbar from "../../components/dataGridCustomToolbar/DataGridCustomToolbar";
 
 const Projects = () => {
   const theme = useTheme();
@@ -12,6 +13,8 @@ const Projects = () => {
   const [limit, setLimit] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
+
+  const [searchInput, setSearchInput] = useState("");
 
   const { data, isLoading } = useGetProjectsQuery({
     page,
@@ -47,7 +50,7 @@ const Projects = () => {
       field: "sector",
       headerName: "Sector",
       flex: 0.4,
-      renderCell: (params) => (params.value  ? "SI" : "NO"),
+      renderCell: (params) => (params.value ? "SI" : "NO"),
     },
     {
       field: "idCarrera",
@@ -98,16 +101,26 @@ const Projects = () => {
           getRowId={(row) => row._id}
           rows={data && data.projectos ? data.projectos : []}
           columns={columns}
-          rowCount={data && data.total}
-          //rowsPerPageOptions={[20, 50, 100]}
+          rowCount={data ? data.total : 0}
+          rowsPerPageOptions={[20, 50, 100]}
           pagination
-          page={page}
+          page={page} 
           pageSize={limit}
           paginationMode="server"
           sortingMode="server"
           onPageChange={(newPage) => setPage(newPage)}
           onPageSizeChange={(newPageSize) => setLimit(newPageSize)}
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
+          slots={{
+            toolbar: DataGridCustomToolbar,
+          }}
+          slotProps={{
+            toolbar: {
+              searchInput,
+              setSearchInput,
+              setSearch,
+            },
+          }}
         />
       </Box>
     </Box>

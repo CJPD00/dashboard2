@@ -12,12 +12,12 @@ const Users = () => {
     {
       field: "_id",
       headerName: "ID",
-      flex: 1,
+      flex: 0.7,
     },
     {
       field: "name",
       headerName: "Name",
-      flex: 0.5,
+      flex: 0.3,
     },
 
     {

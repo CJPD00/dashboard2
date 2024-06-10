@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 const projectoSchema = new Schema(
   {
     titulo: {
-      
       type: String,
       unique: true,
       required: true,
@@ -38,6 +37,10 @@ const projectoSchema = new Schema(
     idCarrera: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Carrera",
+      required: true,
+    },
+    carrera: {
+      type: String,
       required: true,
     },
   },

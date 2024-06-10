@@ -35,6 +35,9 @@ export const createProjecto = async (req, res) => {
 
     carrera.projectos.push(newProjecto._id);
 
+    //agregar al projecto
+    newProjecto.carrera = carrera.nombre;
+
     await newProjecto.save();
     await carrera.save();
 
@@ -67,7 +70,10 @@ export const getProjectos = async (req, res) => {
     const projectos = await Projecto.find({
       $or: [
         { titulo: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
+        { autor: { $regex: search, $options: "i" } },
+        { estado: { $regex: search, $options: "i" } },
+        { tipo: { $regex: search, $options: "i" } },
+        { carrera: { $regex: search, $options: "i" } },
       ],
     })
       .sort(sortFormatted)
@@ -78,7 +84,10 @@ export const getProjectos = async (req, res) => {
     const total = await Projecto.countDocuments({
       $or: [
         { titulo: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
+        { autor: { $regex: search, $options: "i" } },
+        { estado: { $regex: search, $options: "i" } },
+        { tipo: { $regex: search, $options: "i" } },
+        { carrera: { $regex: search, $options: "i" } },
       ],
     });
 
