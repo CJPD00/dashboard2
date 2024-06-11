@@ -79,7 +79,8 @@ export const getProjectos = async (req, res) => {
       .sort(sortFormatted)
       .skip((page - 1) * limit)
       .limit(limit)
-      .populate("idCarrera");
+      .populate("idCarrera")
+      .populate("personal");
 
     const total = await Projecto.countDocuments({
       $or: [

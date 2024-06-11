@@ -73,3 +73,34 @@ GET http://localhost:5001/carrera HTTP/1.1
 
 ###
 GET http://localhost:5001/projecto HTTP/1.1
+
+###
+POST  http://localhost:5001/personal HTTP/1.1
+Content-Type: application/json
+
+{
+   "name":"alfre",
+    "lastname":"the god",
+    "email":"affdsf@gmail.com",
+    "projecto":"6660906c3da3142896d26a8f"
+}
+
+###
+POST  http://localhost:5001/personal HTTP/1.1
+Content-Type: application/json
+
+{
+   "name":"javier",
+    "lastname":"pache",
+    "email":"affhjgghkf@gmail.com",
+    "projecto":"6660906c3da3142896d26a8f"
+}
+
+###
+GET http://localhost:5001/personal HTTP/1.1
+
+###
+GET http://localhost:5001/personal/6660906c3da3142896d26a8f HTTP/1.1
+
+###
+GET http://localhost:5001/personal/geografia HTTP/1.1

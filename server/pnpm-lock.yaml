@@ -17,6 +17,9 @@ importers:
       cors:
         specifier: 2.8.5
         version: 2.8.5
+      country-iso-2-to-3:
+        specifier: ^1.1.0
+        version: 1.1.0
       dotenv:
         specifier: 16.4.5
         version: 16.4.5
@@ -234,6 +237,9 @@ packages:
   cors@2.8.5:
     resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
     engines: {node: '>= 0.10'}
+
+  country-iso-2-to-3@1.1.0:
+    resolution: {integrity: sha512-+xaB6XPuuLuSQEjejWXjff7s5AMyisPk3jBmIqM7aymup79mEcinNkUiIpe4VedSPWCT+/bMW/EDJvRaiDaWKw==}
 
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
@@ -1174,6 +1180,8 @@ snapshots:
     dependencies:
       object-assign: 4.1.1
       vary: 1.1.2
+
+  country-iso-2-to-3@1.1.0: {}
 
   cross-spawn@7.0.3:
     dependencies:

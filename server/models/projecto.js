@@ -17,7 +17,8 @@ const projectoSchema = new Schema(
     },
     miembros: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Personal",
       },
     ],
     estado: {
