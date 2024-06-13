@@ -90,7 +90,7 @@ export const getGeography = async (req, res) => {
       }
     );
 
-    res.status(200).json({ locations: formattedLocations });
+    res.status(200).json({ locations: formattedLocations, code: 200 });
   } catch (error) {
     res.status(500).json({
       message: error.message,

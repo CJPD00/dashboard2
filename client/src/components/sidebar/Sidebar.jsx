@@ -20,7 +20,7 @@ import {
   Groups2Outlined,
   ReceiptLongOutlined,
   BuildOutlined,
-  PointOfSaleOutlined,
+  PublicOutlined,
   TodayOutlined,
   CalendarMonthOutlined,
   AdminPanelSettingsOutlined,
@@ -38,7 +38,7 @@ const navItems = [
     icon: <HomeOutlined />,
   },
   {
-    text: "Client Facing",
+    text: "Datos",
     icon: null,
   },
   {
@@ -62,8 +62,8 @@ const navItems = [
     icon: null,
   },
   {
-    text: "Overview",
-    icon: <PointOfSaleOutlined />,
+    text: "Geografia",
+    icon: <PublicOutlined />,
   },
   {
     text: "Daily",

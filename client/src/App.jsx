@@ -11,6 +11,7 @@ import Departments from "./scenes/departments/Departments";
 import Users from "./scenes/users/Users";
 import Projects from "./scenes/Projects/Projects";
 import Careers from "./scenes/careers/Careers";
+import Geography from "./scenes/geography/Geography";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -35,6 +36,7 @@ function App() {
               <Route path="Usuarios" element={<Users></Users>} />
               <Route path="Proyectos" element={<Projects></Projects>} />
               <Route path="Carreras" element={<Careers></Careers>} />
+              <Route path="Geografia" element={<Geography></Geography>} />
             </Route>
           </Routes>
         </ThemeProvider>
