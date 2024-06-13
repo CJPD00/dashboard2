@@ -30,11 +30,13 @@ const personalSchema = new Schema(
       type: String,
       default: "CU",
     },
-    projecto: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Projecto",
-      required: true,
-    },
+    projecto: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Projecto",
+        required: true,
+      },
+    ],
   },
   {
     timestamps: true,

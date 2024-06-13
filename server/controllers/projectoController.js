@@ -80,7 +80,7 @@ export const getProjectos = async (req, res) => {
       .skip((page - 1) * limit)
       .limit(limit)
       .populate("idCarrera")
-      .populate("personal");
+      .populate("miembros");
 
     const total = await Projecto.countDocuments({
       $or: [
