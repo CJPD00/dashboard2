@@ -12,7 +12,7 @@ export const api = createApi({
     "Careers",
     "Geography",
     "Breakdown",
-    "Admins",
+    "Totals",
     "Performance",
     "Dashboard",
   ],
@@ -54,10 +54,10 @@ export const api = createApi({
       query: () => "overall/projectsByType",
       providesTags: ["Breakdown"],
     }),
-    // getAdmins: build.query({
-    //   query: () => "management/admins",
-    //   providesTags: ["Admins"],
-    // }),
+    getTotals: build.query({
+      query: () => "overall/total",
+      providesTags: ["Totals"],
+    }),
     // getUserPerformance: build.query({
     //   query: (id) => `management/performance/${id}`,
     //   providesTags: ["Performance"],
@@ -77,7 +77,7 @@ export const {
   useGetCareersQuery,
   useGetGeographyQuery,
   useGetBreakdownQuery,
-  // useGetAdminsQuery,
+  useGetTotalsQuery,
   // useGetUserPerformanceQuery,
   // useGetDashboardQuery,
 } = api;
