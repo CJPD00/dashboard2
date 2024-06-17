@@ -15,6 +15,7 @@ import departamentoRouter from "./routes/departamentoRouter.js";
 import carreraRouter from "./routes/carreraRouter.js";
 import projectoRouter from "./routes/projectoRouter.js";
 import personalRouter from "./routes/personalRouter.js";
+import overallRouter from "./routes/overallRouter.js";
 
 // configuracion de la aplicacion
 dotenv.config();
@@ -33,6 +34,7 @@ app.use("/departamento", departamentoRouter);
 app.use("/carrera", carreraRouter);
 app.use("/projecto", projectoRouter);
 app.use("/personal", personalRouter);
+app.use("/overall", overallRouter);
 
 //connect to mongodb
 mongoose

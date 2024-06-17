@@ -104,3 +104,6 @@ GET http://localhost:5001/personal/6660906c3da3142896d26a8f HTTP/1.1
 
 ###
 GET http://localhost:5001/personal/geografia HTTP/1.1
+
+###
+GET http://localhost:5001/overall/projectsByType HTTP/1.1
