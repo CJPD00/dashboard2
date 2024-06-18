@@ -110,3 +110,6 @@ GET http://localhost:5001/overall/projectsByType HTTP/1.1
 
 ###
 GET http://localhost:5001/overall/total HTTP/1.1
+
+###
+GET http://localhost:5001/overall/totalRecent HTTP/1.1

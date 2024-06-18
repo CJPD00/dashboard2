@@ -13,7 +13,7 @@ export const api = createApi({
     "Geography",
     "Breakdown",
     "Totals",
-    "Performance",
+    "TotalsRecent",
     "Dashboard",
   ],
   endpoints: (build) => ({
@@ -58,10 +58,10 @@ export const api = createApi({
       query: () => "overall/total",
       providesTags: ["Totals"],
     }),
-    // getUserPerformance: build.query({
-    //   query: (id) => `management/performance/${id}`,
-    //   providesTags: ["Performance"],
-    // }),
+    getTotalsRecent: build.query({
+      query: () => "overall/totalRecent",
+      providesTags: ["TotalsRecent"],
+    }),
     // getDashboard: build.query({
     //   query: () => "general/dashboard",
     //   providesTags: ["Dashboard"],
@@ -78,6 +78,6 @@ export const {
   useGetGeographyQuery,
   useGetBreakdownQuery,
   useGetTotalsQuery,
-  // useGetUserPerformanceQuery,
+  useGetTotalsRecentQuery,
   // useGetDashboardQuery,
 } = api;

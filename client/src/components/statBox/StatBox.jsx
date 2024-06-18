@@ -1,10 +1,10 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "../FlexBetween";
 
-const StatBox = ({ title, value, icon, description }) => {
+const StatBox = ({ title, value, icon, description, increase }) => {
   return (
     <Box
-      gridColumn="span 2"
+      gridColumn="span 3"
       gridRow="span 1"
       display="flex"
       flexDirection="column"
@@ -31,6 +31,13 @@ const StatBox = ({ title, value, icon, description }) => {
         {value}
       </Typography>
       <FlexBetween gap="1rem">
+        <Typography
+          variant="h5"
+          fontStyle="italic"
+          sx={{ color: useTheme().palette.secondary.light }}
+        >
+          {`+${increase}`}
+        </Typography>
         <Typography
           variant="h5"
           fontStyle="italic"
