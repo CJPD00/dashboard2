@@ -16,6 +16,7 @@ import carreraRouter from "./routes/carreraRouter.js";
 import projectoRouter from "./routes/projectoRouter.js";
 import personalRouter from "./routes/personalRouter.js";
 import overallRouter from "./routes/overallRouter.js";
+import eventoGRouter from "./routes/eventoGRouter.js";
 
 // configuracion de la aplicacion
 dotenv.config();
@@ -35,6 +36,7 @@ app.use("/carrera", carreraRouter);
 app.use("/projecto", projectoRouter);
 app.use("/personal", personalRouter);
 app.use("/overall", overallRouter);
+app.use("/eventog", eventoGRouter);
 
 //connect to mongodb
 mongoose
