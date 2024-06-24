@@ -21,10 +21,7 @@ import {
   ReceiptLongOutlined,
   BuildOutlined,
   PublicOutlined,
-  TodayOutlined,
   CalendarMonthOutlined,
-  AdminPanelSettingsOutlined,
-  TrendingUpOutlined,
   PieChartOutline,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
@@ -58,7 +55,15 @@ const navItems = [
     icon: <ReceiptLongOutlined />,
   },
   {
-    text: "Tablas",
+    text: "Agenda",
+    icon: null,
+  },
+  {
+    text: "Calendario",
+    icon: <CalendarMonthOutlined />,
+  },
+  {
+    text: "Estadísticas",
     icon: null,
   },
   {
@@ -69,18 +74,6 @@ const navItems = [
     text: "Desglose",
     icon: <PieChartOutline />,
   },
-  // {
-  //   text: "Management",
-  //   icon: null,
-  // },
-  // {
-  //   text: "Admin",
-  //   icon: <AdminPanelSettingsOutlined />,
-  // },
-  // {
-  //   text: "Performance",
-  //   icon: <TrendingUpOutlined />,
-  // },
 ];
 
 const Sidebar = ({
