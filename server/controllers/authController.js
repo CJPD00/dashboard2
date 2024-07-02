@@ -1,4 +1,4 @@
-import { createToken, decodeToken } from "../services/jwtServices";
+import { createToken, decodeToken } from "../services/jwtServices.js";
 import User from "../models/user.js";
 import moment from "moment";
 

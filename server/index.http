@@ -36,6 +36,17 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:5001/eventog HTTP/1.1
+
+###
+POST http://localhost:5001/auth/refresh HTTP/1.1
+Content-Type: application/json
+
+{
+  "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDhjY2RmMDRlODZiMWYwZWNmNDI3YyIsImlhdCI6MTcxOTk0MzY1MiwiZXhwIjoxNzIyNTM1NjUyfQ.ow9sbfMIj2cv1nWByzaaz_6d68FEFgUEOR7sGNT2cjk"
+}
+
+###
 POST http://localhost:5001/departamento HTTP/1.1
 Content-Type: application/json
 
@@ -122,6 +133,3 @@ Content-Type: application/json
     "title":"pueras bla bla",
     "start":"2024-01-01T00:00:00Z"
 }
-
-###
-GET http://localhost:5001/eventog HTTP/1.1

@@ -15,6 +15,8 @@ export const api = createApi({
     "Totals",
     "TotalsRecent",
     "Dashboard",
+    "UserSignup",
+    "RefreshToken",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -62,10 +64,23 @@ export const api = createApi({
       query: () => "overall/totalRecent",
       providesTags: ["TotalsRecent"],
     }),
-    // getDashboard: build.query({
-    //   query: () => "general/dashboard",
-    //   providesTags: ["Dashboard"],
-    // }),
+    userSignup: build.mutation({
+      query: (data) => ({
+        url: "user/signUp",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["UserSignup"],
+    }),
+    //refresh token
+    refreshToken: build.mutation({
+      query: (data) => ({
+        url: "auth/refresh",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["RefreshToken"],
+    }),
   }),
 });
 
@@ -79,5 +94,5 @@ export const {
   useGetBreakdownQuery,
   useGetTotalsQuery,
   useGetTotalsRecentQuery,
-  // useGetDashboardQuery,
+  useUserSignupMutation,
 } = api;
