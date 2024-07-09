@@ -5,14 +5,20 @@ import { useSelector } from "react-redux";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { useGetUserQuery } from "../../state/api";
+import useAuth from "../../hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 const Layout = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const { auth } = useAuth();
   const userId = useSelector((state) => state.global.userId);
   const { data } = useGetUserQuery(userId);
   //console.log(data);
+
+  if (!auth) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <Box width={"100%"} height={"100%"} display={isMobile ? "block" : "flex"}>

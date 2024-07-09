@@ -64,23 +64,6 @@ export const api = createApi({
       query: () => "overall/totalRecent",
       providesTags: ["TotalsRecent"],
     }),
-    userSignup: build.mutation({
-      query: (data) => ({
-        url: "user/signUp",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["UserSignup"],
-    }),
-    //refresh token
-    refreshToken: build.mutation({
-      query: (data) => ({
-        url: "auth/refresh",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["RefreshToken"],
-    }),
   }),
 });
 
@@ -94,5 +77,4 @@ export const {
   useGetBreakdownQuery,
   useGetTotalsQuery,
   useGetTotalsRecentQuery,
-  useUserSignupMutation,
 } = api;

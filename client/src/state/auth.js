@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 
 export const willExpire = (token) => {
   const decoded = jwtDecode(token);

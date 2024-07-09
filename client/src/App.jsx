@@ -14,7 +14,8 @@ import Careers from "./scenes/careers/Careers";
 import Geography from "./scenes/geography/Geography";
 import Breakdown from "./scenes/breakdown/Breakdown";
 import Calendar from "./scenes/calendar/Calendar";
-import AuthProvider from "./providers/authProvider";
+import AuthProvider from "./providers/AuthProvider";
+import Auth from "./scenes/auth/Auth";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -27,6 +28,7 @@ function App() {
           <CssBaseline />
           <AuthProvider>
             <Routes>
+              <Route path="/login" element={<Auth></Auth>}></Route>
               <Route element={<Layout></Layout>}>
                 <Route
                   path="/"

@@ -8,6 +8,7 @@ import {
 } from "../state/auth";
 
 export const AuthContext = createContext();
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
     user: null,
