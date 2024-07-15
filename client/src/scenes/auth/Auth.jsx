@@ -2,9 +2,10 @@ import { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
 import { getAccessToken } from "../../state/auth";
 import { Navigate } from "react-router-dom";
+import SigninForm from "../../components/signinForm/SiginForm";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -31,6 +32,7 @@ function a11yProps(index) {
 const Auth = () => {
   const [value, setValue] = useState(0);
   const theme = useTheme();
+  const isSmallScreen = useMediaQuery("( max-width: 600px )");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -46,7 +48,7 @@ const Auth = () => {
         //color: theme.palette.secondary[200]
         // display: "flex",
         // justifyContent: "center",
-        width: "50%",
+        width: isSmallScreen ? "100%" : "50%",
         margin: "0 auto",
         marginTop: "5rem",
       }}
@@ -64,7 +66,7 @@ const Auth = () => {
               color: theme.palette.secondary[300],
             },
             "& .MuiTab-root": {
-              color: theme.palette.secondary[100],
+              //color: theme.palette.secondary[100],
             },
           }}
         >
@@ -73,7 +75,7 @@ const Auth = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <SigninForm />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two
