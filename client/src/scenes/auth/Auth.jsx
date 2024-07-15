@@ -6,6 +6,7 @@ import { useTheme, useMediaQuery } from "@mui/material";
 import { getAccessToken } from "../../state/auth";
 import { Navigate } from "react-router-dom";
 import SigninForm from "../../components/signinForm/SiginForm";
+import SigupForm from "../../components/sigupForm/SigupForm";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,7 +49,7 @@ const Auth = () => {
         //color: theme.palette.secondary[200]
         // display: "flex",
         // justifyContent: "center",
-        width: isSmallScreen ? "100%" : "50%",
+        width: isSmallScreen ? "100%" : "450px",
         margin: "0 auto",
         marginTop: "5rem",
       }}
@@ -78,7 +79,7 @@ const Auth = () => {
         <SigninForm />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <SigupForm />
       </CustomTabPanel>
     </Box>
   );

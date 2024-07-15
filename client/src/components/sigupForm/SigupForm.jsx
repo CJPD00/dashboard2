@@ -1,19 +1,25 @@
 import { useState, useEffect } from "react";
 import { Paper, Chip, TextField, Button, Alert } from "@mui/material";
 import { useTheme } from "@mui/material";
-import { Face, Login } from "@mui/icons-material";
-import { verifyEmail, verifyPassword } from "../../helpers/authHelper";
+import { Lock, AppRegistration } from "@mui/icons-material";
+import {
+  comparePasswords,
+  verifyEmail,
+  verifyPassword,
+} from "../../helpers/authHelper";
 
-const SiginForm = () => {
+const SigupForm = () => {
   const theme = useTheme();
   const [dataForm, setDataForm] = useState({});
   //inputs errors
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   //message validation
   const [messageError, setMessageError] = useState();
-  //sucess login
-  const [successLogin, setSuccessLogin] = useState(false);
+  //sucess registration
+  const [successRegistration, setSuccessRegistration] = useState(false);
 
   const handleBlurEmail = () => {
     if (!verifyEmail(dataForm.email)) {
@@ -31,13 +37,23 @@ const SiginForm = () => {
     }
   };
 
+  const handleBlurName = () => {
+    if (!dataForm.name) {
+      setNameError(true);
+    } else {
+      setNameError(false);
+    }
+  };
+
+  const handleBlurConfirmPassword = () => {
+    if (!comparePasswords(dataForm.password, dataForm.confirmPassword)) {
+      setConfirmPasswordError(true);
+    } else {
+      setConfirmPasswordError(false);
+    }
+  };
+
   const handleChange = (e) => {
-    if (verifyEmail(dataForm.email)) {
-      setEmailError(false);
-    }
-    if (verifyPassword(dataForm.password)) {
-      setPasswordError(false);
-    }
     setDataForm({ ...dataForm, [e.target.name]: e.target.value });
   };
 
@@ -45,10 +61,21 @@ const SiginForm = () => {
     e.preventDefault();
 
     setMessageError(null);
-    setSuccessLogin(false);
+    setSuccessRegistration(false);
 
-    if (!dataForm.email || !dataForm.password) {
+    //console.log(dataForm);
+
+    if (
+      !dataForm.email ||
+      !dataForm.password ||
+      !dataForm.name ||
+      !dataForm.lastname ||
+      !dataForm.confirmPassword
+    ) {
       setMessageError("Todos los campos son obligatorios");
+      return;
+    } else if (nameError) {
+      setMessageError("Los campos nombre y apellido son obligatorios");
       return;
     } else if (emailError) {
       setMessageError("Ingrese un correo valido");
@@ -58,6 +85,10 @@ const SiginForm = () => {
         "Ingrese una contraseña de 8 a 15 caracteres y al menos un numero y una letra mayuscula y minuscula y un caracter especial !"
       );
       return;
+    } else if (!comparePasswords(dataForm.password, dataForm.confirmPassword)) {
+      setConfirmPasswordError(true);
+      setMessageError("Las contraseñas no coinciden");
+      return;
     } else if (
       verifyEmail(dataForm.email) &&
       verifyPassword(dataForm.password)
@@ -65,8 +96,8 @@ const SiginForm = () => {
       setMessageError(null);
     }
 
-    setSuccessLogin(true);
-    console.log(successLogin);
+    setSuccessRegistration(true);
+    setTimeout(() => setSuccessRegistration(false), 2000);
   };
 
   return (
@@ -79,8 +110,8 @@ const SiginForm = () => {
       }}
     >
       <Chip
-        label="Acceso"
-        icon={<Face />}
+        label="Registro"
+        icon={<Lock />}
         sx={{
           mb: 2,
           display: "flex",
@@ -89,6 +120,38 @@ const SiginForm = () => {
         }}
         color="secondary"
         variant="outlined"
+      />
+
+      <TextField
+        label="Nombre"
+        type="text"
+        variant="standard"
+        size="small"
+        name="name"
+        value={dataForm.name}
+        error={nameError}
+        onBlur={handleBlurName}
+        onChange={(e) => handleChange(e)}
+        sx={{
+          mb: 2,
+          width: "100%",
+        }}
+      />
+
+      <TextField
+        label="Apellidos"
+        type="text"
+        variant="standard"
+        size="small"
+        name="lastname"
+        value={dataForm.lastname}
+        error={nameError}
+        onBlur={handleBlurName}
+        onChange={(e) => handleChange(e)}
+        sx={{
+          mb: 2,
+          width: "100%",
+        }}
       />
 
       <TextField
@@ -120,14 +183,27 @@ const SiginForm = () => {
         sx={{ mb: 2, width: "100%" }}
       />
 
+      <TextField
+        label="Confirmar Contraseña"
+        type="password"
+        variant="standard"
+        size="small"
+        name="confirmPassword"
+        value={dataForm.confirmPassword}
+        error={confirmPasswordError}
+        onBlur={handleBlurConfirmPassword}
+        onChange={(e) => handleChange(e)}
+        sx={{ mb: 2, width: "100%" }}
+      />
+
       <Button
         variant="contained"
         color="secondary"
         sx={{ width: "100%" }}
-        startIcon={<Login />}
+        startIcon={<AppRegistration />}
         onClick={handleSubmit}
       >
-        Iniciar Sesion
+        Registrarse
       </Button>
 
       {messageError || messageError === "" ? (
@@ -167,9 +243,10 @@ const SiginForm = () => {
           {messageError}
         </Alert>
       ) : null}
-      {successLogin ? (
+      {successRegistration ? (
         <Alert
           severity="success"
+          autoHideDuration={3000}
           sx={{
             mt: 2,
             display: "flex",
@@ -201,11 +278,11 @@ const SiginForm = () => {
             },
           }}
         >
-          Login exitoso
+          Registro exitoso
         </Alert>
       ) : null}
     </Paper>
   );
 };
 
-export default SiginForm;
+export default SigupForm;
