@@ -14,6 +14,7 @@ export const createToken = (user) => {
     iat: moment().unix(),
     exp: moment().add(14, "days").unix(),
   };
+  //console.log(process.env.SECRET_JWT_SEED);
   return jwt.sign(payload, process.env.SECRET_JWT_SEED);
 };
 

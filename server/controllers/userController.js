@@ -69,19 +69,19 @@ export const login = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({
-        message: "User not found",
+        message: "El usuario no existe",
         code: 401,
       });
     }
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return res.status(401).json({
-        message: "Invalid password",
+        message: "Contraseña incorrecta",
         code: 401,
       });
     }
-    const token = createToken(user);
-    const refreshToken = createRefreshToken(user);
+    const token = await createToken(user);
+    const refreshToken = await createRefreshToken(user);
     res.status(200).json({
       token,
       refreshToken,

@@ -7,6 +7,7 @@ import {
   verifyEmail,
   verifyPassword,
 } from "../../helpers/authHelper";
+import { signup } from "../../state/user";
 
 const SigupForm = () => {
   const theme = useTheme();
@@ -53,11 +54,11 @@ const SigupForm = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setDataForm({ ...dataForm, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setMessageError(null);
@@ -96,7 +97,22 @@ const SigupForm = () => {
       setMessageError(null);
     }
 
+    const response = await signup(dataForm);
+
+    if (response.message) {
+      setMessageError("EL correo ya se encuentra registrado");
+      return;
+    }
+
+    //console.log(response);
     setSuccessRegistration(true);
+    setDataForm({
+      name: "",
+      lastname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
     setTimeout(() => setSuccessRegistration(false), 2000);
   };
 

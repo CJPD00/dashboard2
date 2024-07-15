@@ -12,8 +12,6 @@ const Layout = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { auth } = useAuth();
-  const userId = useSelector((state) => state.global.userId);
-  const { data } = useGetUserQuery(userId);
   //console.log(data);
 
   if (!auth) {
@@ -23,7 +21,7 @@ const Layout = () => {
   return (
     <Box width={"100%"} height={"100%"} display={isMobile ? "block" : "flex"}>
       <Sidebar
-        user={data || {}}
+        user={auth || {}}
         isMobile={isMobile}
         drawerWidth={"250px"}
         isSidebarOpen={isSidebarOpen}
@@ -31,7 +29,7 @@ const Layout = () => {
       ></Sidebar>
       <Box flexGrow={1}>
         <Navbar
-          user={data || {}}
+          user={auth || {}}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         ></Navbar>

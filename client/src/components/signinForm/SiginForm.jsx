@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { Paper, Chip, TextField, Button, Alert } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { Face, Login } from "@mui/icons-material";
+import { Navigate } from "react-router-dom";
 import { verifyEmail, verifyPassword } from "../../helpers/authHelper";
+import { login } from "../../state/user";
 
 const SiginForm = () => {
   const theme = useTheme();
@@ -41,7 +43,7 @@ const SiginForm = () => {
     setDataForm({ ...dataForm, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setMessageError(null);
@@ -55,7 +57,7 @@ const SiginForm = () => {
       return;
     } else if (passwordError) {
       setMessageError(
-        "Ingrese una contraseña de 8 a 15 caracteres y al menos un numero y una letra mayuscula y minuscula y un caracter especial !"
+        "contraseña incorrecta, por favor verifique e intente de nuevo"
       );
       return;
     } else if (
@@ -65,8 +67,23 @@ const SiginForm = () => {
       setMessageError(null);
     }
 
+    const response = await login(dataForm);
+
+    if (response.message) {
+      setMessageError(response.message);
+      return;
+    }
+
+    const { accessToken, refreshToken } = response;
+
+    console.log(accessToken, refreshToken);
+    // localStorage.setItem("accessToken", accessToken);
+    // localStorage.setItem("refreshToken", refreshToken);
+
     setSuccessLogin(true);
-    console.log(successLogin);
+    //console.log(successLogin);
+
+    return <Navigate to="/" />;
   };
 
   return (
