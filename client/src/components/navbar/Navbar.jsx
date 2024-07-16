@@ -4,24 +4,26 @@ import {
   MenuOutlined,
   SearchOutlined,
   SettingsOutlined,
-  ArrowDropDownOutlined,
+  LogoutOutlined,
 } from "@mui/icons-material";
 
 import FlexBetween from "../FlexBetween";
 import { useDispatch } from "react-redux";
 import { setMode } from "../../state";
 import profileImage from "../../assets/Designer (1).png";
+import { logout } from "../../state/auth";
 import {
   useTheme,
   AppBar,
   Toolbar,
   IconButton,
   InputBase,
-  Button,
+  //Button,
   Box,
   Typography,
-  MenuItem,
-  Menu,
+  //MenuItem,
+  //Menu,
+  Tooltip,
 } from "@mui/material";
 import { useState } from "react";
 
@@ -29,12 +31,12 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, user }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const isOpen = Boolean(anchorEl);
-  const handleClick = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
-
   //console.log(user);
+
+  const handleLogout = () => {
+    logout();
+    window.location.reload();
+  };
 
   return (
     <AppBar
@@ -72,19 +74,25 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, user }) => {
         </FlexBetween>
         {/* RIGHT SIDE */}
         <FlexBetween gap={"1.5rem"}>
-          <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === "dark" ? (
-              <DarkModeOutlined sx={{ fontSize: "25px" }}></DarkModeOutlined>
-            ) : (
-              <LightModeOutlined sx={{ fontSize: "25px" }}></LightModeOutlined>
-            )}
-          </IconButton>
-          <IconButton>
-            <SettingsOutlined></SettingsOutlined>
-          </IconButton>
+          <Tooltip title="Cambiar Tema">
+            <IconButton onClick={() => dispatch(setMode())}>
+              {theme.palette.mode === "dark" ? (
+                <DarkModeOutlined sx={{ fontSize: "25px" }}></DarkModeOutlined>
+              ) : (
+                <LightModeOutlined
+                  sx={{ fontSize: "25px" }}
+                ></LightModeOutlined>
+              )}
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Configuraciones">
+            <IconButton>
+              <SettingsOutlined></SettingsOutlined>
+            </IconButton>
+          </Tooltip>
           <FlexBetween>
-            <Button
-              onClick={handleClick}
+            <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -108,27 +116,29 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, user }) => {
                   fontSize="0.85rem"
                   sx={{ color: theme.palette.secondary[100] }}
                 >
-                  {user && user.user && user.user.name}
+                  {user && user.name}
                 </Typography>
                 <Typography
                   fontSize="0.75rem"
                   sx={{ color: theme.palette.secondary[200] }}
                 >
-                  {user && user.user && user.user.role}
+                  {user && user.role}
                 </Typography>
               </Box>
-              <ArrowDropDownOutlined
-                sx={{ color: theme.palette.secondary[300], fontSize: "25px" }}
-              ></ArrowDropDownOutlined>
-            </Button>
-            <Menu
-              anchorEl={anchorEl}
-              open={isOpen}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            >
-              <MenuItem onClick={handleClose}>Log Out</MenuItem>
-            </Menu>
+              <Tooltip title="Cerrar Sesion">
+                <IconButton
+                  onClick={handleLogout}
+                  //sx={{ color: theme.palette.secondary[100] }}
+                >
+                  <LogoutOutlined
+                    sx={{
+                      color: theme.palette.secondary[300],
+                      fontSize: "25px",
+                    }}
+                  ></LogoutOutlined>
+                </IconButton>
+              </Tooltip>
+            </Box>
           </FlexBetween>
         </FlexBetween>
       </Toolbar>

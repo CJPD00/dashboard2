@@ -197,14 +197,14 @@ const Sidebar = ({
                   fontSize="0.9rem"
                   sx={{ color: theme.palette.secondary[100] }}
                 >
-                  {user && user.user && user.user.name}
+                  {user && user.name}
                 </Typography>
-                <Typography
+                {/* <Typography
                   fontSize="0.8rem"
                   sx={{ color: theme.palette.secondary[200] }}
                 >
-                  {user && user.user && user.user.name}
-                </Typography>
+                  {user && user.role}
+                </Typography> */}
               </Box>
               <SettingsOutlined
                 sx={{ color: theme.palette.secondary[300], fontSize: "25px" }}

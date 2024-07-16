@@ -50,7 +50,7 @@ const SiginForm = () => {
     setSuccessLogin(false);
 
     if (!dataForm.email || !dataForm.password) {
-      setMessageError("Todos los campos son obligatorios");
+      setMessageError("Por favor rellene todos los campos");
       return;
     } else if (emailError) {
       setMessageError("Ingrese un correo valido");
@@ -74,16 +74,16 @@ const SiginForm = () => {
       return;
     }
 
-    const { accessToken, refreshToken } = response;
+    const { token, refreshToken } = response;
 
-    console.log(accessToken, refreshToken);
-    // localStorage.setItem("accessToken", accessToken);
-    // localStorage.setItem("refreshToken", refreshToken);
+    //console.log(token, refreshToken);
+    localStorage.setItem("accessToken", token);
+    localStorage.setItem("refreshToken", refreshToken);
 
     setSuccessLogin(true);
     //console.log(successLogin);
 
-    return <Navigate to="/" />;
+    window.location.href = "/dashboard";
   };
 
   return (

@@ -45,6 +45,12 @@ export const signUp = async (req, res) => {
       email,
       password,
     });
+    if (name.length < 3 || lastname.length < 3) {
+      return res.status(401).json({
+        message: "El nombre y el apellido deben tener al menos 3 caracteres",
+        code: 401,
+      });
+    }
     newUser.password = bcrypt.hashSync(password, 10);
     await newUser.save();
     const token = createToken(newUser);
@@ -77,6 +83,12 @@ export const login = async (req, res) => {
     if (!validPassword) {
       return res.status(401).json({
         message: "Contraseña incorrecta",
+        code: 401,
+      });
+    }
+    if (user.role !== "admin") {
+      return res.status(401).json({
+        message: "No eres administrador",
         code: 401,
       });
     }

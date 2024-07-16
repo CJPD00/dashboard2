@@ -99,6 +99,11 @@ const SigupForm = () => {
 
     const response = await signup(dataForm);
 
+    if (response.code === 401) {
+      setMessageError(response.message);
+      return;
+    }
+
     if (response.message) {
       setMessageError("EL correo ya se encuentra registrado");
       return;
