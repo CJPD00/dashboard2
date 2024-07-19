@@ -7,10 +7,13 @@ import Sidebar from "../../components/sidebar/Sidebar";
 //import { useGetUserQuery } from "../../state/api";
 import useAuth from "../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
+import Modal from "../../components/modal/Modal";
 
 const Layout = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   const { user } = useAuth();
   //console.log(user);
 
@@ -32,9 +35,15 @@ const Layout = () => {
           user={user || {}}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
+          setIsModalOpen={setIsModalOpen}
+          setModalContent={setModalContent}
         ></Navbar>
         <Outlet></Outlet>
       </Box>
+
+      <Modal isVisible={isModalOpen} setIsVisible={setIsModalOpen}>
+        {modalContent}
+      </Modal>
     </Box>
   );
 };

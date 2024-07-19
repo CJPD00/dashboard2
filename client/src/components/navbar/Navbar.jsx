@@ -25,9 +25,16 @@ import {
   //Menu,
   Tooltip,
 } from "@mui/material";
+import UserFormEdit from "../userFormEdit/UserFormEdit";
 import { useState } from "react";
 
-const Navbar = ({ isSidebarOpen, setIsSidebarOpen, user }) => {
+const Navbar = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+  user,
+  setIsModalOpen,
+  setModalContent,
+}) => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -36,6 +43,11 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, user }) => {
   const handleLogout = () => {
     logout();
     window.location.reload();
+  };
+
+  const handleUserEdit = () => {
+    setIsModalOpen(true);
+    setModalContent(<UserFormEdit />);
   };
 
   return (
@@ -87,7 +99,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, user }) => {
           </Tooltip>
 
           <Tooltip title="Configuraciones">
-            <IconButton>
+            <IconButton onClick={handleUserEdit}>
               <SettingsOutlined></SettingsOutlined>
             </IconButton>
           </Tooltip>
