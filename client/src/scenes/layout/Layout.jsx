@@ -13,7 +13,8 @@ const Layout = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
+  const [modalContent, setModalContent] = useState(<></>);
+   const [modalTitle, setModalTitle] = useState("");
   const { user } = useAuth();
   //console.log(user);
 
@@ -37,11 +38,12 @@ const Layout = () => {
           setIsSidebarOpen={setIsSidebarOpen}
           setIsModalOpen={setIsModalOpen}
           setModalContent={setModalContent}
+          setModalTitle={setModalTitle}
         ></Navbar>
         <Outlet></Outlet>
       </Box>
 
-      <Modal isVisible={isModalOpen} setIsVisible={setIsModalOpen}>
+      <Modal isVisible={isModalOpen} setIsVisible={setIsModalOpen} title={modalTitle}>
         {modalContent}
       </Modal>
     </Box>

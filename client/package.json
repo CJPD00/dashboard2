@@ -21,6 +21,7 @@
     "@nivo/pie": "0.86.0",
     "@reduxjs/toolkit": "2.2.4",
     "@tinymce/tinymce-react": "5.1.1",
+    "antd": "5.19.3",
     "jwt-decode": "4.0.0",
     "react": "18.2.0",
     "react-datepicker": "6.9.0",

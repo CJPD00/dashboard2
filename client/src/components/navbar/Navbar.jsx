@@ -34,6 +34,7 @@ const Navbar = ({
   user,
   setIsModalOpen,
   setModalContent,
+  setModalTitle,
 }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -48,6 +49,7 @@ const Navbar = ({
   const handleUserEdit = () => {
     setIsModalOpen(true);
     setModalContent(<UserFormEdit />);
+    setModalTitle("Editar Perfil");
   };
 
   return (
