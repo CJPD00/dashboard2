@@ -106,3 +106,30 @@ export const login = async (req, res) => {
     });
   }
 };
+
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let { name, lastname, password } = req.body;
+
+    password = bcrypt.hashSync(password, 10);
+
+    const user = await User.findByIdAndUpdate(
+      id,
+      { name, lastname, password },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        code: 404,
+      });
+    }
+    res.status(200).json({ user, code: 200 });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

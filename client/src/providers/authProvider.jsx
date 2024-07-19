@@ -19,7 +19,11 @@ const AuthProvider = ({ children }) => {
     checkUserLogin(setUser);
   }, []);
 
-  return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={user} setUser={setUser}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 const checkUserLogin = (setUser) => {
