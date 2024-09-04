@@ -17,6 +17,7 @@ export const api = createApi({
     "Dashboard",
     "UserSignup",
     "RefreshToken",
+    "Avatar",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -64,6 +65,10 @@ export const api = createApi({
       query: () => "overall/totalRecent",
       providesTags: ["TotalsRecent"],
     }),
+    getAvatar: build.query({
+      query: (avatarName) => `user/getAvatar/${avatarName}`,
+      providesTags: ["Avatar"],
+    }),
   }),
 });
 
@@ -77,4 +82,5 @@ export const {
   useGetBreakdownQuery,
   useGetTotalsQuery,
   useGetTotalsRecentQuery,
+  useGetAvatarQuery,
 } = api;

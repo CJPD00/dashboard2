@@ -5,6 +5,8 @@ import {
   createRefreshToken,
 } from "../services/jwtServices.js";
 import bcrypt from "bcrypt";
+import fs from "fs";
+import path from "path";
 
 export const getUser = async (req, res) => {
   try {
@@ -86,9 +88,9 @@ export const login = async (req, res) => {
         code: 401,
       });
     }
-    if (user.role !== "admin") {
+    if (user.active === false) {
       return res.status(401).json({
-        message: "No eres administrador",
+        message: "Cuenta inactiva",
         code: 401,
       });
     }
@@ -107,7 +109,7 @@ export const login = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     let { name, lastname, password } = req.body;
@@ -132,4 +134,52 @@ const updateUser = async (req, res) => {
       message: error.message,
     });
   }
+};
+
+export const uploadAvatar = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        code: 404,
+      });
+    }
+    let filePath = req.files.avatar.path;
+
+    let filesplit = filePath.split("\\");
+
+    let fileName = filesplit[filesplit.length - 1];
+
+    let extSplit = fileName.split(".");
+
+    let fileExt = extSplit[1];
+
+    if (fileExt !== "png" && fileExt !== "jpg" && fileExt !== "jpeg") {
+      res.status(400).send({ message: "Extensión no válida" });
+    }
+
+    user.avatar = fileName;
+    await user.findOneAndUpdate({ _id: id }, user);
+
+    res.status(200).json({ message: "Avatar guardado", code: 200 });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getAvatar = (req, res) => {
+  const avatarName = req.params.avatarName;
+  const filePath = `./uploads/avatars/${avatarName}`;
+
+  fs.exists(filePath, (exists) => {
+    if (exists) {
+      res.sendFile(path.resolve(filePath));
+    } else {
+      res.status(404).send({ message: "La imagen no existe" });
+    }
+  });
 };

@@ -27,7 +27,8 @@ import {
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "../FlexBetween";
-import profileImage from "../../assets/Designer (1).png";
+import noAvatar from "../../assets/noAvatar.png";
+import { useGetAvatarQuery } from "../../state/api";
 
 const navItems = [
   {
@@ -87,6 +88,8 @@ const Sidebar = ({
   const [active, setActive] = useState("");
   const navigate = useNavigate();
   const theme = useTheme();
+
+  const { data, isLoading } = useGetAvatarQuery(user.avatar);
 
   useEffect(() => {
     setActive(pathname.substring(1));
@@ -185,7 +188,7 @@ const Sidebar = ({
               <Box
                 component="img"
                 alt="profile"
-                src={profileImage}
+                src={user.avatar ? data?.url ?? noAvatar : noAvatar}
                 height="40px"
                 width="40px"
                 borderRadius="50%"

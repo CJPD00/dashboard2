@@ -1,24 +1,23 @@
 import useAuth from "../../hooks/useAuth";
-import { useState, useEffect } from "react";
+import noAvatar from "../../assets/noAvatar.png";
+import { useDropzone } from "react-dropzone";
+import { useCallback, useState, useEffect } from "react";
 
 const UserFormEdit = () => {
-  const [dataForm, setDataForm] = useState({
-    name: "",
-    lastname: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const auth = useAuth();
+  const { auth } = useAuth();
+  const [avatar, setAvatar] = useState(null);
+  const [dataForm, setDataForm] = useState({});
 
   useEffect(() => {
-    setDataForm({
-      name: auth.user.name,
-      lastname: auth.user.lastname,
-      password: "",
-      confirmPassword: "",
-    });
-  }, []);
+    if (auth) {
+      setDataForm({
+        name: auth.name,
+        lastname: auth.lastname,
+        role: auth.role,
+        avatar: auth.avatar,
+      });
+    }
+  }, [auth]);
 
   // console.log(dataForm);
 

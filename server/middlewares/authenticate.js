@@ -1,9 +1,9 @@
-import moment from "moment";
-import { decodeToken } from "../services/jwtServices";
+//import moment from "moment";
+import { decodeToken } from "../services/jwtServices.js";
 
 export const ensureAuth = async (req, res, next) => {
   try {
-    const token = req.headers["x-access-token"];
+    const token = req.headers.authorization;
     if (!token) {
       return res.status(401).json({
         message: "No token provided",

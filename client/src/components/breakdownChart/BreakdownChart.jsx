@@ -6,7 +6,7 @@ const BreakdownChart = ({ isDashboard = false }) => {
   const theme = useTheme();
   const { data, isLoading } = useGetBreakdownQuery();
 
-  console.log(data);
+  //console.log(data);
 
   if (!data || isLoading) return "Loading...";
 

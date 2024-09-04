@@ -10,7 +10,7 @@ import {
 import FlexBetween from "../FlexBetween";
 import { useDispatch } from "react-redux";
 import { setMode } from "../../state";
-import profileImage from "../../assets/Designer (1).png";
+import noAvatar from "../../assets/noAvatar.png";
 import { logout } from "../../state/auth";
 import {
   useTheme,
@@ -27,6 +27,7 @@ import {
 } from "@mui/material";
 import UserFormEdit from "../userFormEdit/UserFormEdit";
 import { useState } from "react";
+import { useGetAvatarQuery } from "../../state/api";
 
 const Navbar = ({
   isSidebarOpen,
@@ -38,6 +39,8 @@ const Navbar = ({
 }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+
+  const { data, isLoading } = useGetAvatarQuery(user.avatar);
 
   //console.log(user);
 
@@ -118,7 +121,7 @@ const Navbar = ({
               <Box
                 component="img"
                 alt="profile"
-                src={profileImage}
+                src={user.avatar ? data?.url ?? noAvatar : noAvatar}
                 height="32px"
                 width="32px"
                 borderRadius="50%"

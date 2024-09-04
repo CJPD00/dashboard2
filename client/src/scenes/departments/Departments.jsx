@@ -6,7 +6,7 @@ import {
   Collapse,
   Button,
   Typography,
-  Rating,
+  //Rating,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
