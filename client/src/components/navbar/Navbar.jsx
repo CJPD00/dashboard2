@@ -42,7 +42,7 @@ const Navbar = ({
 
   const { data, isLoading } = useGetAvatarQuery(user.avatar);
 
-  //console.log(user);
+  //console.log(user.avatar);
 
   const handleLogout = () => {
     logout();

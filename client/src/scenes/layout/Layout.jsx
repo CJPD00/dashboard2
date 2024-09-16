@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTheme } from "@mui/material";
 import { Box, useMediaQuery } from "@mui/material";
 import { Outlet } from "react-router-dom";
 //import { useSelector } from "react-redux";
@@ -14,7 +15,7 @@ const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(<></>);
-   const [modalTitle, setModalTitle] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
   const { user } = useAuth();
   //console.log(user);
 
@@ -43,7 +44,11 @@ const Layout = () => {
         <Outlet></Outlet>
       </Box>
 
-      <Modal isVisible={isModalOpen} setIsVisible={setIsModalOpen} title={modalTitle}>
+      <Modal
+        isVisible={isModalOpen}
+        setIsVisible={setIsModalOpen}
+        title={modalTitle}
+      >
         {modalContent}
       </Modal>
     </Box>
