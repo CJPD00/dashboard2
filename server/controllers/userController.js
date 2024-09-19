@@ -137,6 +137,7 @@ export const updateUser = async (req, res) => {
 };
 
 export const uploadAvatar = async (req, res) => {
+  console.log(req.files);
   try {
     const { id } = req.params;
     const user = await User.findById(id);

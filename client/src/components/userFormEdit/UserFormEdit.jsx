@@ -93,7 +93,11 @@ const UserFormEdit = ({ setIsModalOpen }) => {
         });
         return;
       }
-      updateAvatar(token, user.id, userUpdate.avatar);
+      updateAvatar({
+        id: user.id,
+        token: token,
+        avatar: userUpdate.avatar,
+      });
       userUpdate.avatar = result.avatarName;
       updateUserApi(user.id, token, userUpdate)
         .then((response) => {

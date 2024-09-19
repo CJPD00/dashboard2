@@ -71,7 +71,7 @@ export const api = createApi({
     }),
     updateAvatar: build.mutation({
       query: ({ id, avatar, token }) => ({
-        url: `user/updateAvatar/${id}`,
+        url: `user/uploadAvatar/${id}`,
         method: "PUT",
         headers: {
           authorization: token,
