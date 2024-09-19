@@ -51,7 +51,7 @@ const Navbar = ({
 
   const handleUserEdit = () => {
     setIsModalOpen(true);
-    setModalContent(<UserFormEdit />);
+    setModalContent(<UserFormEdit setIsModalOpen={setIsModalOpen} />);
     setModalTitle("Editar Perfil");
   };
 

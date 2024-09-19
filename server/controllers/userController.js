@@ -128,7 +128,7 @@ export const updateUser = async (req, res) => {
         code: 404,
       });
     }
-    res.status(200).json({ user, code: 200 });
+    res.status(200).json({ user, code: 200, message: "usuario actualizado" });
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -163,7 +163,9 @@ export const uploadAvatar = async (req, res) => {
     user.avatar = fileName;
     await user.findOneAndUpdate({ _id: id }, user);
 
-    res.status(200).json({ message: "Avatar guardado", code: 200 });
+    res
+      .status(200)
+      .json({ message: "Avatar guardado", code: 200, avatarName: user.avatar });
   } catch (error) {
     res.status(500).json({
       message: error.message,

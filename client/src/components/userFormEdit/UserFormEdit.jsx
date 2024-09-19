@@ -8,12 +8,17 @@ import { useCallback, useState, useEffect } from "react";
 import { useGetAvatarQuery } from "../../state/api";
 import { Edit, Password } from "@mui/icons-material";
 import { comparePasswords, verifyPassword } from "../../helpers/authHelper";
+import { useUpdateAvatarMutation } from "../../state/api";
+import { getAccessToken } from "../../state/auth";
+import { notification } from "antd";
+import { updateUser as updateUserApi } from "../../state/user";
 
-const UserFormEdit = () => {
+const UserFormEdit = ({ setIsModalOpen }) => {
   const { user } = useAuth();
   const [avatar, setAvatar] = useState(null);
   const [dataForm, setDataForm] = useState({});
   const { data, error, isLoading } = useGetAvatarQuery(user.avatar);
+  const [updateAvatar, result] = useUpdateAvatarMutation();
   const theme = useTheme();
 
   useEffect(() => {
@@ -45,6 +50,117 @@ const UserFormEdit = () => {
 
   //console.log(user);
 
+  const updateUser = () => {
+    const token = getAccessToken();
+    let userUpdate = dataForm;
+    //console.log(userUpdate);
+    console.log(token);
+    if (dataForm.password) {
+      if (!comparePasswords(dataForm.password, dataForm.repeatPassword)) {
+        notification["error"]({
+          message: "Error",
+          description: "Las contraseñas no coinciden",
+          style: {
+            backgroundColor: "#f5222d",
+            color: "#fff",
+          },
+        });
+        return;
+      } else {
+        delete userUpdate.repeatPassword;
+      }
+    }
+    if (!userUpdate.name || !userUpdate.lastname || !userUpdate.password) {
+      notification["error"]({
+        message: "Error",
+        description: "Todos los campos son obligatorios",
+        style: {
+          backgroundColor: "#f5222d",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+    if (typeof userUpdate.avatar === "object") {
+      if (!verifyPassword(dataForm.password)) {
+        notification["error"]({
+          message: "Error",
+          description: "Contraseña invalida",
+          style: {
+            backgroundColor: "#f5222d",
+            color: "#fff",
+          },
+        });
+        return;
+      }
+      updateAvatar(token, user.id, userUpdate.avatar);
+      userUpdate.avatar = result.avatarName;
+      updateUserApi(user.id, token, userUpdate)
+        .then((response) => {
+          notification["success"]({
+            message: "Exito",
+            description: response.message,
+            style: {
+              backgroundColor: "#52c41a",
+              color: "#fff",
+            },
+          });
+          setIsModalOpen(false);
+        })
+        .catch((error) => {
+          notification["error"]({
+            message: "Error",
+            description: error.message,
+            style: {
+              backgroundColor: "#f5222d",
+              color: "#fff",
+            },
+          });
+        });
+    } else {
+      if (!verifyPassword(dataForm.password)) {
+        notification["error"]({
+          message: "Error",
+          description: "Contraseña invalida",
+          style: {
+            backgroundColor: "#f5222d",
+            color: "#fff",
+          },
+        });
+        return;
+      }
+      updateUserApi(user.id, token, userUpdate)
+        .then((response) => {
+          notification["success"]({
+            message: "Exito",
+            description: response.message,
+            style: {
+              backgroundColor: "#52c41a",
+              color: "#fff",
+            },
+          });
+          setIsModalOpen(false);
+        })
+        .catch((error) => {
+          notification["error"]({
+            message: "Error",
+            description: error.message,
+            style: {
+              backgroundColor: "#f5222d",
+              color: "#fff",
+            },
+          });
+        });
+    }
+    setDataForm({
+      name: user.name,
+      lastname: user.lastname,
+      avatar: user.avatar,
+      password: "",
+      repeatPassword: "",
+    });
+  };
+
   return (
     <div
       className="userFormEdit"
@@ -54,7 +170,11 @@ const UserFormEdit = () => {
       }}
     >
       <UploadAvatar avatar={avatar} setAvatar={setAvatar} />
-      <EditForm dataForm={dataForm} setDataForm={setDataForm}></EditForm>
+      <EditForm
+        dataForm={dataForm}
+        setDataForm={setDataForm}
+        updateUser={updateUser}
+      ></EditForm>
     </div>
   );
 };
@@ -143,7 +263,7 @@ const UploadAvatar = ({ avatar, setAvatar }) => {
   );
 };
 
-const EditForm = ({ dataForm, setDataForm }) => {
+const EditForm = ({ dataForm, setDataForm, updateUser }) => {
   const theme = useTheme();
   const [passwordError, setPasswordError] = useState(false);
   const [messageError, setMessageError] = useState(null);
@@ -247,7 +367,12 @@ const EditForm = ({ dataForm, setDataForm }) => {
       ) : (
         <></>
       )}
-      <Button variant="contained" color="secondary" sx={{ width: "100%" }}>
+      <Button
+        variant="contained"
+        color="secondary"
+        sx={{ width: "100%" }}
+        onClick={updateUser}
+      >
         Guardar
       </Button>
     </div>

@@ -5,7 +5,8 @@ import {
   login,
   signUp,
   uploadAvatar,
-  getAvatar
+  getAvatar,
+  updateUser,
 } from "../controllers/userController.js";
 import { verifyPasswords } from "../middlewares/verifyPasswords.js";
 import multipart from "connect-multiparty";
@@ -35,5 +36,7 @@ userRouter.put(
 
 //get avatar
 userRouter.get("/getAvatar/:avatarName", getAvatar);
+
+userRouter.put("/updateUser/:id", [ensureAuth], updateUser);
 
 export default userRouter;

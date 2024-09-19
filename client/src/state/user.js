@@ -25,3 +25,16 @@ export const login = async (data) => {
   const dataResponse = await response.json();
   return dataResponse;
 };
+
+export const updateUser = async (id, token, user) => {
+  const response = await fetch(config.baseUrl + `/user/updateUser/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: token,
+    },
+    body: JSON.stringify(user),
+  });
+  const dataResponse = await response.json();
+  return dataResponse;
+};

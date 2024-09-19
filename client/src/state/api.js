@@ -69,6 +69,17 @@ export const api = createApi({
       query: (avatarName) => `user/getAvatar/${avatarName}`,
       providesTags: ["Avatar"],
     }),
+    updateAvatar: build.mutation({
+      query: ({ id, avatar, token }) => ({
+        url: `user/updateAvatar/${id}`,
+        method: "PUT",
+        headers: {
+          authorization: token,
+        },
+        body: avatar,
+      }),
+      invalidatesTags: ["Avatar"],
+    }),
   }),
 });
 
@@ -83,4 +94,5 @@ export const {
   useGetTotalsQuery,
   useGetTotalsRecentQuery,
   useGetAvatarQuery,
+  useUpdateAvatarMutation,
 } = api;
