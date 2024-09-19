@@ -19,13 +19,13 @@ body,
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #21295c;
+  background: #505575;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #21295c;
+  background: #383e66;
 }
 
 @tailwind base;

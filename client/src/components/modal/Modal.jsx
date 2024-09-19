@@ -1,4 +1,10 @@
-import { Modal as MuiModal } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import { useTheme } from "@mui/material";
 
 const Modal = ({
@@ -11,44 +17,39 @@ const Modal = ({
   const theme = useTheme();
 
   return (
-    <MuiModal
+    <Dialog
       open={isVisible}
       onClose={() => setIsVisible(false)}
-      aria-labelledby="modal-title"
-      aria-describedby="modal-description"
-      disableRestoreFocus = {true}
-      disableScrollLock={false}
+      fullWidth
+      maxWidth="sm"
       sx={{
-        backgroundColor: "background.default",
-        color: "text.primary",
-        border: `1px solid ${theme.palette.text.primary}`,
-        borderRadius: "10px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-        p: 2,
-        zIndex: 1000,
-        width: "50%",
-        height: "50%",
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-
-        "& .MuiBackdrop-root": {
-          backgroundColor: "rgba(0, 0, 0, 0.5)", 
+        "& .MuiDialog-paper": {
+          backgroundColor: theme.palette.background.default,
+        },
+        "& .MuiDialogTitle-root": {
+          backgroundColor: theme.palette.background.default,
         },
 
-        "& .MuiPaper-root": {
-          backgroundColor: "background.default",
-          color: "text.primary",
-          border: `1px solid ${theme.palette.text.primary}`,
-          borderRadius: "10px",
-          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-          p: 2,
+        "& .MuiDialogContent-root": {
+          backgroundColor: theme.palette.background.default,
+          borderTop: `1px solid ${theme.palette.divider}`,
         },
+        "& .MuiDialogActions-root ": {
+          backgroundColor: theme.palette.background.default,
+
+        }
       }}
     >
-      {children}
-    </MuiModal>
+      <DialogTitle id="dialog-title" sx={{ textAlign: "center" }}>
+        {title}
+      </DialogTitle>
+      <DialogContent dividers>{children}</DialogContent>
+      <DialogActions>
+        <Button onClick={() => setIsVisible(false)} color="secondary">
+          Cerrar
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
