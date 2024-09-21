@@ -137,7 +137,9 @@ export const updateUser = async (req, res) => {
 };
 
 export const uploadAvatar = async (req, res) => {
-  console.log(req.files);
+  //console.log(req.headers);
+  //console.log(req.params.id);
+  //console.log(req.files);
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -162,7 +164,8 @@ export const uploadAvatar = async (req, res) => {
     }
 
     user.avatar = fileName;
-    await user.findOneAndUpdate({ _id: id }, user);
+    //console.log(user);
+    await user.save();
 
     res
       .status(200)
@@ -176,7 +179,7 @@ export const uploadAvatar = async (req, res) => {
 
 export const getAvatar = (req, res) => {
   const avatarName = req.params.avatarName;
-  const filePath = `./uploads/avatars/${avatarName}`;
+  const filePath = `./uploads/users/${avatarName}`;
 
   fs.exists(filePath, (exists) => {
     if (exists) {

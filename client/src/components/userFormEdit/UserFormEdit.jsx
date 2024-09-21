@@ -12,6 +12,7 @@ import { useUpdateAvatarMutation } from "../../state/api";
 import { getAccessToken } from "../../state/auth";
 import { notification } from "antd";
 import { updateUser as updateUserApi } from "../../state/user";
+import { login } from "../../state/user";
 
 const UserFormEdit = ({ setIsModalOpen }) => {
   const { user } = useAuth();
@@ -26,7 +27,7 @@ const UserFormEdit = ({ setIsModalOpen }) => {
       setDataForm({
         name: user.name,
         lastname: user.lastname,
-        avatar: user.avatar,
+        avatar: null,
         password: "",
         repeatPassword: "",
       });
@@ -35,7 +36,7 @@ const UserFormEdit = ({ setIsModalOpen }) => {
 
   useEffect(() => {
     if (data) {
-      setAvatar(data);
+      setAvatar(data.url);
     }
   }, [data]);
 
@@ -50,11 +51,11 @@ const UserFormEdit = ({ setIsModalOpen }) => {
 
   //console.log(user);
 
-  const updateUser = () => {
+  const updateUser = async () => {
     const token = getAccessToken();
     let userUpdate = dataForm;
-    //console.log(userUpdate);
-    console.log(token);
+    console.log(userUpdate.avatar);
+    //console.log(token);
     if (dataForm.password) {
       if (!comparePasswords(dataForm.password, dataForm.repeatPassword)) {
         notification["error"]({
@@ -93,10 +94,12 @@ const UserFormEdit = ({ setIsModalOpen }) => {
         });
         return;
       }
+      const formData = new FormData();
+      formData.append("avatar", userUpdate.avatar, userUpdate.avatar.name);
       updateAvatar({
         id: user.id,
         token: token,
-        avatar: userUpdate.avatar,
+        avatar: formData,
       });
       userUpdate.avatar = result.avatarName;
       updateUserApi(user.id, token, userUpdate)
@@ -121,6 +124,7 @@ const UserFormEdit = ({ setIsModalOpen }) => {
             },
           });
         });
+
     } else {
       if (!verifyPassword(dataForm.password)) {
         notification["error"]({
@@ -200,10 +204,13 @@ const UploadAvatar = ({ avatar, setAvatar }) => {
 
   const onDrop = useCallback(
     (acceptedFiles) => {
+      const file = acceptedFiles[0];
       setAvatar({
-        file: acceptedFiles[0],
-        preview: URL.createObjectURL(acceptedFiles[0]),
+        file,
+        preview: URL.createObjectURL(file),
       });
+      // console.log(avatar);
+      // console.log(avatarUrl)
     },
     [setAvatar]
   );
@@ -218,7 +225,7 @@ const UploadAvatar = ({ avatar, setAvatar }) => {
   return (
     <div
       className="dropzone"
-      {...getRootProps({ className: "dropzone" })}
+      {...getRootProps()}
       style={{
         position: "relative",
         display: "flex",

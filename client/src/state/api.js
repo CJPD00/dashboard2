@@ -66,7 +66,11 @@ export const api = createApi({
       providesTags: ["TotalsRecent"],
     }),
     getAvatar: build.query({
-      query: (avatarName) => `user/getAvatar/${avatarName}`,
+      query: (avatarName) => ({
+        url: `user/getAvatar/${avatarName}`,
+        method: "GET",
+        responseHandler: (response) => response,
+      }),
       providesTags: ["Avatar"],
     }),
     updateAvatar: build.mutation({

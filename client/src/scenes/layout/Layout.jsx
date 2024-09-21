@@ -17,11 +17,14 @@ const Layout = () => {
   const [modalContent, setModalContent] = useState(<></>);
   const [modalTitle, setModalTitle] = useState("");
   const { user } = useAuth();
+  
   //console.log(user);
 
   if (!user) {
     return <Navigate to="/login" replace></Navigate>;
   }
+
+  //console.log(user);
 
   return (
     <Box width={"100%"} height={"100%"} display={isMobile ? "block" : "flex"}>
