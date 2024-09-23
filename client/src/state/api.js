@@ -28,6 +28,14 @@ export const api = createApi({
       query: () => "departamento",
       providesTags: ["Departments"],
     }),
+    createDepartment: build.mutation({
+      query: (department) => ({
+        url: "departamento",
+        method: "POST",
+        body: department,
+      }),
+      invalidatesTags: ["Departments"],
+    }),
     getUsers: build.query({
       query: () => "user",
       providesTags: ["Users"],
@@ -90,6 +98,7 @@ export const api = createApi({
 export const {
   useGetUserQuery,
   useGetDepartmentsQuery,
+  useCreateDepartmentMutation,
   useGetUsersQuery,
   useGetProjectsQuery,
   useGetCareersQuery,

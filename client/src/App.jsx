@@ -15,6 +15,7 @@ import Geography from "./scenes/geography/Geography";
 import Breakdown from "./scenes/breakdown/Breakdown";
 import Calendar from "./scenes/calendar/Calendar";
 import AuthProvider from "./providers/authProvider";
+import { ModalProvider } from "./providers/ModalProvider";
 import Auth from "./scenes/auth/Auth";
 
 function App() {
@@ -27,26 +28,28 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <AuthProvider>
-            <Routes>
-              <Route path="/login" element={<Auth></Auth>}></Route>
-              <Route element={<Layout></Layout>}>
-                <Route
-                  path="/"
-                  element={<Navigate to="/dashboard" replace></Navigate>}
-                />
-                <Route path="dashboard" element={<Dashboard></Dashboard>} />
-                <Route
-                  path="Departamentos"
-                  element={<Departments></Departments>}
-                />
-                <Route path="Usuarios" element={<Users></Users>} />
-                <Route path="Proyectos" element={<Projects></Projects>} />
-                <Route path="Carreras" element={<Careers></Careers>} />
-                <Route path="Geografia" element={<Geography></Geography>} />
-                <Route path="Desglose" element={<Breakdown></Breakdown>} />
-                <Route path="Calendario" element={<Calendar></Calendar>} />
-              </Route>
-            </Routes>
+            <ModalProvider>
+              <Routes>
+                <Route path="/login" element={<Auth></Auth>}></Route>
+                <Route element={<Layout></Layout>}>
+                  <Route
+                    path="/"
+                    element={<Navigate to="/dashboard" replace></Navigate>}
+                  />
+                  <Route path="dashboard" element={<Dashboard></Dashboard>} />
+                  <Route
+                    path="Departamentos"
+                    element={<Departments></Departments>}
+                  />
+                  <Route path="Usuarios" element={<Users></Users>} />
+                  <Route path="Proyectos" element={<Projects></Projects>} />
+                  <Route path="Carreras" element={<Careers></Careers>} />
+                  <Route path="Geografia" element={<Geography></Geography>} />
+                  <Route path="Desglose" element={<Breakdown></Breakdown>} />
+                  <Route path="Calendario" element={<Calendar></Calendar>} />
+                </Route>
+              </Routes>
+            </ModalProvider>
           </AuthProvider>
         </ThemeProvider>
       </BrowserRouter>

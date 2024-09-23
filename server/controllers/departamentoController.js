@@ -12,11 +12,12 @@ export const getDepartamentosWhitCarreras = async (req, res) => {
 
 //postDepartamento
 export const postDepartamento = async (req, res) => {
-  const { nombre, cantidadProfesores } = req.body;
+  const { nombre, cantidadProfesores, description } = req.body;
 
   const newDepartamento = new Departamento({
     nombre,
     cantidadProfesores,
+    description,
   });
   try {
     await newDepartamento.save();

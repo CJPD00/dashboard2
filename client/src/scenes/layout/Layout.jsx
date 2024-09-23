@@ -9,15 +9,25 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import useAuth from "../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import Modal from "../../components/modal/Modal";
+import useModal from "../../hooks/useModal";
 
 const Layout = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(<></>);
-  const [modalTitle, setModalTitle] = useState("");
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [modalContent, setModalContent] = useState(<></>);
+  // const [modalTitle, setModalTitle] = useState("");
   const { user } = useAuth();
-  
+
+  const {
+    isModalOpen,
+    setIsModalOpen,
+    modalContent,
+    setModalContent,
+    modalTitle,
+    setModalTitle,
+  } = useModal();
+
   //console.log(user);
 
   if (!user) {

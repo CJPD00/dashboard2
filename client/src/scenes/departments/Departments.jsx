@@ -5,26 +5,64 @@ import {
   CardContent,
   Collapse,
   Button,
+  //Stack,
   Typography,
   //Rating,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import FlexBetween from "../../components/FlexBetween";
+import { ApartmentOutlined } from "@mui/icons-material";
 
 import { useState } from "react";
 import { useGetDepartmentsQuery } from "../../state/api";
 
 import Header from "../../components/Header";
+import DepartmentForm from "../../components/departmentForm/DepartmentForm";
+import useModal from "../../hooks/useModal";
 
 const Departments = () => {
   const { data, isLoading } = useGetDepartmentsQuery();
   //console.log(data);
 
+  const {
+    //isModalOpen,
+    setIsModalOpen,
+    //modalContent,
+    setModalContent,
+    //modalTitle,
+    setModalTitle,
+  } = useModal();
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Departamentos" subtitle="Todos los departamentos." />
+      <FlexBetween>
+        <Header title="Departamentos" subtitle="Todos los departamentos." />
+        <Button
+          variant="contained"
+          color="secondary"
+          startIcon={<ApartmentOutlined />}
+          onClick={() => {
+            setIsModalOpen(true);
+            setModalContent(<DepartmentForm setIsModalOpen={setIsModalOpen} />);
+            setModalTitle("Agregar departamento");
+          }}
+          sx={{
+            ":hover": {
+              backgroundColor: "secondary.light",
+              color: "neutral.white",
+            },
+            backgroundColor: "secondary.main",
+            color: "neutral.white",
+            borderRadius: "10px",
+            padding: "0.5rem 1rem",
+          }}
+        >
+          Agregar departamento
+        </Button>
+      </FlexBetween>
 
       {!isLoading ? (
         <Box
@@ -79,7 +117,7 @@ const Department = ({ nombre, cantidadProfesores, description }) => {
         >
           {isExpanded ? "Ver Menos" : "Ver Mas"}
         </Button>
-      </CardActions>  
+      </CardActions>
       <Collapse
         in={isExpanded}
         timeout="auto"

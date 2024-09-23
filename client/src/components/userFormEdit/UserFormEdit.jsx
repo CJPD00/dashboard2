@@ -6,13 +6,13 @@ import { useTheme } from "@mui/material";
 import { useDropzone } from "react-dropzone";
 import { useCallback, useState, useEffect } from "react";
 import { useGetAvatarQuery } from "../../state/api";
-import { Edit, Password } from "@mui/icons-material";
+//import { Edit, Password } from "@mui/icons-material";
 import { comparePasswords, verifyPassword } from "../../helpers/authHelper";
 import { useUpdateAvatarMutation } from "../../state/api";
 import { getAccessToken } from "../../state/auth";
 import { notification } from "antd";
 import { updateUser as updateUserApi } from "../../state/user";
-import { login } from "../../state/user";
+//import { login } from "../../state/user";
 
 const UserFormEdit = ({ setIsModalOpen }) => {
   const { user } = useAuth();

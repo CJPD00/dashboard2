@@ -69,19 +69,17 @@ const Dashboard = () => {
         <Header title="DASHBOARD" subtitle="Bienvenido a tu  " />
         <Button
           sx={{
-            backgroundColor: theme.palette.secondary.light,
-            color: theme.palette.background.alt,
-            fontSize: "14px",
-            fontWeight: "bold",
-            padding: "10px 20px",
-            "&:hover": {
-              backgroundColor: theme.palette.secondary.dark,
-              color: theme.palette.background.alt,
-              boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
+            ":hover": {
+              backgroundColor: "secondary.light",
+              color: "neutral.white",
             },
+            backgroundColor: "secondary.main",
+            color: "neutral.white",
+            borderRadius: "10px",
+            padding: "0.5rem 1rem",
           }}
+          startIcon={<DownloadOutlined />}
         >
-          <DownloadOutlined sx={{ mr: "10px" }} />
           Descargar Estatutos
         </Button>
       </FlexBetween>
