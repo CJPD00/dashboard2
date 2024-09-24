@@ -36,6 +36,25 @@ export const api = createApi({
       }),
       invalidatesTags: ["Departments"],
     }),
+    deleteDepartment: build.mutation({
+      query: ({ nombre }) => ({
+        url: `departamento/${nombre}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Departments"],
+    }),
+    updateDepartment: build.mutation({
+      query: ({ id, nombre, cantidadProfesores, description }) => ({
+        url: `departamento/${id}`,
+        method: "PUT",
+        body: {
+          nombre,
+          cantidadProfesores,
+          description,
+        },
+      }),
+      invalidatesTags: ["Departments"],
+    }),
     getUsers: build.query({
       query: () => "user",
       providesTags: ["Users"],
@@ -99,6 +118,8 @@ export const {
   useGetUserQuery,
   useGetDepartmentsQuery,
   useCreateDepartmentMutation,
+  useDeleteDepartmentMutation,
+  useUpdateDepartmentMutation,
   useGetUsersQuery,
   useGetProjectsQuery,
   useGetCareersQuery,
