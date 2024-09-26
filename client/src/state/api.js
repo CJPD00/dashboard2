@@ -32,7 +32,21 @@ export const api = createApi({
           departamento,
         },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User", "Users"],
+    }),
+    desactiveUser: build.mutation({
+      query: (id) => ({
+        url: `user/desactivateUser/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["User", "Users"],
+    }),
+    deleteUser: build.mutation({
+      query: ({ id }) => ({
+        url: `user/deleteUser/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["User", "Users"],
     }),
     getDepartments: build.query({
       query: () => "departamento",
@@ -158,6 +172,8 @@ export const api = createApi({
 export const {
   useGetUserQuery,
   useActiveUserMutation,
+  useDesactiveUserMutation,
+  useDeleteUserMutation,
   useGetDepartmentsQuery,
   useCreateDepartmentMutation,
   useDeleteDepartmentMutation,

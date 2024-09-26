@@ -8,6 +8,8 @@ import {
   getAvatar,
   updateUser,
   activateUser,
+  desactivateUser,
+  deleteUser,
 } from "../controllers/userController.js";
 import { verifyPasswords } from "../middlewares/verifyPasswords.js";
 import multipart from "connect-multiparty";
@@ -43,5 +45,11 @@ userRouter.put("/updateUser/:id", [ensureAuth], updateUser);
 
 //activate user
 userRouter.put("/activateUser/:id", activateUser);
+
+//desactiveUser
+userRouter.put("/desactivateUser/:id", desactivateUser);
+
+//delete user
+userRouter.delete("/deleteUser/:id", deleteUser);
 
 export default userRouter;

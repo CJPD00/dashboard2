@@ -25,10 +25,28 @@ export const getUser = async (req, res) => {
   }
 };
 
+//getUserById
+export const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        code: 404,
+      });
+    }
+    res.status(200).json({ user, code: 200 });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 //get allUsers
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    const users = await User.find().populate("departamento");
     res.status(200).json({ users, code: 200 });
   } catch (error) {
     res.status(500).json({
@@ -63,6 +81,7 @@ export const signUp = async (req, res) => {
       code: 201,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: error.message,
       code: 500,
@@ -191,6 +210,7 @@ export const getAvatar = (req, res) => {
 };
 
 export const activateUser = async (req, res) => {
+  console.log(req.params.id, req.body.departamento);
   try {
     const { id } = req.params;
     const { departamento } = req.body;
@@ -206,6 +226,48 @@ export const activateUser = async (req, res) => {
       });
     }
     res.status(200).json({ user, code: 200, message: "usuario activado" });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const desactivateUser = async (req, res) => {
+  //console.log(req.params.id);
+
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        code: 404,
+      });
+    }
+    user.active = false;
+    user.departamento = null;
+    await user.save();
+    res.status(200).json({ user, code: 200, message: "usuario desactivado" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        code: 404,
+      });
+    }
+    res.status(200).json({ user, code: 200, message: "usuario eliminado" });
   } catch (error) {
     res.status(500).json({
       message: error.message,

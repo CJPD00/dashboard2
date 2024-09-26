@@ -1,4 +1,6 @@
 import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
+import Departamento from "./departamento.js";
 
 const userSchema = new Schema(
   {
@@ -50,8 +52,9 @@ const userSchema = new Schema(
       type: String,
     },
     departamento: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Departamento",
+      //default: null,
     },
   },
   {
@@ -63,6 +66,6 @@ const userSchema = new Schema(
 );
 
 // Set strict to false
-userSchema.set('strict', false);
+userSchema.set("strict", false);
 
 export default model("User", userSchema);

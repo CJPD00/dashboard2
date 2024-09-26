@@ -29,7 +29,7 @@ import { useDeleteDepartmentMutation } from "../../state/api";
 
 const Departments = () => {
   const { data, isLoading } = useGetDepartmentsQuery();
-  //console.log(data);
+  console.log(data);
 
   const {
     //isModalOpen,

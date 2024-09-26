@@ -18,7 +18,8 @@ import { useState } from "react";
 const Careers = () => {
   const theme = useTheme();
   const { data, isLoading } = useGetCareersQuery();
-  const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
+  const { setIsModalOpen, setModalContent, setModalTitle, isModalOpen } =
+    useModal();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [deleteCareer, error] = useDeleteCareerMutation();
@@ -32,31 +33,31 @@ const Careers = () => {
 
   const handleEdit = (id) => {
     setIsModalOpen(true);
+    //console.log(isModalOpen);
     setModalContent(<CareerFormEdit setIsModalOpen={setIsModalOpen} id={id} />);
     setModalTitle("Editar Carrera");
-    console.log(id);
+    // console.log(id);
   };
 
   const handleDelete = async (id) => {
-    setDialogOpen(true);
-    if (confirm) {
-      try {
-        await deleteCareer({ id });
-        setConfirm(false);
-      } catch (error) {
-        console.log(error);
-      }
+    //setDialogOpen(true);
+
+    try {
+      await deleteCareer({ id });
+      //setConfirm(false);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleConfirm = async (id) => {
-    setConfirm(true);
-    setDialogOpen(false);
-  };
+  // const handleConfirm = async (id) => {
+  //   setConfirm(true);
+  //   setDialogOpen(false);
+  // };
 
-  const handleCancel = () => {
-    setDialogOpen(false);
-  };
+  // const handleCancel = () => {
+  //   setDialogOpen(false);
+  // };
 
   const rows =
     data?.carreras?.length > 0
@@ -189,7 +190,7 @@ const Careers = () => {
           columns={columns}
         />
       </Box>
-      <Dialog open={dialogOpen} onClose={handleCancel}>
+      {/* <Dialog open={dialogOpen} onClose={handleCancel}>
         <DialogTitle
           sx={{ textAlign: "center", color: theme.palette.error.main }}
         >
@@ -222,7 +223,7 @@ const Careers = () => {
             Confirmar
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </Box>
   );
 };
