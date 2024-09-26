@@ -214,7 +214,8 @@ const Department = ({ nombre, cantidadProfesores, description, _id }) => {
           Advertencia
         </DialogTitle>
         <DialogContent>
-          ¿Estás seguro de que deseas eliminar este elemento?
+          ¿Estás seguro de que deseas eliminar este elemento, eliminara tambien
+          todo lo relacionado con este departamento?
         </DialogContent>
         <DialogActions>
           <Button

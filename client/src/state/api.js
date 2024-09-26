@@ -65,7 +65,7 @@ export const api = createApi({
         url: `departamento/${nombre}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Departments"],
+      invalidatesTags: ["Departments","Careers"],
     }),
     updateDepartment: build.mutation({
       query: ({ id, nombre, cantidadProfesores, description }) => ({

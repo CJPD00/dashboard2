@@ -35,11 +35,27 @@ const departamentoSchema = new Schema(
   }
 );
 
-departamentoSchema.pre("remove", async function (next) {
+// departamentoSchema.pre("remove", async function (next) {
+//   try {
+//     await Carrera.deleteMany({ idDepartamento: this._id });
+//     next();
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+departamentoSchema.pre("deleteOne", async function (next) {
   try {
-    await Carrera.deleteMany({ idDepartamento: this._id });
+    console.log("Middleware de deleteOne se está ejecutando");
+    const { _conditions } = this;
+    //console.log(_conditions);
+    const depart = _conditions.nombre;
+    //console.log(typeof depart);
+    await Carrera.deleteMany({ departamento: depart });
+    console.log("Middleware de deleteOne finalizado");
     next();
   } catch (error) {
+    console.log(error);
     next(error);
   }
 });
