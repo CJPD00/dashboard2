@@ -3,6 +3,9 @@ import {
   getAllCarreras,
   getCarrerasByIdDepartamento,
   postCarrera,
+  updateCarrera,
+  getCarreraById,
+  deleteCarrera,
 } from "../controllers/carreraController.js";
 
 const carreraRouter = Router();
@@ -15,5 +18,14 @@ carreraRouter.get("/:idDepartamento", getCarrerasByIdDepartamento);
 
 //postCarrera
 carreraRouter.post("/", postCarrera);
+
+//updateCarrera
+carreraRouter.put("/:id", updateCarrera);
+
+//getCarreraById
+carreraRouter.get("/byId/:id", getCarreraById);
+
+//deleteCarrera
+carreraRouter.delete("/:id", deleteCarrera);
 
 export default carreraRouter;

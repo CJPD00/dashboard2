@@ -15,6 +15,19 @@ export const getAllCarreras = async (req, res) => {
   }
 };
 
+//get carrera by id
+export const getCarreraById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const carrera = await Carrera.findById(id).populate("projectos");
+    res.status(200).json({ carrera, code: 200 });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 //get carreras by idDepartamento
 export const getCarrerasByIdDepartamento = async (req, res) => {
   try {
@@ -60,5 +73,53 @@ export const postCarrera = async (req, res) => {
     });
   } catch (error) {
     res.status(409).json({ message: error.message });
+  }
+};
+
+//updateCarrera
+export const updateCarrera = async (req, res) => {
+  const { id } = req.params;
+  const { nombre, description, idDepartamento } = req.body;
+  try {
+    const departamentoData = await Departamento.findById(idDepartamento);
+    console.log(departamentoData);
+    const departamento = departamentoData?.nombre;
+    const updatedCarrera = await Carrera.findByIdAndUpdate(
+      id,
+      { nombre, description, idDepartamento, departamento },
+      { new: true }
+    );
+    if (!updatedCarrera) {
+      return res.status(404).json({
+        message: "Carrera no encontrada",
+        code: 404,
+      });
+    }
+    res.status(200).json({
+      message: "Carrera actualizada exitosamente",
+      code: 200,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//deleteCarrera
+export const deleteCarrera = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedCarrera = await Carrera.findByIdAndDelete(id);
+    if (!deletedCarrera) {
+      return res.status(404).json({
+        message: "Carrera no encontrada",
+        code: 404,
+      });
+    }
+    res.status(200).json({
+      message: "Carrera eliminada exitosamente",
+      code: 200,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

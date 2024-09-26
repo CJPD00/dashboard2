@@ -24,6 +24,16 @@ export const api = createApi({
       query: (id) => `user/${id}`,
       providesTags: ["User"],
     }),
+    activeUser: build.mutation({
+      query: ({ id, departamento }) => ({
+        url: `user/activateUser/${id}`,
+        method: "PUT",
+        body: {
+          departamento,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
     getDepartments: build.query({
       query: () => "departamento",
       providesTags: ["Departments"],
@@ -76,6 +86,37 @@ export const api = createApi({
       query: () => "carrera",
       providesTags: ["Careers"],
     }),
+    getCareerById: build.query({
+      query: (id) => `carrera/byId/${id}`,
+      providesTags: ["Careers"],
+    }),
+    postCareer: build.mutation({
+      query: (career) => ({
+        url: "carrera",
+        method: "POST",
+        body: career,
+      }),
+      invalidatesTags: ["Careers"],
+    }),
+    updateCareer: build.mutation({
+      query: ({ id, nombre, description, idDepartamento }) => ({
+        url: `carrera/${id}`,
+        method: "PUT",
+        body: {
+          nombre,
+          description,
+          idDepartamento,
+        },
+      }),
+      invalidatesTags: ["Careers"],
+    }),
+    deleteCareer: build.mutation({
+      query: ({ id }) => ({
+        url: `carrera/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Careers"],
+    }),
     getGeography: build.query({
       query: () => "personal/geografia",
       providesTags: ["Geography"],
@@ -116,6 +157,7 @@ export const api = createApi({
 
 export const {
   useGetUserQuery,
+  useActiveUserMutation,
   useGetDepartmentsQuery,
   useCreateDepartmentMutation,
   useDeleteDepartmentMutation,
@@ -123,6 +165,10 @@ export const {
   useGetUsersQuery,
   useGetProjectsQuery,
   useGetCareersQuery,
+  useGetCareerByIdQuery,
+  usePostCareerMutation,
+  useUpdateCareerMutation,
+  useDeleteCareerMutation,
   useGetGeographyQuery,
   useGetBreakdownQuery,
   useGetTotalsQuery,

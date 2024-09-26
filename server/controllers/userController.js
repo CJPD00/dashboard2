@@ -189,3 +189,26 @@ export const getAvatar = (req, res) => {
     }
   });
 };
+
+export const activateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { departamento } = req.body;
+    const user = await User.findByIdAndUpdate(
+      id,
+      { active: true, departamento: departamento },
+      { new: true }
+    );
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        code: 404,
+      });
+    }
+    res.status(200).json({ user, code: 200, message: "usuario activado" });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

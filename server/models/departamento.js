@@ -1,7 +1,9 @@
 //modelo de departamento
 
 import mongoose from "mongoose";
+import Carrera from "./carrera.js";
 const Schema = mongoose.Schema;
+
 const departamentoSchema = new Schema(
   {
     nombre: {
@@ -32,5 +34,14 @@ const departamentoSchema = new Schema(
     versionKey: false,
   }
 );
+
+departamentoSchema.pre("remove", async function (next) {
+  try {
+    await Carrera.deleteMany({ idDepartamento: this._id });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default mongoose.model("Departamento", departamentoSchema);

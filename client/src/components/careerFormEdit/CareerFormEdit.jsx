@@ -1,22 +1,60 @@
-//import React from "react";
-import { TextField, Button, useTheme, Alert } from "@mui/material";
-import { useState } from "react";
-//import { notification } from "antd";
-import { useCreateDepartmentMutation } from "../../state/api";
+import {
+  TextField,
+  Button,
+  useTheme,
+  Alert,
+  Autocomplete,
+} from "@mui/material";
+import { useState, useEffect } from "react"; //import React from 'react'
+import {
+  useUpdateCareerMutation,
+  useGetCareerByIdQuery,
+  useGetDepartmentsQuery,
+} from "../../state/api";
 
-const DepartmentForm = ({ setIsModalOpen }) => {
+const CareerFormEdit = ({ setIsModalOpen, id }) => {
   const theme = useTheme();
   const [dataForm, setDataForm] = useState({});
   const [messageError, setMessageError] = useState(null);
   const [textError, setTextError] = useState(null);
-  const [createDepartment, error] = useCreateDepartmentMutation();
+  const [autocompleteValor, setAutocompleteValor] = useState(null);
+  const [autoCompleteError, setAutocompleteError] = useState(false);
+  const [helperText, setHelperText] = useState("");
+
+  const { data } = useGetCareerByIdQuery(id);
+  const { data: departamentos } = useGetDepartmentsQuery();
+  const [updateCareer, error] = useUpdateCareerMutation();
+
+  const opciones =
+    departamentos?.departamentos?.length > 0
+      ? departamentos.departamentos.map((item) => {
+          return { label: item?.nombre, value: item?._id };
+        })
+      : [];
+
+  useEffect(() => {
+    if (data) {
+      setDataForm({
+        id: id,
+        nombre: data?.carrera.nombre,
+        description: data?.carrera.description,
+      });
+      console.log(departamentos);
+    }
+  }, [data]);
+
+  const handleAutocompleteChange = (event, newValue) => {
+    setAutocompleteValor(newValue);
+    setDataForm({ ...dataForm, idDepartamento: newValue?.value });
+    setAutocompleteError(false);
+    setHelperText("");
+    //console.log(dataForm);
+  };
 
   const handleBlur = () => {
     if (
       dataForm.nombre === "" ||
       !dataForm.nombre ||
-      dataForm.cantidadProfesores === "" ||
-      !dataForm.cantidadProfesores ||
       dataForm.description === "" ||
       !dataForm.description
     ) {
@@ -33,9 +71,6 @@ const DepartmentForm = ({ setIsModalOpen }) => {
       dataForm.nombre === "" ||
       !dataForm.nombre ||
       !dataForm.nombre.trim() === "" ||
-      dataForm.cantidadProfesores === "" ||
-      !dataForm.cantidadProfesores ||
-      !dataForm.cantidadProfesores.trim() === "" ||
       dataForm.description === "" ||
       !dataForm.description ||
       !dataForm.description.trim() === ""
@@ -51,15 +86,21 @@ const DepartmentForm = ({ setIsModalOpen }) => {
 
   const handleClick = async () => {
     //console.log(dataForm);
-    if (dataForm.nombre === "") {
+    if (
+      dataForm.nombre === "" ||
+      !dataForm.idDepartamento ||
+      dataForm.idDepartamento === ""
+    ) {
       setMessageError("Todos los campos son obligatorios");
       setTextError(true);
+      setAutocompleteError(true);
+      setHelperText("Por favor, selecciona un departamento");
       return;
     } else if (textError) {
       return;
     } else {
       try {
-        const response = await createDepartment(dataForm);
+        const response = await updateCareer(dataForm);
         setIsModalOpen(false);
         console.log(response);
       } catch (error) {
@@ -92,18 +133,6 @@ const DepartmentForm = ({ setIsModalOpen }) => {
         sx={{ mb: 2, width: "100%" }}
       />
       <TextField
-        label="Cantidad de Profesores"
-        name="cantidadProfesores"
-        type="number"
-        variant="standard"
-        size="small"
-        error={textError}
-        //onBlur={handleBlur}
-        value={dataForm.cantidadProfesores}
-        onChange={(e) => handlerChange(e)}
-        sx={{ mb: 2, width: "100%" }}
-      />
-      <TextField
         label="Descripción"
         name="description"
         type="textarea"
@@ -119,6 +148,22 @@ const DepartmentForm = ({ setIsModalOpen }) => {
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />
+
+      <Autocomplete
+        options={opciones}
+        value={autocompleteValor}
+        onChange={handleAutocompleteChange}
+        sx={{ width: "100%", mb: 2 }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Departamento"
+            variant="outlined"
+            error={autoCompleteError}
+            helperText={helperText}
+          />
+        )}
+      ></Autocomplete>
       {textError ? (
         <Alert
           severity="error"
@@ -146,4 +191,4 @@ const DepartmentForm = ({ setIsModalOpen }) => {
   );
 };
 
-export default DepartmentForm;
+export default CareerFormEdit;
