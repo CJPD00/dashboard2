@@ -23,6 +23,7 @@ import {
   PublicOutlined,
   CalendarMonthOutlined,
   PieChartOutline,
+  BorderColorOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -60,8 +61,16 @@ const navItems = [
     icon: null,
   },
   {
-    text: "Calendario",
+    text: "Eventos",
     icon: <CalendarMonthOutlined />,
+  },
+  {
+    text: "Promociones",
+    icon: null,
+  },
+  {
+    text: "Publicaciones",
+    icon: <BorderColorOutlined />,
   },
   {
     text: "Estadísticas",

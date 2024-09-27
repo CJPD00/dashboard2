@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { config } from "../config";
+import { Update } from "@mui/icons-material";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: config.baseUrl }),
@@ -18,6 +19,7 @@ export const api = createApi({
     "UserSignup",
     "RefreshToken",
     "Avatar",
+    "EventosG",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -65,7 +67,7 @@ export const api = createApi({
         url: `departamento/${nombre}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Departments","Careers"],
+      invalidatesTags: ["Departments", "Careers"],
     }),
     updateDepartment: build.mutation({
       query: ({ id, nombre, cantidadProfesores, description }) => ({
@@ -166,6 +168,50 @@ export const api = createApi({
       }),
       invalidatesTags: ["Avatar"],
     }),
+    getEventosG: build.query({
+      query: () => ({
+        url: "eventog",
+        method: "GET",
+      }),
+      providesTags: ["EventosG"],
+    }),
+    createEventoG: build.mutation({
+      query: ({ title, day, type, description }) => ({
+        url: "eventog",
+        method: "POST",
+        body: {
+          title,
+          day,
+          type,
+          description,
+        },
+      }),
+      invalidatesTags: ["EventosG"],
+    }),
+    getEventoById: build.query({
+      query: (id) => `eventog/byId/${id}`,
+      providesTags: ["EventosG"],
+    }),
+    updateEventoG: build.mutation({
+      query: ({ id, title, day, type, description }) => ({
+        url: `eventog/${id}`,
+        method: "PUT",
+        body: {
+          title,
+          day,
+          type,
+          description,
+        },
+      }),
+      invalidatesTags: ["EventosG"],
+    }),
+    deleteEventoG: build.mutation({
+      query: ({ id }) => ({
+        url: `eventog/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["EventosG"],
+    }),
   }),
 });
 
@@ -191,4 +237,9 @@ export const {
   useGetTotalsRecentQuery,
   useGetAvatarQuery,
   useUpdateAvatarMutation,
+  useGetEventosGQuery,
+  useCreateEventoGMutation,
+  useGetEventoByIdQuery,
+  useUpdateEventoGMutation,
+  useDeleteEventoGMutation,
 } = api;

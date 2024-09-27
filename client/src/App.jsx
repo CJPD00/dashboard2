@@ -14,7 +14,9 @@ import Careers from "./scenes/careers/Careers";
 import Geography from "./scenes/geography/Geography";
 import Breakdown from "./scenes/breakdown/Breakdown";
 import Calendar from "./scenes/calendar/Calendar";
+import Posts from "./scenes/posts/Posts";
 import AuthProvider from "./providers/authProvider";
+import EventoGSingleView from "./components/eventoGSingleView/EventoGSingleView";
 import { ModalProvider } from "./providers/ModalProvider";
 import Auth from "./scenes/auth/Auth";
 
@@ -46,7 +48,12 @@ function App() {
                   <Route path="Carreras" element={<Careers></Careers>} />
                   <Route path="Geografia" element={<Geography></Geography>} />
                   <Route path="Desglose" element={<Breakdown></Breakdown>} />
-                  <Route path="Calendario" element={<Calendar></Calendar>} />
+                  <Route path="Eventos" element={<Calendar></Calendar>} />
+                  <Route path="Publicaciones" element={<Posts></Posts>} />
+                  <Route
+                    path="EventoSingle/:id"
+                    element={<EventoGSingleView />}
+                  />
                 </Route>
               </Routes>
             </ModalProvider>

@@ -6,22 +6,22 @@ const eventoGeneralSchema = new Schema(
       type: String,
       required: true,
     },
-    start: {
+    description: {
+      type: String,
+      required: true,
+    },
+    day: {
       type: Date,
       required: true,
     },
-    end: {
-      type: Date,
-      default: null,
-    },
-    link: {
-      type: String,
-      default: null,
-    },
-    exclusive: {
-      type: Boolean,
-      default: false,
-    },
+    // link: {
+    //   type: String,
+    //   default: null,
+    // },
+    // exclusive: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     type: {
       type: String,
       enum: [
