@@ -18,6 +18,9 @@ import personalRouter from "./routes/personalRouter.js";
 import overallRouter from "./routes/overallRouter.js";
 import eventoGRouter from "./routes/eventoGRouter.js";
 import authRouter from "./routes/authRouter.js";
+import publicacionRouter from "./routes/publicacionRouter.js";
+import premioRouter from "./routes/premioRouter.js";
+import tareaRouter from "./routes/tareaRouter.js";
 
 // configuracion de la aplicacion
 dotenv.config();
@@ -39,6 +42,9 @@ app.use("/personal", personalRouter);
 app.use("/overall", overallRouter);
 app.use("/eventog", eventoGRouter);
 app.use("/auth", authRouter);
+app.use("/publicacion", publicacionRouter);
+app.use("/premio", premioRouter);
+app.use("/tarea", tareaRouter);
 
 //connect to mongodb
 mongoose

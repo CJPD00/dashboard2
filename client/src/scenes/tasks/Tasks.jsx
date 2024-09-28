@@ -1,35 +1,30 @@
-import React from "react";
+//import React from 'react'
+
 import Header from "../../components/Header";
 import { useTheme, Box, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import FlexBetween from "../../components/FlexBetween";
-import { BorderColorOutlined } from "@mui/icons-material";
-import { useGetPublicacionesQuery } from "../../state/api";
-import { Link } from "react-router-dom";
-import PublicacionForm from "../../components/publicacionForm/PublicacionForm";
-import PublicacionFormEdit from "../../components/publicacionFormEdit/PublicacionFormEdit";
 import useModal from "../../hooks/useModal";
 import { useNavigate } from "react-router-dom";
-import { useDeletePublicacionesMutation } from "../../state/api";
+import { AssignmentOutlined } from "@mui/icons-material";
+import { useGetTareasQuery } from "../../state/api";
+import TareaForm from "../../components/tareaForm/TareaForm";
 
-const Posts = () => {
+const Tasks = () => {
   const theme = useTheme();
-  const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
-
-  const { data, isLoading } = useGetPublicacionesQuery();
-
-  const [deletePublicacion, error] = useDeletePublicacionesMutation();
-
   const navigate = useNavigate();
 
+  const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
+
+  const { data, isLoading } = useGetTareasQuery();
+
   const rows =
-    data?.publicaciones?.length > 0
-      ? data.publicaciones.map((row) => ({
+    data?.tareas?.length > 0
+      ? data.tareas.map((row) => ({
           id: row._id,
           Titulo: row.title,
-          Dia: row.fecha,
-          Autor: row.autor,
-          Link: row.link,
+          Responsable: row.responsable,
+          Lugar: row.lugar,
         }))
       : [];
 
@@ -40,13 +35,13 @@ const Posts = () => {
       flex: 0.2,
     },
     {
-      field: "Dia",
-      headerName: "Dia",
+      field: "Responsable",
+      headerName: "Responsable",
       flex: 0.2,
     },
     {
-      field: "Autor",
-      headerName: "Autor",
+      field: "Lugar",
+      headerName: "Lugar",
       flex: 0.2,
     },
     {
@@ -68,7 +63,7 @@ const Posts = () => {
               padding: "0.5rem 1rem",
               marginRight: "1rem",
             }}
-            onClick={() => handleView(params.row.id)}
+            //onClick={() => handleView(params.row.id)}
           >
             Ver
           </Button>
@@ -86,7 +81,7 @@ const Posts = () => {
               padding: "0.5rem 1rem",
               marginRight: "1rem",
             }}
-            onClick={() => handleEdit(params.row.id)}
+            //onClick={() => handleEdit(params.row.id)}
           >
             Editar
           </Button>
@@ -103,7 +98,7 @@ const Posts = () => {
               borderRadius: "10px",
               padding: "0.5rem 1rem",
             }}
-            onClick={() => handleDelete(params.row.id)}
+            //onClick={() => handleDelete(params.row.id)}
           >
             Eliminar
           </Button>
@@ -116,38 +111,18 @@ const Posts = () => {
 
   const handlePost = () => {
     setIsModalOpen(true);
-    setModalTitle("Nueva Publicación");
-    setModalContent(<PublicacionForm setIsModalOpen={setIsModalOpen} />);
-  };
-
-  const handleEdit = (id) => {
-    setIsModalOpen(true);
-    setModalTitle("Editar Publicación");
-    setModalContent(
-      <PublicacionFormEdit setIsModalOpen={setIsModalOpen} id={id} />
-    );
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await deletePublicacion({ id });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleView = (id) => {
-    navigate(`/publicacionSingle/${id}`);
+    setModalContent(<TareaForm setIsModalOpen={setIsModalOpen} />);
+    setModalTitle("Crear Nueva Tarea");
   };
 
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="Publicaciones" subtitle="Todas Las Publicaciones" />
+        <Header title="Tareas" subtitle="Todas las Tareas" />
         <Button
           variant="contained"
           color="secondary"
-          startIcon={<BorderColorOutlined />}
+          startIcon={<AssignmentOutlined />}
           sx={{
             ":hover": {
               backgroundColor: "secondary.light",
@@ -160,7 +135,7 @@ const Posts = () => {
           }}
           onClick={handlePost}
         >
-          Agregar Publicación
+          Agregar tarea
         </Button>
       </FlexBetween>
       <Box
@@ -202,4 +177,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default Tasks;

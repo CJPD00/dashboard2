@@ -1,23 +1,23 @@
 //import React from "react";
 import Header from "../Header";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import FlexBetween from "../FlexBetween";
 import { useParams } from "react-router-dom";
-import { useGetEventoByIdQuery } from "../../state/api";
-import dayjs from "dayjs";
+import { useGetPublicacionByIdQuery } from "../../state/api";
+import { LaunchOutlined } from "@mui/icons-material";
 
-const EventoGSingleView = () => {
+const PublicacionSingleView = () => {
   const theme = useTheme();
   const { id } = useParams();
 
-  const { data, isLoading } = useGetEventoByIdQuery(id);
+  const { data, isLoading } = useGetPublicacionByIdQuery(id);
 
-  //console.log(id);
+  // console.log(id);
 
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title={`Evento ${data?.evento?.title}`} subtitle=" " />
+        <Header title={`Evento ${data?.publicacion?.title}`} subtitle=" " />
       </FlexBetween>
 
       <Box
@@ -36,22 +36,29 @@ const EventoGSingleView = () => {
           },
         }}
       >
-        <Box sx={{ width: "100%" }}>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          gap="10px"
+          sx={{
+            "& > div": {
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+            },
+            width: "100%",
+          }}
+        >
           <Typography
-            variant="h2"
-            textAlign="center"
+            variant="h4"
             fontWeight="bold"
-            sx={{ mb: "10px", color: theme.palette.secondary[100] }}
+            sx={{ color: theme.palette.secondary[100] }}
           >
-            {data && data?.evento?.title}
+            Titulo:
           </Typography>
-          <Typography
-            variant="subtitle2"
-            textAlign="center"
-            mt="10px"
-            color={theme.palette.secondary[300]}
-          >
-            {data && data?.evento?.description}
+          <Typography variant="h5" sx={{ color: theme.palette.secondary[300] }}>
+            {data && data?.publicacion?.title}
           </Typography>
         </Box>
         <Box
@@ -73,10 +80,10 @@ const EventoGSingleView = () => {
             fontWeight="bold"
             sx={{ color: theme.palette.secondary[100] }}
           >
-            Fecha:
+            Autor:
           </Typography>
           <Typography variant="h5" sx={{ color: theme.palette.secondary[300] }}>
-            {data && dayjs(data?.evento?.day).format("DD/MM/YYYY")}
+            {data && data?.publicacion?.autor}
           </Typography>
         </Box>
         <Box
@@ -98,15 +105,26 @@ const EventoGSingleView = () => {
             fontWeight="bold"
             sx={{ color: theme.palette.secondary[100] }}
           >
-            Tipo:
+            Enlace:
           </Typography>
           <Typography variant="h5" sx={{ color: theme.palette.secondary[300] }}>
-            {data && data?.evento?.type}
+            {data && data?.publicacion?.link}
           </Typography>
+          <a href={data && data?.publicacion?.link} target="_blank">
+            <LaunchOutlined
+              sx={{
+                color: theme.palette.secondary[300],
+                "&:hover": {
+                  color: theme.palette.secondary[500],
+                  cursor: "pointer",
+                },
+              }}
+            ></LaunchOutlined>
+          </a>
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default EventoGSingleView;
+export default PublicacionSingleView;

@@ -20,6 +20,9 @@ export const api = createApi({
     "RefreshToken",
     "Avatar",
     "EventosG",
+    "Publicaciones",
+    "Premios",
+    "Tareas",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -212,6 +215,97 @@ export const api = createApi({
       }),
       invalidatesTags: ["EventosG"],
     }),
+    getPublicaciones: build.query({
+      query: () => ({
+        url: "publicacion",
+        method: "GET",
+      }),
+      providesTags: ["Publicaciones"],
+    }),
+    getPublicacionById: build.query({
+      query: (id) => `publicacion/byId/${id}`,
+      providesTags: ["Publicaciones"],
+    }),
+    createPublicaciones: build.mutation({
+      query: ({ title, autor, link }) => ({
+        url: "publicacion",
+        method: "POST",
+        body: {
+          title,
+          autor,
+          link,
+        },
+      }),
+      invalidatesTags: ["Publicaciones"],
+    }),
+    updatePublicaciones: build.mutation({
+      query: ({ id, title, autor, link }) => ({
+        url: `publicacion/${id}`,
+        method: "PUT",
+        body: {
+          title,
+          autor,
+          link,
+        },
+      }),
+      invalidatesTags: ["Publicaciones"],
+    }),
+    deletePublicaciones: build.mutation({
+      query: ({ id }) => ({
+        url: `publicacion/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Publicaciones"],
+    }),
+    getPremios: build.query({
+      query: () => ({
+        url: "premio",
+        method: "GET",
+      }),
+      providesTags: ["Premios"],
+    }),
+    createPremio: build.mutation({
+      query: (premio) => ({
+        url: "premio",
+        method: "POST",
+        body: premio,
+      }),
+      invalidatesTags: ["Premios"],
+    }),
+    updatePremio: build.mutation({
+      query: (premio) => ({
+        url: `premio/${premio._id}`,
+        method: "PUT",
+        body: premio,
+      }),
+      invalidatesTags: ["Premios"],
+    }),
+    deletePremio: build.mutation({
+      query: (id) => ({
+        url: `premio/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Premios"],
+    }),
+    getTareas: build.query({
+      query: () => ({
+        url: "tarea",
+        method: "GET",
+      }),
+      providesTags: ["Tareas"],
+    }),
+    getTareaById: build.query({
+      query: (id) => `tarea/byId/${id}`,
+      providesTags: ["Tareas"],
+    }),
+    createTarea: build.mutation({
+      query: (tarea) => ({
+        url: "tarea",
+        method: "POST",
+        body: tarea,
+      }),
+      invalidatesTags: ["Tareas"],
+    }),
   }),
 });
 
@@ -242,4 +336,15 @@ export const {
   useGetEventoByIdQuery,
   useUpdateEventoGMutation,
   useDeleteEventoGMutation,
+  useGetPublicacionesQuery,
+  useCreatePublicacionesMutation,
+  useGetPublicacionByIdQuery,
+  useUpdatePublicacionesMutation,
+  useDeletePublicacionesMutation,
+  useGetPremiosQuery,
+  useCreatePremioMutation,
+  useUpdatePremioMutation,
+  useDeletePremioMutation,
+  useGetTareasQuery,
+  useCreateTareaMutation,
 } = api;

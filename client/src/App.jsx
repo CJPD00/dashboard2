@@ -15,8 +15,11 @@ import Geography from "./scenes/geography/Geography";
 import Breakdown from "./scenes/breakdown/Breakdown";
 import Calendar from "./scenes/calendar/Calendar";
 import Posts from "./scenes/posts/Posts";
+import Rewards from "./scenes/rewards/Rewards";
+import Tasks from "./scenes/tasks/Tasks";
 import AuthProvider from "./providers/authProvider";
 import EventoGSingleView from "./components/eventoGSingleView/EventoGSingleView";
+import PublicacionSingleView from "./components/publicacionSingleView/PublicacionSingleView";
 import { ModalProvider } from "./providers/ModalProvider";
 import Auth from "./scenes/auth/Auth";
 
@@ -50,9 +53,15 @@ function App() {
                   <Route path="Desglose" element={<Breakdown></Breakdown>} />
                   <Route path="Eventos" element={<Calendar></Calendar>} />
                   <Route path="Publicaciones" element={<Posts></Posts>} />
+                  <Route path="Premios" element={<Rewards></Rewards>} />
+                  <Route path="Tareas" element={<Tasks></Tasks>} />
                   <Route
                     path="EventoSingle/:id"
                     element={<EventoGSingleView />}
+                  />
+                  <Route
+                    path="PublicacionSingle/:id"
+                    element={<PublicacionSingleView />}
                   />
                 </Route>
               </Routes>
