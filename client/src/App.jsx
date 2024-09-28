@@ -21,6 +21,7 @@ import AuthProvider from "./providers/authProvider";
 import EventoGSingleView from "./components/eventoGSingleView/EventoGSingleView";
 import PublicacionSingleView from "./components/publicacionSingleView/PublicacionSingleView";
 import TareaSingleView from "./components/tareaSingleView/TareaSingleView";
+import ProjectSingleView from "./components/projectSingleView/ProjectSingleView";
 import { ModalProvider } from "./providers/ModalProvider";
 import Auth from "./scenes/auth/Auth";
 
@@ -65,6 +66,10 @@ function App() {
                     element={<PublicacionSingleView />}
                   />
                   <Route path="TareaSingle/:id" element={<TareaSingleView />} />
+                  <Route
+                    path="ProyectoSingle/:id"
+                    element={<ProjectSingleView />}
+                  />
                 </Route>
               </Routes>
             </ModalProvider>

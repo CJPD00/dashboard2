@@ -15,12 +15,12 @@ const projectoSchema = new Schema(
       type: String,
       required: true,
     },
-    miembros: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Personal",
-      },
-    ],
+    // miembros: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Personal",
+    //   },
+    // ],
     estado: {
       type: String,
       enum: ["activo", "inactivo", "cancelado"],
@@ -42,7 +42,11 @@ const projectoSchema = new Schema(
     },
     carrera: {
       type: String,
-      required: true,
+      //required: true,
+    },
+    recurso: {
+      type: String,
+      //required: true,
     },
   },
   {

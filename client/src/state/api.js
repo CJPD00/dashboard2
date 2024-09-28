@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { config } from "../config";
-import { Update } from "@mui/icons-material";
+//import { Update } from "@mui/icons-material";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: config.baseUrl }),
@@ -100,6 +100,21 @@ export const api = createApi({
         },
       }),
       providesTags: ["Projects"],
+    }),
+    createProject: build.mutation({
+      query: (project) => ({
+        url: "projecto",
+        method: "POST",
+        body: project,
+      }),
+      invalidatesTags: ["Projects"],
+    }),
+    deleteProject: build.mutation({
+      query: ({ id }) => ({
+        url: `projecto/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Projects"],
     }),
     getCareers: build.query({
       query: () => "carrera",
@@ -341,6 +356,8 @@ export const {
   useUpdateDepartmentMutation,
   useGetUsersQuery,
   useGetProjectsQuery,
+  useCreateProjectMutation,
+  useDeleteProjectMutation,
   useGetCareersQuery,
   useGetCareerByIdQuery,
   usePostCareerMutation,

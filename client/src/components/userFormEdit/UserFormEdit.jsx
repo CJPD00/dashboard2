@@ -124,7 +124,6 @@ const UserFormEdit = ({ setIsModalOpen }) => {
             },
           });
         });
-
     } else {
       if (!verifyPassword(dataForm.password)) {
         notification["error"]({

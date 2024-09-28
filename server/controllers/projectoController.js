@@ -1,45 +1,32 @@
 import Projecto from "../models/projecto.js";
-import Carrera from "../models/carrera.js";
+//import Carrera from "../models/carrera.js";
 
 export const createProjecto = async (req, res) => {
-  const {
-    titulo,
-    description,
-    autor,
-    miembros,
-    estado,
-    tipo,
-    sector,
-    idCarrera,
-  } = req.body;
+  const { titulo, description, autor, idCarrera } = req.body;
   try {
     const newProjecto = new Projecto({
       titulo,
       description,
       autor,
-      miembros,
-      estado,
-      tipo,
-      sector,
       idCarrera,
     });
 
     //agregar al carrera
-    const carrera = await Carrera.findById(idCarrera);
-    if (!carrera) {
-      return res.status(404).json({
-        message: "Carrera no encontrada",
-        code: 404,
-      });
-    }
+    // const carrera = await Carrera.findById(idCarrera);
+    // if (!carrera) {
+    //   return res.status(404).json({
+    //     message: "Carrera no encontrada",
+    //     code: 404,
+    //   });
+    // }
 
-    carrera.projectos.push(newProjecto._id);
+    // carrera.projectos.push(newProjecto._id);
 
-    //agregar al projecto
-    newProjecto.carrera = carrera.nombre;
+    // //agregar al projecto
+    // newProjecto.carrera = carrera.nombre;
 
     await newProjecto.save();
-    await carrera.save();
+    //await carrera.save();
 
     res.status(201).json({
       message: "Projecto creado exitosamente",
@@ -47,11 +34,13 @@ export const createProjecto = async (req, res) => {
       projecto: newProjecto,
     });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: error.message });
   }
 };
 
 export const getProjectos = async (req, res) => {
+  //console.log("llegue al metodo getProjectos");
   try {
     //pagination
     const { page = 1, limit = 20, sort = null, search = "" } = req.query;
@@ -79,8 +68,7 @@ export const getProjectos = async (req, res) => {
       .sort(sortFormatted)
       .skip((page - 1) * limit)
       .limit(limit)
-      .populate("idCarrera")
-      .populate("miembros");
+      .populate("idCarrera");
 
     const total = await Projecto.countDocuments({
       $or: [
@@ -94,6 +82,26 @@ export const getProjectos = async (req, res) => {
 
     res.status(200).json({ projectos, code: 200, total });
   } catch (error) {
+    console.log(error);
     res.status(404).json({ message: error.message });
+  }
+};
+
+export const deleteProjecto = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const projecto = await Projecto.deleteOne({ _id: id });
+    if (!projecto) {
+      return res.status(404).json({
+        message: "Projecto no encontrado",
+        code: 404,
+      });
+    }
+    res
+      .status(200)
+      .json({ message: "Projecto eliminado exitosamente", code: 200 });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
