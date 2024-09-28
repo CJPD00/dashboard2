@@ -102,7 +102,7 @@ const EventoGForm = ({ setIsModalOpen }) => {
         day: formatFecha,
         type: autocompleteValor.value,
       };
-      console.log(DataForm);
+      //console.log(DataForm);
       const response = await createEvent({
         title: DataForm.title,
         day: DataForm.day,

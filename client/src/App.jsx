@@ -20,6 +20,7 @@ import Tasks from "./scenes/tasks/Tasks";
 import AuthProvider from "./providers/authProvider";
 import EventoGSingleView from "./components/eventoGSingleView/EventoGSingleView";
 import PublicacionSingleView from "./components/publicacionSingleView/PublicacionSingleView";
+import TareaSingleView from "./components/tareaSingleView/TareaSingleView";
 import { ModalProvider } from "./providers/ModalProvider";
 import Auth from "./scenes/auth/Auth";
 
@@ -63,6 +64,7 @@ function App() {
                     path="PublicacionSingle/:id"
                     element={<PublicacionSingleView />}
                   />
+                  <Route path="TareaSingle/:id" element={<TareaSingleView />} />
                 </Route>
               </Routes>
             </ModalProvider>

@@ -7,8 +7,9 @@ import FlexBetween from "../../components/FlexBetween";
 import useModal from "../../hooks/useModal";
 import { useNavigate } from "react-router-dom";
 import { AssignmentOutlined } from "@mui/icons-material";
-import { useGetTareasQuery } from "../../state/api";
+import { useGetTareasQuery, useDeleteTareaMutation } from "../../state/api";
 import TareaForm from "../../components/tareaForm/TareaForm";
+import TareaFormEdit from "../../components/tareaFormEdit/TareaFormEdit";
 
 const Tasks = () => {
   const theme = useTheme();
@@ -17,6 +18,8 @@ const Tasks = () => {
   const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
 
   const { data, isLoading } = useGetTareasQuery();
+
+  const [deleteTarea, error] = useDeleteTareaMutation();
 
   const rows =
     data?.tareas?.length > 0
@@ -63,7 +66,7 @@ const Tasks = () => {
               padding: "0.5rem 1rem",
               marginRight: "1rem",
             }}
-            //onClick={() => handleView(params.row.id)}
+            onClick={() => handleView(params.row.id)}
           >
             Ver
           </Button>
@@ -81,7 +84,7 @@ const Tasks = () => {
               padding: "0.5rem 1rem",
               marginRight: "1rem",
             }}
-            //onClick={() => handleEdit(params.row.id)}
+            onClick={() => handleEdit(params.row.id)}
           >
             Editar
           </Button>
@@ -98,7 +101,7 @@ const Tasks = () => {
               borderRadius: "10px",
               padding: "0.5rem 1rem",
             }}
-            //onClick={() => handleDelete(params.row.id)}
+            onClick={() => handleDelete(params.row.id)}
           >
             Eliminar
           </Button>
@@ -113,6 +116,24 @@ const Tasks = () => {
     setIsModalOpen(true);
     setModalContent(<TareaForm setIsModalOpen={setIsModalOpen} />);
     setModalTitle("Crear Nueva Tarea");
+  };
+
+  const handleEdit = (id) => {
+    setIsModalOpen(true);
+    setModalTitle("Editar Tarea");
+    setModalContent(<TareaFormEdit setIsModalOpen={setIsModalOpen} id={id} />);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteTarea({ id });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleView = (id) => {
+    navigate(`/tareaSingle/${id}`);
   };
 
   return (

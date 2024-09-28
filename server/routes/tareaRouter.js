@@ -3,6 +3,8 @@ import {
   getTareas,
   getTareaById,
   createTarea,
+  updateTarea,
+  deleteTarea,
 } from "../controllers/tareaController.js";
 
 const tareaRouter = Router();
@@ -11,9 +13,15 @@ const tareaRouter = Router();
 tareaRouter.get("/", getTareas);
 
 //getById
-tareaRouter.get("/byId:id", getTareaById);
+tareaRouter.get("/byId/:id", getTareaById);
 
 //post
 tareaRouter.post("/", createTarea);
+
+//update
+tareaRouter.put("/:id", updateTarea);
+
+//delete
+tareaRouter.delete("/:id", deleteTarea);
 
 export default tareaRouter;

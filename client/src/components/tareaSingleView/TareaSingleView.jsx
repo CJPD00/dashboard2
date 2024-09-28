@@ -1,23 +1,23 @@
-//import React from "react";
+//import React from 'react'
 import Header from "../Header";
 import { Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "../FlexBetween";
 import { useParams } from "react-router-dom";
-import { useGetPublicacionByIdQuery } from "../../state/api";
-import { LaunchOutlined } from "@mui/icons-material";
+import { useGetTareaByIdQuery } from "../../state/api";
+import dayjs from "dayjs";
 
-const PublicacionSingleView = () => {
+const TareaSingleView = () => {
   const theme = useTheme();
   const { id } = useParams();
 
-  const { data, isLoading } = useGetPublicacionByIdQuery(id);
+  const { data, isLoading } = useGetTareaByIdQuery(id);
 
   // console.log(id);
 
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title={`Evento ${data?.publicacion?.title}`} subtitle=" " />
+        <Header title={`Evento ${data?.tarea?.title}`} subtitle=" " />
       </FlexBetween>
 
       <Box
@@ -36,29 +36,22 @@ const PublicacionSingleView = () => {
           },
         }}
       >
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          gap="10px"
-          sx={{
-            "& > div": {
-              display: "flex",
-              alignItems: "center",
-              gap: "5px",
-            },
-            width: "100%",
-          }}
-        >
+        <Box sx={{ width: "100%" }}>
           <Typography
-            variant="h4"
+            variant="h2"
+            textAlign="center"
             fontWeight="bold"
-            sx={{ color: theme.palette.secondary[100] }}
+            sx={{ mb: "10px", color: theme.palette.secondary[100] }}
           >
-            Titulo:
+            {data && data?.tarea?.title}
           </Typography>
-          <Typography variant="h5" sx={{ color: theme.palette.secondary[300] }}>
-            {data && data?.publicacion?.title}
+          <Typography
+            variant="subtitle2"
+            textAlign="center"
+            mt="10px"
+            color={theme.palette.secondary[300]}
+          >
+            {data && data?.tarea?.description}
           </Typography>
         </Box>
         <Box
@@ -80,10 +73,10 @@ const PublicacionSingleView = () => {
             fontWeight="bold"
             sx={{ color: theme.palette.secondary[100] }}
           >
-            Autor:
+            Fecha:
           </Typography>
           <Typography variant="h5" sx={{ color: theme.palette.secondary[300] }}>
-            {data && data?.publicacion?.autor}
+            {data && dayjs(data?.tarea?.fecha).format("DD/MM/YYYY")}
           </Typography>
         </Box>
         <Box
@@ -105,26 +98,40 @@ const PublicacionSingleView = () => {
             fontWeight="bold"
             sx={{ color: theme.palette.secondary[100] }}
           >
-            Enlace:
+            Responsable:
           </Typography>
           <Typography variant="h5" sx={{ color: theme.palette.secondary[300] }}>
-            {data && data?.publicacion?.link}
+            {data && data?.tarea?.responsable}
           </Typography>
-          <a href={data && data?.publicacion?.link} target="_blank">
-            <LaunchOutlined
-              sx={{
-                color: theme.palette.secondary[300],
-                "&:hover": {
-                  color: theme.palette.secondary[500],
-                  cursor: "pointer",
-                },
-              }}
-            ></LaunchOutlined>
-          </a>
+        </Box>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          gap="10px"
+          sx={{
+            "& > div": {
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+            },
+            width: "100%",
+          }}
+        >
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            sx={{ color: theme.palette.secondary[100] }}
+          >
+            Lugar:
+          </Typography>
+          <Typography variant="h5" sx={{ color: theme.palette.secondary[300] }}>
+            {data && data?.tarea?.lugar}
+          </Typography>
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default PublicacionSingleView;
+export default TareaSingleView;

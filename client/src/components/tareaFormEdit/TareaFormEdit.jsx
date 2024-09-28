@@ -4,11 +4,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TextField, Alert } from "@mui/material";
 import { useTheme, Button } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { useCreateTareaMutation } from "../../state/api";
+import { useUpdateTareaMutation, useGetTareaByIdQuery } from "../../state/api";
 
-const TareaForm = ({ setIsModalOpen }) => {
+const TareaFormEdit = ({ setIsModalOpen, id }) => {
   const theme = useTheme();
   const [dataForm, setDataForm] = useState({});
   //const [fecha, setFecha] = useState(null);
@@ -17,7 +17,21 @@ const TareaForm = ({ setIsModalOpen }) => {
   const [fechaError, setFechaError] = useState(false);
   const [helperText2, setHelperText2] = useState("");
 
-  const [createTarea, error] = useCreateTareaMutation();
+  const [updateTarea, error] = useUpdateTareaMutation();
+
+  const { data } = useGetTareaByIdQuery(id);
+
+  useEffect(() => {
+    if (data) {
+      setDataForm({
+        title: data?.tarea?.title || "",
+        description: data?.tarea?.description || "",
+        fecha: dayjs(data?.tarea?.fecha),
+        responsable: data?.tarea?.responsable || "",
+        lugar: data?.tarea?.lugar || "",
+      });
+    }
+  }, [data]);
 
   const handleBlur = () => {
     if (
@@ -77,17 +91,18 @@ const TareaForm = ({ setIsModalOpen }) => {
     } else {
       const formatFecha = dayjs(dataForm.fecha).toDate();
 
-      const DataForm = {
-        title: dataForm.title,
-        description: dataForm.description,
-        responsable: dataForm.responsable,
-        lugar: dataForm.lugar,
-        fecha: formatFecha,
-      };
+      const { title, description, responsable, lugar } = dataForm;
 
-      const response = await createTarea(DataForm);
+      const response = await updateTarea({
+        title,
+        description,
+        responsable,
+        lugar,
+        fecha: formatFecha,
+        id,
+      });
       setIsModalOpen(false);
-      //console.log(formatFecha);
+      //console.log(DataForm);
     }
   };
 
@@ -206,4 +221,4 @@ const TareaForm = ({ setIsModalOpen }) => {
   );
 };
 
-export default TareaForm;
+export default TareaFormEdit;

@@ -35,7 +35,7 @@ const Rewards = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="Departamentos" subtitle="Todos los departamentos." />
+        <Header title="Premios" subtitle="Todos los Premios." />
         <Button
           variant="contained"
           color="secondary"

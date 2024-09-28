@@ -295,7 +295,7 @@ export const api = createApi({
       providesTags: ["Tareas"],
     }),
     getTareaById: build.query({
-      query: (id) => `tarea/byId/${id}`,
+      query: (id) => ({ url: `tarea/byId/${id}`, method: "GET" }),
       providesTags: ["Tareas"],
     }),
     createTarea: build.mutation({
@@ -303,6 +303,27 @@ export const api = createApi({
         url: "tarea",
         method: "POST",
         body: tarea,
+      }),
+      invalidatesTags: ["Tareas"],
+    }),
+    updateTarea: build.mutation({
+      query: ({ id, title, fecha, responsable, description, lugar }) => ({
+        url: `tarea/${id}`,
+        method: "PUT",
+        body: {
+          title,
+          fecha,
+          responsable,
+          description,
+          lugar,
+        },
+      }),
+      invalidatesTags: ["Tareas"],
+    }),
+    deleteTarea: build.mutation({
+      query: ({ id }) => ({
+        url: `tarea/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: ["Tareas"],
     }),
@@ -346,5 +367,8 @@ export const {
   useUpdatePremioMutation,
   useDeletePremioMutation,
   useGetTareasQuery,
+  useGetTareaByIdQuery,
   useCreateTareaMutation,
+  useUpdateTareaMutation,
+  useDeleteTareaMutation,
 } = api;
