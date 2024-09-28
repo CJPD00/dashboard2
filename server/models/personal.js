@@ -6,7 +6,7 @@ const personalSchema = new Schema(
   {
     name: {
       type: String,
-      unique: true,
+      //unique: true,
       required: true,
     },
     lastname: {
@@ -20,6 +20,7 @@ const personalSchema = new Schema(
     },
     ocupation: {
       type: String,
+      default: "Desconocido",
     },
     tipo: {
       type: String,
@@ -30,13 +31,11 @@ const personalSchema = new Schema(
       type: String,
       default: "CU",
     },
-    projecto: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Projecto",
-        required: true,
-      },
-    ],
+    projecto: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Projecto",
+      required: true,
+    },
   },
   {
     timestamps: true,

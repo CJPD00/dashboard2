@@ -36,7 +36,7 @@ const StatBox = ({ title, value, icon, description, increase }) => {
           fontStyle="italic"
           sx={{ color: useTheme().palette.secondary.light }}
         >
-          {`+${increase}`}
+          {`${increase}`}
         </Typography>
         <Typography
           variant="h5"

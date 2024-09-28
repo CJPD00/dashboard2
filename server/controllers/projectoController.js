@@ -1,5 +1,5 @@
 import Projecto from "../models/projecto.js";
-//import Carrera from "../models/carrera.js";
+import Carrera from "../models/carrera.js";
 
 export const createProjecto = async (req, res) => {
   const { titulo, description, autor, idCarrera } = req.body;
@@ -81,6 +81,24 @@ export const getProjectos = async (req, res) => {
     });
 
     res.status(200).json({ projectos, code: 200, total });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getProjectById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const projecto = await Projecto.findById(id).populate("idCarrera");
+    if (!projecto) {
+      console.log("entre aqui");
+      return res.status(404).json({
+        message: "Projecto no encontrado",
+        code: 404,
+      });
+    }
+    res.status(200).json({ projecto, code: 200 });
   } catch (error) {
     console.log(error);
     res.status(404).json({ message: error.message });

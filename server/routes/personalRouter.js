@@ -5,6 +5,9 @@ import {
   getAllPersonal,
   getPersonalByProject,
   getGeography,
+  deletePersonal,
+  getPersonalById,
+  updatePersonal,
 } from "../controllers/personalController.js";
 
 const personalRouter = express.Router();
@@ -16,9 +19,18 @@ personalRouter.get("/", getAllPersonal);
 personalRouter.route("/geografia").get(getGeography);
 
 //getbyproject
-personalRouter.route("/:id").get(getPersonalByProject);
+personalRouter.route("/byProject/:id").get(getPersonalByProject);
+
+//getById
+personalRouter.get("/byId/:id", getPersonalById);
 
 //addPersonal
 personalRouter.post("/", addPersonal);
+
+//deletePersonal
+personalRouter.delete("/:id", deletePersonal);
+
+//updatePersonal
+personalRouter.put("/:id", updatePersonal);
 
 export default personalRouter;

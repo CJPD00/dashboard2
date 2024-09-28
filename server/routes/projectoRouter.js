@@ -3,6 +3,7 @@ import {
   createProjecto,
   getProjectos,
   deleteProjecto,
+  getProjectById,
 } from "../controllers/projectoController.js";
 
 const projectoRouter = Router();
@@ -12,6 +13,9 @@ projectoRouter.post("/", createProjecto);
 
 //get all
 projectoRouter.get("/", getProjectos);
+
+//getById
+projectoRouter.get("/byId/:id", getProjectById);
 
 //delete
 projectoRouter.delete("/:id", deleteProjecto);

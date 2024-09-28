@@ -1,89 +1,62 @@
+//import React from 'react'
 import Header from "../../components/Header";
-import { Box, useTheme, Button, } from "@mui/material";
-import { BuildOutlined } from "@mui/icons-material";
+import { Box, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useGetCareersQuery, useDeleteCareerMutation } from "../../state/api";
 import FlexBetween from "../../components/FlexBetween";
 import useModal from "../../hooks/useModal";
-import CareerForm from "../../components/careerForm/CareerForm";
-import CareerFormEdit from "../../components/careerFormEdit/CareerFormEdit";
+import { AccessibilityOutlined } from "@mui/icons-material";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
-import { useState } from "react";
+  useGetPersonalByProjectQuery,
+  useDeletePersonalMutation,
+} from "../../state/api";
+import PersonalForm from "../personalForm/PersonalForm";
+import PersonalFormEdit from "../personalFormEdit/PersonalFormEdit";
 
-const Careers = () => {
+const Personal = ({ id }) => {
+  //console.log(id);
+  const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
   const theme = useTheme();
-  const { data, isLoading } = useGetCareersQuery();
-  const { setIsModalOpen, setModalContent, setModalTitle, isModalOpen } =
-    useModal();
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [confirm, setConfirm] = useState(false);
-  const [deleteCareer, error] = useDeleteCareerMutation();
-  //console.log(data);
 
-  const handlePost = () => {
-    setIsModalOpen(true);
-    setModalContent(<CareerForm setIsModalOpen={setIsModalOpen} />);
-    setModalTitle("Crear Nueva Carrera");
-  };
-
-  const handleEdit = (id) => {
-    setIsModalOpen(true);
-    //console.log(isModalOpen);
-    setModalContent(<CareerFormEdit setIsModalOpen={setIsModalOpen} id={id} />);
-    setModalTitle("Editar Carrera");
-    // console.log(id);
-  };
-
-  const handleDelete = async (id) => {
-    //setDialogOpen(true);
-
-    try {
-      await deleteCareer({ id });
-      //setConfirm(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // const handleConfirm = async (id) => {
-  //   setConfirm(true);
-  //   setDialogOpen(false);
-  // };
-
-  // const handleCancel = () => {
-  //   setDialogOpen(false);
-  // };
+  const { data, isLoading } = useGetPersonalByProjectQuery({ id });
+  const [deletePersonal, { isLoading: deleting }] = useDeletePersonalMutation();
 
   const rows =
-    data?.carreras?.length > 0
-      ? data.carreras.map((row) => ({
+    data?.personal?.length > 0
+      ? data.personal.map((row) => ({
           id: row._id,
-          nombre: row.nombre,
-          departamento: row.departamento,
+          name: row.name,
+          lastname: row.lastname,
+          email: row.email,
+          ocupation: row.ocupation,
+          tipo: row.tipo,
         }))
       : [];
 
   const columns = [
-    // {
-    //   field: "_id",
-    //   headerName: "ID",
-    //   flex: 0.3,
-    //   renderCell: () => <div style={{ display: "none" }} />,
-    // },
     {
-      field: "nombre",
+      field: "name",
       headerName: "Nombre",
+      flex: 0.2,
+    },
+    {
+      field: "lastname",
+      headerName: "Apellido",
+      flex: 0.2,
+    },
+    {
+      field: "email",
+      headerName: "Email",
       flex: 0.3,
     },
     {
-      field: "departamento",
-      headerName: "Departamento",
-      flex: 0.3,
+      field: "ocupation",
+      headerName: "Ocupación",
+      flex: 0.2,
+    },
+    {
+      field: "tipo",
+      headerName: "Tipo",
+      flex: 0.2,
     },
     {
       headerName: "Acciones",
@@ -132,14 +105,35 @@ const Careers = () => {
     },
   ];
 
+  const handlePost = () => {
+    setIsModalOpen(true);
+    setModalTitle("Agregar Miembro");
+    setModalContent(<PersonalForm setIsModalOpen={setIsModalOpen} id={id} />);
+  };
+  const handleDelete = async (id) => {
+    try {
+      await deletePersonal({ id });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleEdit = (id) => {
+    setIsModalOpen(true);
+    setModalTitle("Editar Miembro");
+    setModalContent(
+      <PersonalFormEdit setIsModalOpen={setIsModalOpen} id={id} />
+    );
+  };
+
   return (
-    <Box m="1.5rem 2.5rem">
+    <Box mt={"3rem"}>
       <FlexBetween>
-        <Header title="Carreras" subtitle="Todos las carreras" />
+        <Header title="Personal" subtitle="Todos los miembros" />
         <Button
           variant="contained"
           color="secondary"
-          startIcon={<BuildOutlined />}
+          startIcon={<AccessibilityOutlined />}
           sx={{
             ":hover": {
               backgroundColor: "secondary.light",
@@ -152,7 +146,7 @@ const Careers = () => {
           }}
           onClick={handlePost}
         >
-          Agregar Carrera
+          Agregar Miembro
         </Button>
       </FlexBetween>
       <Box
@@ -228,4 +222,4 @@ const Careers = () => {
   );
 };
 
-export default Careers;
+export default Personal;

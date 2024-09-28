@@ -23,6 +23,7 @@ export const api = createApi({
     "Publicaciones",
     "Premios",
     "Tareas",
+    "Personal",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -99,6 +100,10 @@ export const api = createApi({
           search,
         },
       }),
+      providesTags: ["Projects"],
+    }),
+    getProjectById: build.query({
+      query: ({id}) => `projecto/byId/${id}`,
       providesTags: ["Projects"],
     }),
     createProject: build.mutation({
@@ -342,6 +347,40 @@ export const api = createApi({
       }),
       invalidatesTags: ["Tareas"],
     }),
+    getPersonalByProject: build.query({
+      query: ({ id }) => ({
+        url: `personal/byProject/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Personal"],
+    }),
+    getPersonalById: build.query({
+      query: (id) => ({ url: `personal/byId/${id}`, method: "GET" }),
+      providesTags: ["Personal"],
+    }),
+    createPersonal: build.mutation({
+      query: (personal) => ({
+        url: `personal`,
+        method: "POST",
+        body: personal,
+      }),
+      invalidatesTags: ["Personal"],
+    }),
+    deletePersonal: build.mutation({
+      query: ({ id }) => ({
+        url: `personal/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Personal"],
+    }),
+    updatePersonal: build.mutation({
+      query: (personal) => ({
+        url: `personal/${personal._id}`,
+        method: "PUT",
+        body: personal,
+      }),
+      invalidatesTags: ["Personal"],
+    }),
   }),
 });
 
@@ -356,6 +395,7 @@ export const {
   useUpdateDepartmentMutation,
   useGetUsersQuery,
   useGetProjectsQuery,
+  useGetProjectByIdQuery,
   useCreateProjectMutation,
   useDeleteProjectMutation,
   useGetCareersQuery,
@@ -388,4 +428,9 @@ export const {
   useCreateTareaMutation,
   useUpdateTareaMutation,
   useDeleteTareaMutation,
+  useGetPersonalByProjectQuery,
+  useGetPersonalByIdQuery,
+  useCreatePersonalMutation,
+  useDeletePersonalMutation,
+  useUpdatePersonalMutation,
 } = api;
