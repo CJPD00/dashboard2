@@ -35,6 +35,7 @@ const Users = () => {
     useModal();
   const [deleteUser, error] = useDeleteUserMutation();
   const { user } = useAuth();
+  const [desactiveUser, errorDesactive] = useDesactiveUserMutation();
   //const [dialogOpen, setDialogOpen] = useState(false);
   // const [confirm, setConfirm] = useState(false);
   //console.log(data);
@@ -91,7 +92,7 @@ const Users = () => {
               padding: "0.5rem 1rem",
               marginRight: "1rem",
             }}
-            onClick={() => handleEdit(params.row.id)}
+            onClick={() => handleEdit(params.row.id, params.row.active)}
           >
             {params.row.active === true ? "Desactivar" : "Activar"}
           </Button>
@@ -119,7 +120,15 @@ const Users = () => {
     },
   ];
 
-  const handleEdit = (id) => {
+  const handleEdit = async (id, active) => {
+    if (active === true) {
+      try {
+        const response = await desactiveUser(id);
+      } catch (error) {
+        console.log(error);
+      }
+      return;
+    }
     setIsModalOpen(true);
     //console.log(isModalOpen)
     setModalContent(
@@ -263,13 +272,13 @@ const UserActive = ({ setIsModalOpen, id, setModalContent, isModalOpen }) => {
 
   //console.log(isModalOpen)
 
-  useEffect(() => {
-    if (dataUser?.user?.active === true) {
-      setModalContent(<div>Desactivando usuario</div>);
-      desactiveUser(id);
-      setIsModalOpen(false);
-    }
-  }, [dataUser]);
+  // useEffect(() => {
+  //   if (dataUser?.user?.active === true) {
+  //     setModalContent(<div>Desactivando usuario</div>);
+  //     desactiveUser(id);
+  //     setIsModalOpen(false);
+  //   }
+  // }, [dataUser]);
 
   const opciones =
     data?.departamentos?.length > 0
@@ -287,11 +296,11 @@ const UserActive = ({ setIsModalOpen, id, setModalContent, isModalOpen }) => {
   };
 
   const handleClick = async () => {
-    // if (dataUser?.user?.active === true) {
-    //   await desactiveUser(id);
-    //   setIsModalOpen(false);
-    //   return;
-    // }
+    if (dataUser?.user?.active === true) {
+      await desactiveUser(id);
+      setIsModalOpen(false);
+      return;
+    }
     if (!autocompleteValor) {
       setAutocompleteError(true);
       setHelperText("Selecciona un departamento");

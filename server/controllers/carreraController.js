@@ -108,7 +108,7 @@ export const updateCarrera = async (req, res) => {
 export const deleteCarrera = async (req, res) => {
   const { id } = req.params;
   try {
-    const deletedCarrera = await Carrera.findByIdAndDelete(id);
+    const deletedCarrera = await Carrera.deleteOne({ _id: id });
     if (!deletedCarrera) {
       return res.status(404).json({
         message: "Carrera no encontrada",

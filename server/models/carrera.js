@@ -1,6 +1,7 @@
 //modelo carrera
 
 import mongoose from "mongoose";
+import Projecto from "./projecto.js";
 const Schema = mongoose.Schema;
 const carreraSchema = new Schema(
   {
@@ -34,5 +35,25 @@ const carreraSchema = new Schema(
     versionKey: false,
   }
 );
+
+carreraSchema.pre("deleteOne", async function (next) {
+  try {
+    console.log("Middleware de deleteOne se está ejecutando");
+    const { _conditions } = this;
+    //console.log(_conditions);
+    const carrera = _conditions._id;
+    //console.log(typeof depart);
+
+    const projectos = await Projecto.find({ idCarrera: carrera });
+    for (const projecto of projectos) {
+      await projecto.deleteOne({ idCarrera: carrera });
+    }
+    next();
+    console.log("Middleware de deleteOne finalizado");
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
 export default mongoose.model("Carrera", carreraSchema);

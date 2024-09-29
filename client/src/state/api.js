@@ -64,14 +64,21 @@ export const api = createApi({
         method: "POST",
         body: department,
       }),
-      invalidatesTags: ["Departments"],
+      invalidatesTags: ["Departments", "Totals", "TotalsRecent"],
     }),
     deleteDepartment: build.mutation({
       query: ({ nombre }) => ({
         url: `departamento/${nombre}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Departments", "Careers"],
+      invalidatesTags: [
+        "Departments",
+        "Totals",
+        "TotalsRecent",
+        "Careers",
+        "Projects",
+        "Personal",
+      ],
     }),
     updateDepartment: build.mutation({
       query: ({ id, nombre, cantidadProfesores, description }) => ({
@@ -112,14 +119,22 @@ export const api = createApi({
         method: "POST",
         body: project,
       }),
-      invalidatesTags: ["Projects","Breakdown"],
+      invalidatesTags: ["Projects", "Breakdown", "Totals", "TotalsRecent"],
     }),
     deleteProject: build.mutation({
       query: ({ id }) => ({
         url: `projecto/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Projects","Breakdown"],
+      invalidatesTags: [
+        "Projects",
+        "Breakdown",
+        "Totals",
+        "TotalsRecent",
+        "Careers",
+        "Projects",
+        "Personal",
+      ],
     }),
     updateProject: build.mutation({
       query: (projecto) => ({
@@ -127,7 +142,7 @@ export const api = createApi({
         method: "PUT",
         body: projecto,
       }),
-      invalidatesTags: ["Projects","Breakdown"],
+      invalidatesTags: ["Projects", "Breakdown"],
     }),
     getCareers: build.query({
       query: () => "carrera",
@@ -143,7 +158,7 @@ export const api = createApi({
         method: "POST",
         body: career,
       }),
-      invalidatesTags: ["Careers"],
+      invalidatesTags: ["Careers", "Totals", "TotalsRecent"],
     }),
     updateCareer: build.mutation({
       query: ({ id, nombre, description, idDepartamento }) => ({
@@ -162,7 +177,14 @@ export const api = createApi({
         url: `carrera/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Careers"],
+      invalidatesTags: [
+        "Careers",
+        "Totals",
+        "TotalsRecent",
+        "Careers",
+        "Projects",
+        "Personal",
+      ],
     }),
     getGeography: build.query({
       query: () => "personal/geografia",
@@ -372,14 +394,14 @@ export const api = createApi({
         method: "POST",
         body: personal,
       }),
-      invalidatesTags: ["Personal", "Geography"],
+      invalidatesTags: ["Personal", "Geography", "Totals", "TotalsRecent"],
     }),
     deletePersonal: build.mutation({
       query: ({ id }) => ({
         url: `personal/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Personal", "Geography"],
+      invalidatesTags: ["Personal", "Geography", "Totals", "TotalsRecent"],
     }),
     updatePersonal: build.mutation({
       query: (personal) => ({

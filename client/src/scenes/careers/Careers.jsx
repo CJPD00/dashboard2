@@ -1,5 +1,5 @@
 import Header from "../../components/Header";
-import { Box, useTheme, Button, } from "@mui/material";
+import { Box, useTheme, Button, Alert } from "@mui/material";
 import { BuildOutlined } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetCareersQuery, useDeleteCareerMutation } from "../../state/api";
@@ -155,6 +155,13 @@ const Careers = () => {
           Agregar Carrera
         </Button>
       </FlexBetween>
+      <Alert
+        severity="warning"
+        sx={{ marginBottom: "1rem", backgroundColor: "transparent" }}
+      >
+        Si Elimina una carera, se borrará permanentemente y todo lo relacionado
+        con ella.
+      </Alert>
       <Box
         mt="40px"
         height="75vh"

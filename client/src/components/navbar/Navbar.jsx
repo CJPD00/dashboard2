@@ -6,6 +6,7 @@ import {
   SettingsOutlined,
   LogoutOutlined,
 } from "@mui/icons-material";
+//import { useTheme } from "@mui/material";
 
 import FlexBetween from "../FlexBetween";
 import { useDispatch } from "react-redux";
@@ -77,11 +78,28 @@ const Navbar = ({
                   ? setIsSidebarOpen(false)
                   : setIsSidebarOpen(true);
               }}
+              //sx={{ height: "80px", ml: "1rem" }}
             >
               <MenuOutlined></MenuOutlined>
             </IconButton>
           </Tooltip>
-          <FlexBetween
+          {/* <h1
+            style={{
+              fontWeight: "bold",
+              fontSize: "24px",
+              color: theme.palette.text.primary,
+            }}
+          >
+            Catedra Honorífica de Ciencias Tecnicas
+          </h1> */}
+          {/* <Typography
+            variant="h2"
+            fontWeight="bold"
+            sx={{ color: theme.palette.secondary[200] }}
+          >
+            Cátedra
+          </Typography> */}
+          {/* <FlexBetween
             backgroundColor={theme.palette.background.alt}
             borderRadius={"9px"}
             gap={2}
@@ -91,7 +109,7 @@ const Navbar = ({
             <IconButton>
               <SearchOutlined></SearchOutlined>
             </IconButton>
-          </FlexBetween>
+          </FlexBetween> */}
         </FlexBetween>
         {/* RIGHT SIDE */}
         <FlexBetween gap={"1.5rem"}>

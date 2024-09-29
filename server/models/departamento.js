@@ -51,8 +51,12 @@ departamentoSchema.pre("deleteOne", async function (next) {
     //console.log(_conditions);
     const depart = _conditions.nombre;
     //console.log(typeof depart);
-    await Carrera.deleteMany({ departamento: depart });
-    console.log("Middleware de deleteOne finalizado");
+    // await Carrera.deleteMany({ departamento: depart });
+    // console.log("Middleware de deleteOne finalizado");
+    const carreras = await Carrera.find({ departamento: depart });
+    for (const carrera of carreras) {
+      await carrera.deleteOne({ departamento: depart }); // Esto activará el middleware 'pre' en CarreraSchema
+    }
     next();
   } catch (error) {
     console.log(error);

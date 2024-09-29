@@ -66,7 +66,10 @@ const Dashboard = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="DASHBOARD" subtitle="Bienvenido a tu  " />
+        <Header
+          title="Panel De Control"
+          subtitle="Bienvenido a la Catedra Honorífica de Ciencias Tecnicas"
+        />
         <Button
           sx={{
             ":hover": {
