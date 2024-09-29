@@ -217,7 +217,7 @@ const Sidebar = ({
                 <Typography
                   fontWeight="bold"
                   fontSize="0.9rem"
-                  sx={{ color: theme.palette.secondary[100] }}
+                  sx={{ color: theme.palette.secondary[100],mb: "0.5rem" }}
                 >
                   {user && user.name}
                 </Typography>
@@ -228,9 +228,9 @@ const Sidebar = ({
                   {user && user.role}
                 </Typography> */}
               </Box>
-              <SettingsOutlined
+              {/* <SettingsOutlined
                 sx={{ color: theme.palette.secondary[300], fontSize: "25px" }}
-              />
+              /> */}
             </FlexBetween>
           </Box>
         </Drawer>

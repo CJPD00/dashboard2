@@ -120,7 +120,7 @@ const ProjectForm = ({ setIsModalOpen }) => {
         size="small"
         error={textError}
         //onBlur={handleBlur}
-        value={dataForm.nombre}
+        value={dataForm.titulo}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />
@@ -133,7 +133,7 @@ const ProjectForm = ({ setIsModalOpen }) => {
         size="small"
         error={textError}
         //onBlur={handleBlur}
-        value={dataForm.nombre}
+        value={dataForm.autor}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />
@@ -162,7 +162,7 @@ const ProjectForm = ({ setIsModalOpen }) => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Departamento"
+            label="Carrera"
             variant="outlined"
             error={autoCompleteError}
             helperText={helperText}

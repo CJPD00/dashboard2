@@ -4,6 +4,7 @@ import {
   getProjectos,
   deleteProjecto,
   getProjectById,
+  updateProjecto,
 } from "../controllers/projectoController.js";
 
 const projectoRouter = Router();
@@ -19,5 +20,8 @@ projectoRouter.get("/byId/:id", getProjectById);
 
 //delete
 projectoRouter.delete("/:id", deleteProjecto);
+
+//update
+projectoRouter.put("/:id", updateProjecto);
 
 export default projectoRouter;

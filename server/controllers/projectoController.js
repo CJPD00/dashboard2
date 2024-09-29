@@ -123,3 +123,30 @@ export const deleteProjecto = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const updateProjecto = async (req, res) => {
+  const { id } = req.params;
+  const { titulo, description, autor, estado, tipo, sector, idCarrera } =
+    req.body;
+
+  try {
+    const updatedProjecto = await Projecto.findByIdAndUpdate(
+      id,
+      { titulo, description, autor, idCarrera, estado, tipo, sector },
+      { new: true }
+    ).populate("idCarrera");
+    if (!updatedProjecto) {
+      return res.status(404).json({
+        message: "Projecto no encontrado",
+        code: 404,
+      });
+    }
+    res.status(200).json({
+      message: "Projecto actualizado exitosamente",
+      code: 200,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error.message });
+  }
+};

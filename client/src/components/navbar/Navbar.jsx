@@ -70,13 +70,17 @@ const Navbar = ({
       >
         {/* LEFT SIDE */}
         <FlexBetween>
-          <IconButton
-            onClick={() => {
-              isSidebarOpen ? setIsSidebarOpen(false) : setIsSidebarOpen(true);
-            }}
-          >
-            <MenuOutlined></MenuOutlined>
-          </IconButton>
+          <Tooltip title="Menu">
+            <IconButton
+              onClick={() => {
+                isSidebarOpen
+                  ? setIsSidebarOpen(false)
+                  : setIsSidebarOpen(true);
+              }}
+            >
+              <MenuOutlined></MenuOutlined>
+            </IconButton>
+          </Tooltip>
           <FlexBetween
             backgroundColor={theme.palette.background.alt}
             borderRadius={"9px"}

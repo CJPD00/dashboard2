@@ -10,31 +10,45 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import {
-  DownloadOutlined,
-  Groups2Outlined,
-  ApartmentOutlined,
-  BuildOutlined,
   ReceiptLongOutlined,
+  ClosedCaptionOutlined,
+  DescriptionOutlined,
+  Person2Outlined,
+  DeviceThermostatOutlined,
+  TypeSpecimenOutlined,
+  PrecisionManufacturingOutlined,
+  HandymanOutlined,
 } from "@mui/icons-material";
 import StatBox from "../../components/statBox/StatBox";
 import Personal from "../personal/Personal";
 import { useGetProjectByIdQuery } from "../../state/api";
+import useModal from "../../hooks/useModal";
+import ProjectFormEdit from "../projectFormEdit/ProjectFormEdit";
 
 const ProjectSingleView = () => {
   const { id } = useParams();
   //console.log(id); // Output: "some-id"
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const theme = useTheme();
+  const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
 
   const { data, isLoading } = useGetProjectByIdQuery({ id });
 
-  console.log(data);
+  //console.log(data);
+
+  const handleEdit = () => {
+    setIsModalOpen(true);
+    setModalContent(
+      <ProjectFormEdit data={data} setIsModalOpen={setIsModalOpen} />
+    );
+    setModalTitle("Editar Projecto");
+  };
 
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
         <Header
-          title={`Projecto ${data.projecto.titulo}`}
+          title={`Projecto ${data?.projecto?.titulo}`}
           //subtitle="Bienvenido a tu  "
         />
         <Button
@@ -48,7 +62,8 @@ const ProjectSingleView = () => {
             borderRadius: "10px",
             padding: "0.5rem 1rem",
           }}
-          startIcon={<DownloadOutlined />}
+          startIcon={<ReceiptLongOutlined />}
+          onClick={handleEdit}
         >
           Editar Projecto
         </Button>
@@ -68,7 +83,7 @@ const ProjectSingleView = () => {
           value={data && data.projecto.titulo}
           description=""
           icon={
-            <Groups2Outlined
+            <ClosedCaptionOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
             />
           }
@@ -79,7 +94,7 @@ const ProjectSingleView = () => {
           value={data && data.projecto.description}
           description=""
           icon={
-            <ApartmentOutlined
+            <DescriptionOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
             />
           }
@@ -90,7 +105,7 @@ const ProjectSingleView = () => {
           value={data && data.projecto.autor}
           description=""
           icon={
-            <BuildOutlined
+            <Person2Outlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
             />
           }
@@ -101,7 +116,7 @@ const ProjectSingleView = () => {
           value={data && data.projecto.estado}
           description=""
           icon={
-            <ReceiptLongOutlined
+            <DeviceThermostatOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
             />
           }
@@ -112,7 +127,7 @@ const ProjectSingleView = () => {
           value={data && data.projecto.tipo}
           description=""
           icon={
-            <ReceiptLongOutlined
+            <TypeSpecimenOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
             />
           }
@@ -120,10 +135,10 @@ const ProjectSingleView = () => {
         />
         <StatBox
           title="Sector Estrategico"
-          value={data && data.projecto.sector}
+          value={data?.projecto.sector ? "Si" : "no"}
           description=""
           icon={
-            <ReceiptLongOutlined
+            <PrecisionManufacturingOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
             />
           }
@@ -134,7 +149,7 @@ const ProjectSingleView = () => {
           value={data && data.projecto.idCarrera.nombre}
           description=""
           icon={
-            <ReceiptLongOutlined
+            <HandymanOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
             />
           }
