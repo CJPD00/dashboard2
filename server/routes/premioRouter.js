@@ -4,6 +4,9 @@ import {
   createPremio,
   updatePremio,
   deletePremio,
+  getPremiosByIdProject,
+  otorgarPremio,
+  revocarPremio,
 } from "../controllers/premioController.js";
 
 const premioRouter = Router();
@@ -19,5 +22,14 @@ premioRouter.put("/:id", updatePremio);
 
 //delete
 premioRouter.delete("/:id", deletePremio);
+
+//byIdProject
+premioRouter.get("/byIdProject/:id", getPremiosByIdProject);
+
+//otorgarPremio
+premioRouter.post("/otorgarPremio", otorgarPremio);
+
+//revocarPremio
+premioRouter.post("/revocarPremio", revocarPremio);
 
 export default premioRouter;

@@ -314,6 +314,26 @@ export const api = createApi({
       }),
       providesTags: ["Premios"],
     }),
+    getPremiosByIdProject: build.query({
+      query: (id) => ({ url: `premio/byIdProject/${id}`, method: "GET" }),
+      providesTags: ["Premios"],
+    }),
+    otorgarPremio: build.mutation({
+      query: (bodyInfo) => ({
+        url: "premio/otorgarPremio",
+        method: "POST",
+        body: bodyInfo,
+      }),
+      invalidatesTags: ["Premios"],
+    }),
+    revocarPremio: build.mutation({
+      query: (bodyInfo) => ({
+        url: `premio/revocarPremio/`,
+        method: "POST",
+        body: bodyInfo,
+      }),
+      invalidatesTags: ["Premios"],
+    }),
     createPremio: build.mutation({
       query: (premio) => ({
         url: "premio",
@@ -451,6 +471,9 @@ export const {
   useUpdatePublicacionesMutation,
   useDeletePublicacionesMutation,
   useGetPremiosQuery,
+  useGetPremiosByIdProjectQuery,
+  useOtorgarPremioMutation,
+  useRevocarPremioMutation,
   useCreatePremioMutation,
   useUpdatePremioMutation,
   useDeletePremioMutation,

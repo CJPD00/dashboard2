@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
 const premioSchema = new Schema(
   {
@@ -15,6 +16,12 @@ const premioSchema = new Schema(
       required: true,
       default: 0,
     },
+    projectos: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Projecto",
+      },
+    ],
   },
   {
     timestamps: true,

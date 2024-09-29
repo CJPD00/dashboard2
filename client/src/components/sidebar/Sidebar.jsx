@@ -32,69 +32,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "../FlexBetween";
 import noAvatar from "../../assets/noAvatar.png";
 import { useGetAvatarQuery } from "../../state/api";
-
-const navItems = [
-  {
-    text: "Dashboard",
-    icon: <HomeOutlined />,
-  },
-  {
-    text: "Datos",
-    icon: null,
-  },
-  {
-    text: "Departamentos",
-    icon: <ApartmentOutlined />,
-  },
-  {
-    text: "Carreras",
-    icon: <BuildOutlined />,
-  },
-  {
-    text: "Usuarios",
-    icon: <Groups2Outlined />,
-  },
-  {
-    text: "Proyectos",
-    icon: <ReceiptLongOutlined />,
-  },
-  {
-    text: "Agenda",
-    icon: null,
-  },
-  {
-    text: "Eventos",
-    icon: <CalendarMonthOutlined />,
-  },
-  {
-    text: "Tareas",
-    icon: <AssignmentOutlined />,
-  },
-  {
-    text: "Promociones",
-    icon: null,
-  },
-  {
-    text: "Publicaciones",
-    icon: <BorderColorOutlined />,
-  },
-  {
-    text: "Premios",
-    icon: <EmojiEventsOutlined />,
-  },
-  {
-    text: "Estadísticas",
-    icon: null,
-  },
-  {
-    text: "Geografia",
-    icon: <PublicOutlined />,
-  },
-  {
-    text: "Desglose",
-    icon: <PieChartOutline />,
-  },
-];
+//import useAuth from "../../hooks/useAuth";
 
 const Sidebar = ({
   drawerWidth,
@@ -108,7 +46,80 @@ const Sidebar = ({
   const navigate = useNavigate();
   const theme = useTheme();
 
+  console.log(user.role);
+
   const { data, isLoading } = useGetAvatarQuery(user.avatar);
+
+  const navItems = [
+    {
+      text: "Dashboard",
+      icon: <HomeOutlined />,
+    },
+    {
+      text: "Datos",
+      icon: null,
+    },
+    ...(user.role !== "user"
+      ? [
+          {
+            text: "Usuarios",
+            icon: <Groups2Outlined />,
+          },
+        ]
+      : []),
+    {
+      text: "Departamentos",
+      icon: <ApartmentOutlined />,
+    },
+    {
+      text: "Carreras",
+      icon: <BuildOutlined />,
+    },
+    // {
+    //   text: "Usuarios",
+    //   icon: <Groups2Outlined />,
+    // },
+    {
+      text: "Proyectos",
+      icon: <ReceiptLongOutlined />,
+    },
+    {
+      text: "Agenda",
+      icon: null,
+    },
+    {
+      text: "Eventos",
+      icon: <CalendarMonthOutlined />,
+    },
+    {
+      text: "Tareas",
+      icon: <AssignmentOutlined />,
+    },
+    {
+      text: "Promociones",
+      icon: null,
+    },
+    {
+      text: "Publicaciones",
+      icon: <BorderColorOutlined />,
+    },
+    {
+      text: "Premios",
+      icon: <EmojiEventsOutlined />,
+    },
+    {
+      text: "Estadísticas",
+      icon: null,
+    },
+    {
+      text: "Geografia",
+      icon: <PublicOutlined />,
+    },
+    {
+      text: "Desglose",
+      icon: <PieChartOutline />,
+    },
+  ];
 
   useEffect(() => {
     setActive(pathname.substring(1));
@@ -217,7 +228,7 @@ const Sidebar = ({
                 <Typography
                   fontWeight="bold"
                   fontSize="0.9rem"
-                  sx={{ color: theme.palette.secondary[100],mb: "0.5rem" }}
+                  sx={{ color: theme.palette.secondary[100], mb: "0.5rem" }}
                 >
                   {user && user.name}
                 </Typography>

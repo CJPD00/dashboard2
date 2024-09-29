@@ -24,6 +24,7 @@ import Personal from "../personal/Personal";
 import { useGetProjectByIdQuery } from "../../state/api";
 import useModal from "../../hooks/useModal";
 import ProjectFormEdit from "../projectFormEdit/ProjectFormEdit";
+import ProjectReward from "../projectReward/ProjectReward";
 
 const ProjectSingleView = () => {
   const { id } = useParams();
@@ -157,6 +158,7 @@ const ProjectSingleView = () => {
         />
       </Box>
       <Personal id={id}></Personal>
+      <ProjectReward id={id}></ProjectReward>
     </Box>
   );
 };
