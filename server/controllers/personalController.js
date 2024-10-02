@@ -1,5 +1,5 @@
 import Personal from "../models/personal.js";
-import Projecto from "../models/projecto.js";
+//import Projecto from "../models/projecto.js";
 import getCountryIso3 from "country-iso-2-to-3";
 
 //getAllPersonal

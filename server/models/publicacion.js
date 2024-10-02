@@ -17,6 +17,10 @@ const publicacionSchema = new Schema({
     type: String,
     required: true,
   },
+  carrera: {
+    type: String,
+    required: true,
+  },
 });
 
 export default model("Publicacion", publicacionSchema);

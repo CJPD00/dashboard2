@@ -22,6 +22,10 @@ const premioSchema = new Schema(
         ref: "Projecto",
       },
     ],
+    recurso: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
