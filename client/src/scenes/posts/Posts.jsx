@@ -11,12 +11,15 @@ import PublicacionFormEdit from "../../components/publicacionFormEdit/Publicacio
 import useModal from "../../hooks/useModal";
 import { useNavigate } from "react-router-dom";
 import { useDeletePublicacionesMutation } from "../../state/api";
+import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 
 const Posts = () => {
   const theme = useTheme();
   const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
 
   const { data, isLoading } = useGetPublicacionesQuery();
+
+  console.log(data);
 
   const [deletePublicacion, error] = useDeletePublicacionesMutation();
 
@@ -30,6 +33,7 @@ const Posts = () => {
           Dia: row.fecha,
           Autor: row.autor,
           Link: row.link,
+          carrera: row.carrera.nombre,
         }))
       : [];
 
@@ -47,6 +51,11 @@ const Posts = () => {
     {
       field: "Autor",
       headerName: "Autor",
+      flex: 0.2,
+    },
+    {
+      field: "carrera",
+      headerName: "Carrera",
       flex: 0.2,
     },
     {
@@ -196,6 +205,9 @@ const Posts = () => {
           getRowId={(row) => row.id}
           rows={rows}
           columns={columns}
+          slots={{
+            toolbar: DataGridCustomToolbarSimple,
+          }}
         />
       </Box>
     </Box>

@@ -185,6 +185,7 @@ export const api = createApi({
         "Careers",
         "Projects",
         "Personal",
+        "Publicaciones",
       ],
     }),
     getGeography: build.query({
@@ -278,25 +279,27 @@ export const api = createApi({
       providesTags: ["Publicaciones"],
     }),
     createPublicaciones: build.mutation({
-      query: ({ title, autor, link }) => ({
+      query: ({ title, autor, link, carrera }) => ({
         url: "publicacion",
         method: "POST",
         body: {
           title,
           autor,
           link,
+          carrera,
         },
       }),
       invalidatesTags: ["Publicaciones"],
     }),
     updatePublicaciones: build.mutation({
-      query: ({ id, title, autor, link }) => ({
+      query: ({ id, title, autor, link, carrera }) => ({
         url: `publicacion/${id}`,
         method: "PUT",
         body: {
           title,
           autor,
           link,
+          carrera,
         },
       }),
       invalidatesTags: ["Publicaciones"],
@@ -456,6 +459,29 @@ export const api = createApi({
       }),
       invalidatesTags: ["Estatutos"],
     }),
+    downloadEstatuto: build.query({
+      query: () => ({
+        url: `doc/downloadEstatutoDoc`,
+        method: "GET",
+        responseHandler: (response) => response.blob(),
+      }),
+      providesTags: ["Estatutos"],
+    }),
+    getExtEstatuto: build.query({
+      query: () => ({
+        url: `doc/sendExtEstatuto`,
+        method: "GET",
+      }),
+      providesTags: ["Estatutos"],
+    }),
+    getPremioImage: build.query({
+      query: ({ id }) => ({
+        url: `doc/getPremioImage/${id}`,
+        method: "GET",
+        responseHandler: (response) => response,
+      }),
+      providesTags: ["Premios"],
+    }),
   }),
 });
 
@@ -515,4 +541,7 @@ export const {
   useUploadProjectDocMutation,
   useLazyDownloadProjectDocQuery,
   useUploadEstatutoMutation,
+  useLazyDownloadEstatutoQuery,
+  useGetExtEstatutoQuery,
+  useGetPremioImageQuery,
 } = api;

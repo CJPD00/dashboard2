@@ -71,10 +71,13 @@ const ProjectSingleView = () => {
       }); // Ajusta el tipo según lo que estés descargando
       const url = window.URL.createObjectURL(blob);
 
+      //coger la extension del recurso del projecto
+      const ext = data.projecto.recurso.split(".").pop();
+
       // Crear un enlace temporal para descargar
       const a = document.createElement("a");
       a.href = url;
-      a.download = data.projecto.recurso || "archivo"; // Puedes establecer un nombre por defecto
+      a.download = `${data.projecto.titulo}.${ext}` || "archivo"; // Puedes establecer un nombre por defecto
       document.body.appendChild(a);
       a.click();
 

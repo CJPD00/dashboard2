@@ -24,7 +24,10 @@ import useModal from "../../hooks/useModal";
 import { useGetPremiosQuery } from "../../state/api";
 import PremioForm from "../../components/premioForm/PremioForm";
 import PremioFormEdit from "../../components/premioFormEdit/PremioFormEdit";
-import { useDeletePremioMutation } from "../../state/api";
+import {
+  useDeletePremioMutation,
+  useGetPremioImageQuery,
+} from "../../state/api";
 
 const Rewards = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -91,6 +94,12 @@ const Reward = ({ title, description, cantidadProjectos, _id }) => {
 
   const [deletePremio, { isLoading }] = useDeletePremioMutation();
 
+  const { data, isLoading: isLoadingPremioImage } = useGetPremioImageQuery({
+    id: _id,
+  });
+
+  console.log(data);
+
   const handleCancel = () => {
     setDialogOpen(false);
   };
@@ -120,6 +129,10 @@ const Reward = ({ title, description, cantidadProjectos, _id }) => {
       />
     );
     setModalTitle("Editar Premio");
+  };
+
+  const handleEvidencia = () => {
+    window.open(data?.url, "_blank").focus();
   };
 
   return (
@@ -155,6 +168,22 @@ const Reward = ({ title, description, cantidadProjectos, _id }) => {
         sx={{ color: theme.palette.neutral[300] }}
       >
         <Stack justifyContent="center">
+          <Button
+            sx={{
+              ":hover": {
+                backgroundColor: "secondary.light",
+                color: "neutral.white",
+              },
+              backgroundColor: "secondary.main",
+              color: "neutral.white",
+              borderRadius: "10px",
+              padding: "0.5rem 1rem",
+              margin: "0.5rem",
+            }}
+            onClick={handleEvidencia}
+          >
+            Evidencia
+          </Button>
           <Button
             sx={{
               ":hover": {

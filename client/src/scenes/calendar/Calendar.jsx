@@ -8,6 +8,7 @@ import useModal from "../../hooks/useModal";
 import EventoGForm from "../../components/eventoGform/EventoGForm";
 import EventoGFormEdit from "../../components/eventoGformEdit/EventoGFormEdit";
 import { useNavigate } from "react-router-dom";
+import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 
 const Calendar = () => {
   const theme = useTheme();
@@ -193,6 +194,7 @@ const Calendar = () => {
           getRowId={(row) => row.id}
           rows={rows}
           columns={columns}
+          slots={{ toolbar: DataGridCustomToolbarSimple }}
         />
       </Box>
     </Box>

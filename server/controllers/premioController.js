@@ -1,3 +1,4 @@
+import premio from "../models/premio.js";
 import Premio from "../models/premio.js";
 
 export const getPremios = async (req, res) => {
@@ -10,12 +11,37 @@ export const getPremios = async (req, res) => {
 };
 
 export const createPremio = async (req, res) => {
-  const premio = req.body;
-  const newPremio = new Premio(premio);
+  const premioBody = req.body.premio;
+
+  const premio = JSON.parse(premioBody);
+
+  let filePath = req.files.recurso.path;
+
+  console.log(premio.title, premio.description);
+
+  let filesplit = filePath.split("\\");
+
+  let fileName = filesplit[filesplit.length - 1];
+
+  let extSplit = fileName.split(".");
+
+  let fileExt = extSplit[1];
+
+  if (fileExt !== "png" && fileExt !== "jpg") {
+    console.log("Extensión no válida");
+    return res.status(400).send({ message: "Extensión no válida" });
+  }
+
+  const newPremio = new Premio({
+    ...premio,
+    recurso: fileName,
+  });
+
   try {
     await newPremio.save();
     res.status(201).json({ message: "Premio creado exitosamente", code: 201 });
   } catch (error) {
+    console.log(error);
     res.status(409).json({ message: error.message });
   }
 };

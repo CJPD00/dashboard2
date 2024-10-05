@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import Carrera from "./carrera.js";
 
 const publicacionSchema = new Schema({
   title: {
@@ -18,7 +19,8 @@ const publicacionSchema = new Schema({
     required: true,
   },
   carrera: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "Carrera",
     required: true,
   },
 });

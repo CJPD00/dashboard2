@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import Projecto from "./projecto.js";
+import Publicacion from "./publicacion.js";
 const Schema = mongoose.Schema;
 const carreraSchema = new Schema(
   {
@@ -45,8 +46,13 @@ carreraSchema.pre("deleteOne", async function (next) {
     //console.log(typeof depart);
 
     const projectos = await Projecto.find({ idCarrera: carrera });
+    const publicaciones = await Publicacion.find({ carrera: carrera });
     for (const projecto of projectos) {
       await projecto.deleteOne({ idCarrera: carrera });
+    }
+
+    for (const publicacion of publicaciones) {
+      await publicacion.deleteOne({ carrera: carrera });
     }
     next();
     console.log("Middleware de deleteOne finalizado");

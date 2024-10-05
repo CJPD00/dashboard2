@@ -7,6 +7,7 @@ import FlexBetween from "../../components/FlexBetween";
 import useModal from "../../hooks/useModal";
 import CareerForm from "../../components/careerForm/CareerForm";
 import CareerFormEdit from "../../components/careerFormEdit/CareerFormEdit";
+import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 import {
   Dialog,
   DialogTitle,
@@ -195,6 +196,9 @@ const Careers = () => {
           getRowId={(row) => row.id}
           rows={rows}
           columns={columns}
+          slots={{
+            toolbar: DataGridCustomToolbarSimple,
+          }}
         />
       </Box>
       {/* <Dialog open={dialogOpen} onClose={handleCancel}>

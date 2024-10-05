@@ -1,10 +1,11 @@
 //import React from 'react'
-import { TextField, Alert } from "@mui/material";
+import { TextField, Alert, Autocomplete } from "@mui/material";
 import { useTheme, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import {
   useGetPublicacionByIdQuery,
   useUpdatePublicacionesMutation,
+  useGetCareersQuery,
 } from "../../state/api";
 
 const PublicacionFormEdit = ({ setIsModalOpen, id }) => {
@@ -14,10 +15,22 @@ const PublicacionFormEdit = ({ setIsModalOpen, id }) => {
   const [dataForm, setDataForm] = useState({});
   const [messageError, setMessageError] = useState(null);
   const [textError, setTextError] = useState(null);
+  const [autocompleteValor, setAutocompleteValor] = useState(null);
+  const [autoCompleteError, setAutocompleteError] = useState(false);
+  const [helperText, setHelperText] = useState("");
 
   const { data } = useGetPublicacionByIdQuery(id);
 
   const [updatePublicacion, error] = useUpdatePublicacionesMutation();
+
+  const { data: carreras } = useGetCareersQuery();
+
+  const opciones =
+    carreras?.carreras?.length > 0
+      ? carreras.carreras.map((item) => {
+          return { label: item?.nombre, value: item?._id };
+        })
+      : [];
 
   //console.log(dataForm);
 
@@ -26,7 +39,9 @@ const PublicacionFormEdit = ({ setIsModalOpen, id }) => {
       title: data?.publicacion?.title || "",
       autor: data?.publicacion?.autor || "",
       link: data?.publicacion?.link || "",
+      carrera: data?.publicacion?.carrera || "",
     });
+    setAutocompleteValor(data?.publicacion?.carrera.nombre || "");
   }, [data]);
 
   const handleBlur = () => {
@@ -64,6 +79,13 @@ const PublicacionFormEdit = ({ setIsModalOpen, id }) => {
       setTextError(false);
     }
     setDataForm({ ...dataForm, [e.target.name]: e.target.value });
+  };
+
+  const handleAutocompleteChange = (event, newValue) => {
+    setAutocompleteValor(newValue);
+    setDataForm({ ...dataForm, carrera: newValue?.value });
+    setAutocompleteError(false);
+    setHelperText("");
   };
 
   const handleClick = async () => {
@@ -136,6 +158,21 @@ const PublicacionFormEdit = ({ setIsModalOpen, id }) => {
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />
+      <Autocomplete
+        options={opciones}
+        value={autocompleteValor}
+        onChange={handleAutocompleteChange}
+        sx={{ width: "100%", mb: 2 }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Carrera"
+            variant="outlined"
+            error={autoCompleteError}
+            helperText={helperText}
+          />
+        )}
+      ></Autocomplete>
 
       {textError ? (
         <Alert

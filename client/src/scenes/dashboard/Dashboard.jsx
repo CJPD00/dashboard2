@@ -1,5 +1,6 @@
 import FlexBetween from "../../components/FlexBetween";
 import Header from "../../components/Header";
+import { notification } from "antd";
 import {
   Box,
   useTheme,
@@ -18,7 +19,11 @@ import {
 import BreakdownChart from "../../components/breakdownChart/BreakdownChart";
 import { useGetTotalsQuery } from "../../state/api";
 import { useGetTotalsRecentQuery } from "../../state/api";
-import { useGetUsersQuery } from "../../state/api";
+import {
+  useGetUsersQuery,
+  useLazyDownloadEstatutoQuery,
+  useGetExtEstatutoQuery,
+} from "../../state/api";
 import StatBox from "../../components/statBox/StatBox";
 import { DataGrid } from "@mui/x-data-grid";
 import useModal from "../../hooks/useModal";
@@ -32,6 +37,13 @@ const Dashboard = () => {
   const { data: data3, isLoading: isLoading3 } = useGetUsersQuery();
 
   const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
+
+  const [downloadEstatuto, { isLoading: isLoading4 }] =
+    useLazyDownloadEstatutoQuery();
+
+  const { data: data4 } = useGetExtEstatutoQuery();
+
+  //console.log(data4);
 
   if (isLoading || isLoading2 || isLoading3) return "Loading...";
 
@@ -74,6 +86,43 @@ const Dashboard = () => {
     setModalContent(<Estatuto setIsModalOpen={setIsModalOpen} />);
   };
 
+  const handleDownload = async () => {
+    try {
+      const response = await downloadEstatuto(); // Suponiendo que `trigger` es la función que llama a la API.
+
+      //console.log(data.recurso);
+
+      if (response.error) {
+        notification.error({
+          message: "No hay documento para descargar", // Asegúrate de que estás accediendo correctamente al mensaje de error
+        });
+        return;
+      }
+
+      // Crear un objeto URL a partir del blob
+      const blob = new Blob([response.data], {
+        type: "application/octet-stream",
+      }); // Ajusta el tipo según lo que estés descargando
+      const url = window.URL.createObjectURL(blob);
+
+      // Crear un enlace temporal para descargar
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `estatutos.${data4.ext}` || "archivo"; // Puedes establecer un nombre por defecto
+      document.body.appendChild(a);
+      a.click();
+
+      // Limpiar el enlace y liberar el objeto URL
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error al descargar el archivo:", error);
+      notification.error({
+        message: "Error al descargar el archivo",
+      });
+    }
+  };
+
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -111,6 +160,7 @@ const Dashboard = () => {
               padding: "0.5rem 1rem",
             }}
             startIcon={<DownloadOutlined />}
+            onClick={handleDownload}
           >
             Descargar Estatutos
           </Button>

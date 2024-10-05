@@ -59,7 +59,7 @@ const Users = () => {
       flex: 0.2,
     },
     {
-      field: "lastName",
+      field: "lastname",
       headerName: "Apellido",
       flex: 0.2,
     },

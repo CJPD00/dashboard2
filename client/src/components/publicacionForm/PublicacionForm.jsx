@@ -1,16 +1,30 @@
 //import React from 'react'
-import { TextField, Alert } from "@mui/material";
+import { TextField, Alert, Autocomplete } from "@mui/material";
 import { useTheme, Button } from "@mui/material";
 import { useState } from "react";
-import { useCreatePublicacionesMutation } from "../../state/api";
+import {
+  useCreatePublicacionesMutation,
+  useGetCareersQuery,
+} from "../../state/api";
 
 const PublicacionForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
   const [dataForm, setDataForm] = useState({});
   const [messageError, setMessageError] = useState(null);
   const [textError, setTextError] = useState(null);
+  const [autocompleteValor, setAutocompleteValor] = useState(null);
+  const [autoCompleteError, setAutocompleteError] = useState(false);
+  const [helperText, setHelperText] = useState("");
 
   const [createPublicacion, error] = useCreatePublicacionesMutation();
+  const { data, isLoading } = useGetCareersQuery();
+
+  const opciones =
+    data?.carreras?.length > 0
+      ? data.carreras.map((item) => {
+          return { label: item?.nombre, value: item?._id };
+        })
+      : [];
 
   const handleBlur = () => {
     if (
@@ -49,11 +63,38 @@ const PublicacionForm = ({ setIsModalOpen }) => {
     setDataForm({ ...dataForm, [e.target.name]: e.target.value });
   };
 
+  const handleAutocompleteChange = (event, newValue) => {
+    setAutocompleteValor(newValue);
+    setDataForm({ ...dataForm, carrera: newValue?.value });
+    setAutocompleteError(false);
+    setHelperText("");
+    setMessageError("");
+    setTextError(false);
+  };
+
   const handleClick = async () => {
     //console.log(dataForm);
-    if (dataForm.title === "") {
+    if (
+      dataForm.title === "" ||
+      !dataForm.title ||
+      dataForm.autor === "" ||
+      !dataForm.autor ||
+      dataForm.link === "" ||
+      !dataForm.link
+    ) {
       setMessageError("Todos los campos son obligatorios");
       setTextError(true);
+      return;
+    }
+    if (
+      !autocompleteValor ||
+      !autocompleteValor.value ||
+      autocompleteValor.value === ""
+    ) {
+      setAutocompleteError(true);
+      setHelperText("Selecciona una carrera");
+      // setMessageError("Todos los campos son obligatorios");
+      // setTextError(true);
       return;
     } else if (textError) {
       return;
@@ -119,6 +160,21 @@ const PublicacionForm = ({ setIsModalOpen }) => {
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />
+      <Autocomplete
+        options={opciones}
+        value={autocompleteValor}
+        onChange={handleAutocompleteChange}
+        sx={{ width: "100%", mb: 2 }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Carrera"
+            variant="outlined"
+            error={autoCompleteError}
+            helperText={helperText}
+          />
+        )}
+      ></Autocomplete>
 
       {textError ? (
         <Alert

@@ -1,8 +1,9 @@
 import Publicacion from "../models/publicacion.js";
+import Carrera from "../models/carrera.js";
 
 export const getPublicaciones = async (req, res) => {
   try {
-    const publicaciones = await Publicacion.find();
+    const publicaciones = await Publicacion.find().populate("carrera");
     return res.status(200).json({ publicaciones, code: 200 });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -11,7 +12,9 @@ export const getPublicaciones = async (req, res) => {
 
 export const getPublicacionById = async (req, res) => {
   try {
-    const publicacion = await Publicacion.findById(req.params.id);
+    const publicacion = await Publicacion.findById(req.params.id).populate(
+      "carrera"
+    );
     return res.status(200).json({ publicacion, code: 200 });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -29,6 +32,7 @@ export const createPublicaciones = async (req, res) => {
 
     return res.status(200).json({ publicacion, code: 200 });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: error.message });
   }
 };

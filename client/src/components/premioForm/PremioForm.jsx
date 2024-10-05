@@ -9,6 +9,9 @@ const PremioForm = ({ setIsModalOpen }) => {
   const [dataForm, setDataForm] = useState({});
   const [messageError, setMessageError] = useState(null);
   const [textError, setTextError] = useState(null);
+  const [file, setFile] = useState(null);
+  const [archivoError, setArchivoError] = useState(false);
+  const [messageError2, setMessageError2] = useState(null);
 
   const [createPremio, error] = useCreatePremioMutation();
 
@@ -45,17 +48,36 @@ const PremioForm = ({ setIsModalOpen }) => {
     setDataForm({ ...dataForm, [e.target.name]: e.target.value });
   };
 
+  const handleChangeFile = (e) => {
+    setFile(e.target.files[0]);
+    setArchivoError(false);
+    setMessageError2(null);
+  };
+
   const handleClick = async () => {
     //console.log(dataForm);
     if (dataForm.title === "") {
       setMessageError("Todos los campos son obligatorios");
       setTextError(true);
       return;
+    }
+    if (!file) {
+      setArchivoError(true);
+      setMessageError2("Por favor seleccione un archivo");
+      return;
     } else if (textError) {
       return;
     } else {
       try {
-        const response = await createPremio(dataForm);
+        const formData = new FormData();
+        formData.append("recurso", file, file.name);
+        formData.append("premio", JSON.stringify(dataForm));
+        const response = await createPremio(formData);
+        if (response.error) {
+          setArchivoError(true);
+          setMessageError2("Archivo no permitido");
+          return;
+        }
         setIsModalOpen(false);
         //console.log(response);
       } catch (error) {
@@ -75,6 +97,54 @@ const PremioForm = ({ setIsModalOpen }) => {
         //boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.2)",
       }}
     >
+      <TextField
+        //label="Buscar archivo"
+        name="recurso"
+        type="file"
+        variant="filled"
+        size="small"
+        error={archivoError}
+        helperText={messageError2}
+        //onBlur={handleBlur}
+        //value={file}
+        onChange={(e) => handleChangeFile(e)}
+        sx={{
+          mb: 2,
+          width: "100%",
+          cursor: "pointer",
+          textAlign: "left",
+          color: "black",
+          //display: "none",
+          "&:hover": {
+            color: theme.palette.primary.main,
+          },
+          "&:focus": {
+            color: theme.palette.primary.main,
+          },
+          "&:active": {
+            color: theme.palette.primary.main,
+          },
+          "&:disabled": {
+            color: theme.palette.primary.main,
+          },
+          "&:disabled:hover": {
+            color: theme.palette.primary.main,
+          },
+          input: {
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            padding: "0.5rem",
+            "&:hover": {
+              borderColor: theme.palette.primary.main,
+              cursor: "pointer",
+            },
+            "&:focus": {
+              borderColor: theme.palette.primary.main,
+              boxShadow: "0 0 0 2px #ccc",
+            },
+          },
+        }}
+      />
       <TextField
         label="Titulo"
         name="title"

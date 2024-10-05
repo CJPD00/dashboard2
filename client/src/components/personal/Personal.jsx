@@ -11,6 +11,7 @@ import {
 } from "../../state/api";
 import PersonalForm from "../personalForm/PersonalForm";
 import PersonalFormEdit from "../personalFormEdit/PersonalFormEdit";
+import DataGridCustomToolbarSimple from "../dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 
 const Personal = ({ id }) => {
   //console.log(id);
@@ -182,6 +183,9 @@ const Personal = ({ id }) => {
           getRowId={(row) => row.id}
           rows={rows}
           columns={columns}
+          slots={{
+            toolbar: DataGridCustomToolbarSimple,
+          }}
         />
       </Box>
       {/* <Dialog open={dialogOpen} onClose={handleCancel}>

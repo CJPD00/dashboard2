@@ -10,6 +10,7 @@ import { AssignmentOutlined } from "@mui/icons-material";
 import { useGetTareasQuery, useDeleteTareaMutation } from "../../state/api";
 import TareaForm from "../../components/tareaForm/TareaForm";
 import TareaFormEdit from "../../components/tareaFormEdit/TareaFormEdit";
+import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 
 const Tasks = () => {
   const theme = useTheme();
@@ -192,6 +193,9 @@ const Tasks = () => {
           getRowId={(row) => row.id}
           rows={rows}
           columns={columns}
+          slots={{
+            toolbar: DataGridCustomToolbarSimple,
+          }}
         />
       </Box>
     </Box>

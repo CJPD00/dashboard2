@@ -20,7 +20,7 @@ const Estatuto = ({ setIsModalOpen }) => {
   };
 
   const handleClick = async () => {
-    console.log(file);
+    //console.log(file);
     if (!file) {
       setArchivoError(true);
       setMessageError("Por favor seleccione un archivo");

@@ -23,6 +23,7 @@ import useModal from "../../hooks/useModal";
 import {
   useGetPremiosByIdProjectQuery,
   useRevocarPremioMutation,
+  useGetPremioImageQuery,
 } from "../../state/api";
 import FlexBetween from "../FlexBetween";
 import ProjectRewardForm from "../projectoRewardForm/ProjectRewardForm";
@@ -102,6 +103,9 @@ const Reward = ({ title, description, cantidadProjectos, id, premioId }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   //const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
   const [revocarPremio, error] = useRevocarPremioMutation();
+  const { data: image } = useGetPremioImageQuery({ id: premioId });
+
+  console.log(image);
 
   const handleCancel = () => {
     setDialogOpen(false);
@@ -118,6 +122,10 @@ const Reward = ({ title, description, cantidadProjectos, id, premioId }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleEvidencia = () => {
+    window.open(image?.url, "_blank").focus();
   };
 
   return (
@@ -153,6 +161,22 @@ const Reward = ({ title, description, cantidadProjectos, id, premioId }) => {
         sx={{ color: theme.palette.neutral[300] }}
       >
         <Stack justifyContent="center">
+          <Button
+            sx={{
+              ":hover": {
+                backgroundColor: "secondary.light",
+                color: "neutral.white",
+              },
+              backgroundColor: "secondary.main",
+              color: "neutral.white",
+              borderRadius: "10px",
+              padding: "0.5rem 1rem",
+              margin: "0.5rem",
+            }}
+            onClick={handleEvidencia}
+          >
+            Evidencia
+          </Button>
           <Button
             sx={{
               ":hover": {
