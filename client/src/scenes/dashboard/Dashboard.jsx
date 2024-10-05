@@ -13,6 +13,7 @@ import {
   ApartmentOutlined,
   BuildOutlined,
   ReceiptLongOutlined,
+  UploadOutlined,
 } from "@mui/icons-material";
 import BreakdownChart from "../../components/breakdownChart/BreakdownChart";
 import { useGetTotalsQuery } from "../../state/api";
@@ -20,6 +21,8 @@ import { useGetTotalsRecentQuery } from "../../state/api";
 import { useGetUsersQuery } from "../../state/api";
 import StatBox from "../../components/statBox/StatBox";
 import { DataGrid } from "@mui/x-data-grid";
+import useModal from "../../hooks/useModal";
+import Estatuto from "../../components/estatutoForm/Estatuto";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -27,6 +30,8 @@ const Dashboard = () => {
   const { data, isLoading } = useGetTotalsQuery();
   const { data: data2, isLoading: isLoading2 } = useGetTotalsRecentQuery();
   const { data: data3, isLoading: isLoading3 } = useGetUsersQuery();
+
+  const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
 
   if (isLoading || isLoading2 || isLoading3) return "Loading...";
 
@@ -63,6 +68,12 @@ const Dashboard = () => {
     },
   ];
 
+  const handleUpload = () => {
+    setIsModalOpen(true);
+    setModalTitle("Subir Estatutos");
+    setModalContent(<Estatuto setIsModalOpen={setIsModalOpen} />);
+  };
+
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -70,21 +81,40 @@ const Dashboard = () => {
           title="Panel De Control"
           subtitle="Bienvenido a la Catedra Honorífica de Ciencias Tecnicas"
         />
-        <Button
-          sx={{
-            ":hover": {
-              backgroundColor: "secondary.light",
+        <FlexBetween>
+          <Button
+            sx={{
+              ":hover": {
+                backgroundColor: "secondary.light",
+                color: "neutral.white",
+              },
+              backgroundColor: "secondary.main",
               color: "neutral.white",
-            },
-            backgroundColor: "secondary.main",
-            color: "neutral.white",
-            borderRadius: "10px",
-            padding: "0.5rem 1rem",
-          }}
-          startIcon={<DownloadOutlined />}
-        >
-          Descargar Estatutos
-        </Button>
+              borderRadius: "10px",
+              padding: "0.5rem 1rem",
+              marginRight: "1rem",
+            }}
+            startIcon={<UploadOutlined />}
+            onClick={handleUpload}
+          >
+            Subir Estatutos
+          </Button>
+          <Button
+            sx={{
+              ":hover": {
+                backgroundColor: "secondary.light",
+                color: "neutral.white",
+              },
+              backgroundColor: "secondary.main",
+              color: "neutral.white",
+              borderRadius: "10px",
+              padding: "0.5rem 1rem",
+            }}
+            startIcon={<DownloadOutlined />}
+          >
+            Descargar Estatutos
+          </Button>
+        </FlexBetween>
       </FlexBetween>
 
       <Box

@@ -1,7 +1,7 @@
 import User from "../models/user.js";
 import {
   createToken,
-  decodeToken,
+  //decodeToken,
   createRefreshToken,
 } from "../services/jwtServices.js";
 import bcrypt from "bcrypt";

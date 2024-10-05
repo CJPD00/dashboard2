@@ -7,12 +7,17 @@ import {
   Autocomplete,
 } from "@mui/material";
 import { useState } from "react";
-import { useGetCareersQuery, useUpdateProjectMutation } from "../../state/api";
+import {
+  useGetCareersQuery,
+  useUpdateProjectMutation,
+  useUploadProjectDocMutation,
+} from "../../state/api";
 
 const ProjectFormEdit = ({ data, setIsModalOpen }) => {
   //console.log(data);
   const theme = useTheme();
   const [dataForm, setDataForm] = useState(data.projecto);
+  const [file, setFile] = useState(null);
   const [messageError, setMessageError] = useState(null);
   const [textError, setTextError] = useState(null);
   const [autoCompleteErrorEstado, setAutocompleteErrorEstado] = useState(false);
@@ -27,9 +32,13 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
   const [autoCompleteErrorCarrera, setAutocompleteErrorCarrera] =
     useState(false);
   const [helperTextCarrera, setHelperTextCarrera] = useState("");
+  const [archivoError, setArchivoError] = useState(false);
+  const [messageError2, setMessageError2] = useState("");
 
   const { data: carrerasData, isLoading } = useGetCareersQuery();
   const [updateProject, error] = useUpdateProjectMutation();
+  const [uploadProjectDoc, uploadProjectDocResult] =
+    useUploadProjectDocMutation();
 
   const carrerasOpciones =
     carrerasData?.carreras?.length > 0
@@ -118,33 +127,40 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
     setDataForm({ ...dataForm, [e.target.name]: e.target.value });
   };
 
+  const handleChangeFile = (e) => {
+    setTextError(false);
+    setMessageError("");
+    setFile(e.target.files[0]);
+    //console.log(file);
+  };
+
   const handleClick = async () => {
-    console.log(dataForm);
-    console.log(autoCompleteValueSector);
+    //console.log(dataForm);
+    //console.log(autoCompleteValueSector);
     if (!dataForm.estado) {
-      setMessageError("Todos los campos son obligatorios");
-      setTextError(true);
+      // setMessageError("Todos los campos son obligatorios");
+      // setTextError(true);
       setAutocompleteErrorEstado(true);
       setHelperTextEstado("Por favor, selecciona un Estado");
       return;
     }
     if (!dataForm.tipo) {
-      setMessageError("Todos los campos son obligatorios");
-      setTextError(true);
+      // setMessageError("Todos los campos son obligatorios");
+      // setTextError(true);
       setAutocompleteErrorTipo(true);
       setHelperTextTipo("Por favor, selecciona un tipo");
       return;
     }
     if (!autoCompleteValueSector) {
-      setMessageError("Todos los campos son obligatorios");
-      setTextError(true);
+      // setMessageError("Todos los campos son obligatorios");
+      // setTextError(true);
       setAutocompleteErrorSector(true);
       setHelperTextSector("Por favor, seleccione si pertene a un sector");
       return;
     }
     if (!autoCompleteValueCarrera) {
-      setMessageError("Todos los campos son obligatorios");
-      setTextError(true);
+      // setMessageError("Todos los campos son obligatorios");
+      // setTextError(true);
       setAutocompleteErrorCarrera(true);
       setHelperTextCarrera("Por favor, selecciona una carrera");
       return;
@@ -153,6 +169,22 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
       return;
     }
     try {
+      if (file) {
+        const formData = new FormData();
+        formData.append("recurso", file, file.name);
+        //console.log(formData.get("recurso"));
+        //console.log(file);
+        const response = await uploadProjectDoc({
+          id: dataForm._id,
+          file: formData,
+        });
+        if (response.error) {
+          //setMessageError("Archivo no aceptado");
+          //setTextError(true);
+          setArchivoError(true);
+          return;
+        }
+      }
       const response = await updateProject(dataForm);
       setIsModalOpen(false);
       //console.log(response);
@@ -172,6 +204,54 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
         //boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.2)",
       }}
     >
+      <TextField
+        //label="Buscar archivo"
+        name="recurso"
+        type="file"
+        variant="filled"
+        size="small"
+        error={archivoError}
+        helperText={archivoError ? "Archivo no aceptado" : null}
+        //onBlur={handleBlur}
+        //value={file}
+        onChange={(e) => handleChangeFile(e)}
+        sx={{
+          mb: 2,
+          width: "100%",
+          cursor: "pointer",
+          textAlign: "left",
+          color: "black",
+          //display: "none",
+          "&:hover": {
+            color: theme.palette.primary.main,
+          },
+          "&:focus": {
+            color: theme.palette.primary.main,
+          },
+          "&:active": {
+            color: theme.palette.primary.main,
+          },
+          "&:disabled": {
+            color: theme.palette.primary.main,
+          },
+          "&:disabled:hover": {
+            color: theme.palette.primary.main,
+          },
+          input: {
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            padding: "0.5rem",
+            "&:hover": {
+              borderColor: theme.palette.primary.main,
+              cursor: "pointer",
+            },
+            "&:focus": {
+              borderColor: theme.palette.primary.main,
+              boxShadow: "0 0 0 2px #ccc",
+            },
+          },
+        }}
+      />
       <TextField
         label="Titulo"
         name="titulo"

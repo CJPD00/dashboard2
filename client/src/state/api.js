@@ -24,6 +24,7 @@ export const api = createApi({
     "Premios",
     "Tareas",
     "Personal",
+    "DOCS",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -431,6 +432,30 @@ export const api = createApi({
       }),
       invalidatesTags: ["Personal", "Geography"],
     }),
+    uploadProjectDoc: build.mutation({
+      query: ({ id, file }) => ({
+        url: `doc/uploadProjectDoc/${id}`,
+        method: "PUT",
+        body: file,
+      }),
+      invalidatesTags: ["Projects"],
+    }),
+    downloadProjectDoc: build.query({
+      query: ({ id }) => ({
+        url: `doc/downloadProjectDoc/${id}`,
+        method: "GET",
+        responseHandler: (response) => response.blob(),
+      }),
+      providesTags: ["Projects"],
+    }),
+    uploadEstatuto: build.mutation({
+      query: ({ file }) => ({
+        url: `doc/uploadEstatutoDoc`,
+        method: "POST",
+        body: file,
+      }),
+      invalidatesTags: ["Estatutos"],
+    }),
   }),
 });
 
@@ -487,4 +512,7 @@ export const {
   useCreatePersonalMutation,
   useDeletePersonalMutation,
   useUpdatePersonalMutation,
+  useUploadProjectDocMutation,
+  useLazyDownloadProjectDocQuery,
+  useUploadEstatutoMutation,
 } = api;

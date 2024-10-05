@@ -2,6 +2,7 @@
 import { useParams } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
 import Header from "../../components/Header";
+import { notification } from "antd";
 import {
   Box,
   useTheme,
@@ -18,10 +19,14 @@ import {
   TypeSpecimenOutlined,
   PrecisionManufacturingOutlined,
   HandymanOutlined,
+  DownloadOutlined,
 } from "@mui/icons-material";
 import StatBox from "../../components/statBox/StatBox";
 import Personal from "../personal/Personal";
-import { useGetProjectByIdQuery } from "../../state/api";
+import {
+  useGetProjectByIdQuery,
+  useLazyDownloadProjectDocQuery,
+} from "../../state/api";
 import useModal from "../../hooks/useModal";
 import ProjectFormEdit from "../projectFormEdit/ProjectFormEdit";
 import ProjectReward from "../projectReward/ProjectReward";
@@ -35,6 +40,8 @@ const ProjectSingleView = () => {
 
   const { data, isLoading } = useGetProjectByIdQuery({ id });
 
+  const [trigger] = useLazyDownloadProjectDocQuery();
+
   //console.log(data);
 
   const handleEdit = () => {
@@ -45,6 +52,43 @@ const ProjectSingleView = () => {
     setModalTitle("Editar Projecto");
   };
 
+  const handleDownload = async () => {
+    try {
+      const response = await trigger({ id }); // Suponiendo que `trigger` es la función que llama a la API.
+
+      //console.log(data.recurso);
+
+      if (response.error) {
+        notification.error({
+          message: "El Proyecto no tiene documento", // Asegúrate de que estás accediendo correctamente al mensaje de error
+        });
+        return;
+      }
+
+      // Crear un objeto URL a partir del blob
+      const blob = new Blob([response.data], {
+        type: "application/octet-stream",
+      }); // Ajusta el tipo según lo que estés descargando
+      const url = window.URL.createObjectURL(blob);
+
+      // Crear un enlace temporal para descargar
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = data.projecto.recurso || "archivo"; // Puedes establecer un nombre por defecto
+      document.body.appendChild(a);
+      a.click();
+
+      // Limpiar el enlace y liberar el objeto URL
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error al descargar el archivo:", error);
+      notification.error({
+        message: "Error al descargar el archivo",
+      });
+    }
+  };
+
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -52,22 +96,41 @@ const ProjectSingleView = () => {
           title={`Projecto ${data?.projecto?.titulo}`}
           //subtitle="Bienvenido a tu  "
         />
-        <Button
-          sx={{
-            ":hover": {
-              backgroundColor: "secondary.light",
+        <FlexBetween>
+          <Button
+            sx={{
+              ":hover": {
+                backgroundColor: "secondary.light",
+                color: "neutral.white",
+              },
+              backgroundColor: "secondary.main",
               color: "neutral.white",
-            },
-            backgroundColor: "secondary.main",
-            color: "neutral.white",
-            borderRadius: "10px",
-            padding: "0.5rem 1rem",
-          }}
-          startIcon={<ReceiptLongOutlined />}
-          onClick={handleEdit}
-        >
-          Editar Projecto
-        </Button>
+              borderRadius: "10px",
+              padding: "0.5rem 1rem",
+              marginRight: "1rem",
+            }}
+            startIcon={<ReceiptLongOutlined />}
+            onClick={handleEdit}
+          >
+            Editar Projecto
+          </Button>
+          <Button
+            sx={{
+              ":hover": {
+                backgroundColor: "secondary.light",
+                color: "neutral.white",
+              },
+              backgroundColor: "secondary.main",
+              color: "neutral.white",
+              borderRadius: "10px",
+              padding: "0.5rem 1rem",
+            }}
+            startIcon={<DownloadOutlined />}
+            onClick={handleDownload}
+          >
+            Descargar Documento
+          </Button>
+        </FlexBetween>
       </FlexBetween>
       <Box
         mt="20px"

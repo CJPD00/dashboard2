@@ -21,10 +21,17 @@ import authRouter from "./routes/authRouter.js";
 import publicacionRouter from "./routes/publicacionRouter.js";
 import premioRouter from "./routes/premioRouter.js";
 import tareaRouter from "./routes/tareaRouter.js";
+import docRouter from "./routes/docRouter.js";
 
 // configuracion de la aplicacion
 dotenv.config();
 const app = express();
+app.use(express.json({ limit: "50mb" })); // Establece el límite a 50 MB
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use((req, res, next) => {
+  req.setTimeout(500000); // Aumenta el timeout a 500 segundos
+  next();
+});
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(cors());
@@ -45,6 +52,7 @@ app.use("/auth", authRouter);
 app.use("/publicacion", publicacionRouter);
 app.use("/premio", premioRouter);
 app.use("/tarea", tareaRouter);
+app.use("/doc", docRouter);
 
 //connect to mongodb
 mongoose
