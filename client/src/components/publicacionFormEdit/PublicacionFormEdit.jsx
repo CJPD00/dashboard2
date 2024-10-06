@@ -7,6 +7,7 @@ import {
   useUpdatePublicacionesMutation,
   useGetCareersQuery,
 } from "../../state/api";
+import { notification } from "antd";
 
 const PublicacionFormEdit = ({ setIsModalOpen, id }) => {
   //console.log(id);
@@ -99,7 +100,15 @@ const PublicacionFormEdit = ({ setIsModalOpen, id }) => {
     } else {
       try {
         const response = await updatePublicacion({ ...dataForm, id });
+        if (response.error) {
+          setTextError(true);
+          setMessageError("El título ya esta en uso");
+          return;
+        }
         setIsModalOpen(false);
+        notification["success"]({
+          message: "Publicación actualizada correctamente",
+        });
         //console.log(response);
       } catch (error) {
         setMessageError(error.message);
@@ -139,6 +148,11 @@ const PublicacionFormEdit = ({ setIsModalOpen, id }) => {
         error={textError}
         onBlur={handleBlur}
         value={dataForm.autor}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         //error={passwordError}
         //onBlur={handleBlurPassword}
         onChange={(e) => handlerChange(e)}

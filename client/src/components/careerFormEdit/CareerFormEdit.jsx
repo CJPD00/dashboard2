@@ -11,17 +11,18 @@ import {
   useGetCareerByIdQuery,
   useGetDepartmentsQuery,
 } from "../../state/api";
+import { notification } from "antd";
 
 const CareerFormEdit = ({ setIsModalOpen, id }) => {
   const theme = useTheme();
   const [dataForm, setDataForm] = useState({});
   const [messageError, setMessageError] = useState(null);
   const [textError, setTextError] = useState(null);
-  const [autocompleteValor, setAutocompleteValor] = useState(null);
   const [autoCompleteError, setAutocompleteError] = useState(false);
   const [helperText, setHelperText] = useState("");
 
   const { data } = useGetCareerByIdQuery(id);
+  //console.log(data.carrera);
   const { data: departamentos } = useGetDepartmentsQuery();
   const [updateCareer, error] = useUpdateCareerMutation();
 
@@ -31,6 +32,9 @@ const CareerFormEdit = ({ setIsModalOpen, id }) => {
           return { label: item?.nombre, value: item?._id };
         })
       : [];
+  const [autocompleteValor, setAutocompleteValor] = useState(
+    data?.carrera?.idDepartamento?.nombre
+  );
 
   useEffect(() => {
     if (data) {
@@ -38,6 +42,7 @@ const CareerFormEdit = ({ setIsModalOpen, id }) => {
         id: id,
         nombre: data?.carrera.nombre,
         description: data?.carrera.description,
+        idDepartamento: data?.carrera?.idDepartamento._id,
       });
       console.log(departamentos);
     }
@@ -101,7 +106,15 @@ const CareerFormEdit = ({ setIsModalOpen, id }) => {
     } else {
       try {
         const response = await updateCareer(dataForm);
+        if (response.error) {
+          setTextError(true);
+          setMessageError("El nombre ya está en uso");
+          return;
+        }
         setIsModalOpen(false);
+        notification["success"]({
+          message: "Carrera actualizada correctamente",
+        });
         console.log(response);
       } catch (error) {
         setMessageError(error.message);
@@ -129,6 +142,11 @@ const CareerFormEdit = ({ setIsModalOpen, id }) => {
         error={textError}
         //onBlur={handleBlur}
         value={dataForm.nombre}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />

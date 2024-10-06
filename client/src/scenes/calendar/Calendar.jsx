@@ -8,6 +8,7 @@ import useModal from "../../hooks/useModal";
 import EventoGForm from "../../components/eventoGform/EventoGForm";
 import EventoGFormEdit from "../../components/eventoGformEdit/EventoGFormEdit";
 import { useNavigate } from "react-router-dom";
+import { notification } from "antd";
 import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 
 const Calendar = () => {
@@ -32,6 +33,10 @@ const Calendar = () => {
   const handleDelete = async (id) => {
     try {
       await deleteEventoG({ id });
+      notification.success({
+        message: "Evento eliminado",
+        description: "El evento ha sido eliminado exitosamente",
+      });
     } catch (error) {
       console.log(error);
     }

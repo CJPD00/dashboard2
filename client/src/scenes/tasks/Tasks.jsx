@@ -10,6 +10,7 @@ import { AssignmentOutlined } from "@mui/icons-material";
 import { useGetTareasQuery, useDeleteTareaMutation } from "../../state/api";
 import TareaForm from "../../components/tareaForm/TareaForm";
 import TareaFormEdit from "../../components/tareaFormEdit/TareaFormEdit";
+import { notification } from "antd";
 import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 
 const Tasks = () => {
@@ -128,6 +129,11 @@ const Tasks = () => {
   const handleDelete = async (id) => {
     try {
       await deleteTarea({ id });
+      notification.success({
+        message: "Tarea eliminada",
+        description: "La tarea ha sido eliminada con exito",
+        //placement: "bottomRight",
+      });
     } catch (error) {
       console.log(error);
     }

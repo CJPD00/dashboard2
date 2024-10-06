@@ -13,6 +13,7 @@ import {
   useGetPersonalByIdQuery,
   useUpdatePersonalMutation,
 } from "../../state/api";
+import { notification } from "antd";
 
 const PersonalFormEdit = ({ setIsModalOpen, id }) => {
   //console.log(id);
@@ -144,6 +145,9 @@ const PersonalFormEdit = ({ setIsModalOpen, id }) => {
           return;
         }
         setIsModalOpen(false);
+        notification["success"]({
+          message: "Edición exitosa",
+        });
         //console.log(response.error);
       } catch (error) {
         setMessageError(error.message);
@@ -174,6 +178,11 @@ const PersonalFormEdit = ({ setIsModalOpen, id }) => {
         error={textError}
         //onBlur={handleBlur}
         value={dataForm.name}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />
@@ -186,6 +195,11 @@ const PersonalFormEdit = ({ setIsModalOpen, id }) => {
         error={textError}
         onBlur={handleBlur}
         value={dataForm.lastname}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         //error={passwordError}
         //onBlur={handleBlurPassword}
         onChange={(e) => handlerChange(e)}

@@ -9,6 +9,7 @@ import {
 import { useGetCareersQuery } from "../../state/api";
 import { useState } from "react";
 import { useCreateProjectMutation } from "../../state/api";
+import { notification } from "antd";
 
 const ProjectForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
@@ -93,7 +94,15 @@ const ProjectForm = ({ setIsModalOpen }) => {
     } else {
       try {
         const response = await createProject(dataForm);
+        if (response.error) {
+          setTextError(true);
+          setMessageError("El proyecto ya existe");
+          return;
+        }
         setIsModalOpen(false);
+        notification.success({
+          message: "Proyecto creado exitosamente",
+        });
         //console.log(response);
       } catch (error) {
         setMessageError(error.message);
@@ -134,6 +143,11 @@ const ProjectForm = ({ setIsModalOpen }) => {
         error={textError}
         //onBlur={handleBlur}
         value={dataForm.autor}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />

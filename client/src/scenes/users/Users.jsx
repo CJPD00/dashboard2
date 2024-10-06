@@ -27,6 +27,7 @@ import {
 import useModal from "../../hooks/useModal";
 import useAuth from "../../hooks/useAuth";
 import { logout } from "../../state/auth";
+import { notification } from "antd";
 
 const Users = () => {
   const theme = useTheme();
@@ -149,6 +150,11 @@ const Users = () => {
     if (id === user.id) {
       try {
         const response = await deleteUser({ id });
+        notification["success"]({
+          message: "Usuario eliminado correctamente",
+          // duration: 2000,
+          // placement: "bottomRight",
+        });
         logout();
         window.location.reload();
       } catch (error) {
@@ -157,6 +163,11 @@ const Users = () => {
     } else {
       try {
         const response = await deleteUser({ id });
+        notification["success"]({
+          message: "Usuario eliminado correctamente",
+          // duration: 2000,
+          // placement: "bottomRight",
+        });
       } catch (error) {
         console.log(error);
       }

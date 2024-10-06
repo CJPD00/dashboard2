@@ -152,6 +152,11 @@ const SigupForm = () => {
         value={dataForm.name}
         error={nameError}
         onBlur={handleBlurName}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handleChange(e)}
         sx={{
           mb: 2,
@@ -168,6 +173,11 @@ const SigupForm = () => {
         value={dataForm.lastname}
         error={nameError}
         onBlur={handleBlurName}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handleChange(e)}
         sx={{
           mb: 2,

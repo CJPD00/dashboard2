@@ -10,6 +10,7 @@ import useModal from "../../hooks/useModal";
 import ProjectForm from "../../components/projectForm/ProjectForm";
 import { useDeleteProjectMutation } from "../../state/api";
 import { useNavigate } from "react-router-dom";
+import { notification } from "antd";
 
 const Projects = () => {
   const theme = useTheme();
@@ -131,6 +132,10 @@ const Projects = () => {
   const handleDelete = async (id) => {
     try {
       await deleteProject({ id });
+      notification.success({
+        message: "Proyecto eliminado exitosamente",
+        //placement: "topRight",
+      });
     } catch (error) {
       console.error(error);
     }

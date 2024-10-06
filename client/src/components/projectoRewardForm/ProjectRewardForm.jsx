@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useGetPremiosQuery, useOtorgarPremioMutation } from "../../state/api";
+import { notification } from "antd";
 
 const ProjectRewardForm = ({ setIsModalOpen, id }) => {
   const theme = useTheme();
@@ -64,6 +65,9 @@ const ProjectRewardForm = ({ setIsModalOpen, id }) => {
         }
         //console.log(response);
         setIsModalOpen(false);
+        notification.success({
+          message: "Premio otorgado",
+        });
       } catch (error) {
         setMessageError(error.message);
       }

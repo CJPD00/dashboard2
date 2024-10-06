@@ -9,6 +9,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TextField, Alert } from "@mui/material";
 import { useTheme, Button, Autocomplete } from "@mui/material";
 import { useUpdateEventoGMutation } from "../../state/api";
+import { notification } from "antd";
 
 const EventoGFormEdit = ({ setIsModalOpen, id }) => {
   //console.log(id);
@@ -131,6 +132,10 @@ const EventoGFormEdit = ({ setIsModalOpen, id }) => {
         description: DataForm.description,
       });
       setIsModalOpen(false);
+      notification.success({
+        message: "Evento actualizado",
+        description: "El evento se actualizo correctamente",
+      })
       console.log(response);
     } catch (error) {
       console.log(error);

@@ -7,6 +7,7 @@ import { useTheme, Button, Autocomplete } from "@mui/material";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { useCreateEventoGMutation } from "../../state/api";
+import { notification } from "antd";
 
 const EventoGForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
@@ -110,6 +111,9 @@ const EventoGForm = ({ setIsModalOpen }) => {
         description: DataForm.description,
       });
       setIsModalOpen(false);
+      notification["success"]({
+        message: "El evento ha sido creado correctamente",
+      });
       console.log(response);
     } catch (error) {
       console.log(error);

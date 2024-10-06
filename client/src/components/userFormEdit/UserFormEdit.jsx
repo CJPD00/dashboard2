@@ -15,12 +15,13 @@ import { updateUser as updateUserApi } from "../../state/user";
 //import { login } from "../../state/user";
 
 const UserFormEdit = ({ setIsModalOpen }) => {
-  const { user } = useAuth();
+  const { user, setRefreshUser } = useAuth();
   const [avatar, setAvatar] = useState(null);
   const [dataForm, setDataForm] = useState({});
   const { data, error, isLoading } = useGetAvatarQuery(user.avatar);
   const [updateAvatar, result] = useUpdateAvatarMutation();
   const theme = useTheme();
+  console.log(user, setRefreshUser);
 
   useEffect(() => {
     if (user) {
@@ -61,10 +62,10 @@ const UserFormEdit = ({ setIsModalOpen }) => {
         notification["error"]({
           message: "Error",
           description: "Las contraseñas no coinciden",
-          style: {
-            backgroundColor: "#f5222d",
-            color: "#fff",
-          },
+          // style: {
+          //   backgroundColor: "#f5222d",
+          //   color: "#fff",
+          // },
         });
         return;
       } else {
@@ -75,22 +76,22 @@ const UserFormEdit = ({ setIsModalOpen }) => {
       notification["error"]({
         message: "Error",
         description: "Todos los campos son obligatorios",
-        style: {
-          backgroundColor: "#f5222d",
-          color: "#fff",
-        },
+        // style: {
+        //   backgroundColor: "#f5222d",
+        //   color: "#fff",
+        // },
       });
       return;
     }
-    if (typeof userUpdate.avatar === "object") {
+    if (userUpdate.avatar) {
       if (!verifyPassword(dataForm.password)) {
         notification["error"]({
           message: "Error",
           description: "Contraseña invalida",
-          style: {
-            backgroundColor: "#f5222d",
-            color: "#fff",
-          },
+          // style: {
+          //   backgroundColor: "#f5222d",
+          //   color: "#fff",
+          // },
         });
         return;
       }
@@ -107,58 +108,61 @@ const UserFormEdit = ({ setIsModalOpen }) => {
           notification["success"]({
             message: "Exito",
             description: response.message,
-            style: {
-              backgroundColor: "#52c41a",
-              color: "#fff",
-            },
+            // style: {
+            //   backgroundColor: "#52c41a",
+            //   color: "#fff",
+            // },
           });
           setIsModalOpen(false);
+          //setRefreshUser(true);
+          return;
         })
         .catch((error) => {
           notification["error"]({
             message: "Error",
             description: error.message,
-            style: {
-              backgroundColor: "#f5222d",
-              color: "#fff",
-            },
-          });
-        });
-    } else {
-      if (!verifyPassword(dataForm.password)) {
-        notification["error"]({
-          message: "Error",
-          description: "Contraseña invalida",
-          style: {
-            backgroundColor: "#f5222d",
-            color: "#fff",
-          },
-        });
-        return;
-      }
-      updateUserApi(user.id, token, userUpdate)
-        .then((response) => {
-          notification["success"]({
-            message: "Exito",
-            description: response.message,
-            style: {
-              backgroundColor: "#52c41a",
-              color: "#fff",
-            },
-          });
-          setIsModalOpen(false);
-        })
-        .catch((error) => {
-          notification["error"]({
-            message: "Error",
-            description: error.message,
-            style: {
-              backgroundColor: "#f5222d",
-              color: "#fff",
-            },
+            // style: {
+            //   backgroundColor: "#f5222d",
+            //   color: "#fff",
+            // },
           });
         });
     }
+    if (!verifyPassword(dataForm.password)) {
+      notification["error"]({
+        message: "Error",
+        description: "Contraseña invalida",
+        // style: {
+        //   backgroundColor: "#f5222d",
+        //   color: "#fff",
+        // },
+      });
+      return;
+    }
+    updateUserApi(user.id, token, userUpdate)
+      .then((response) => {
+        notification["success"]({
+          message: "Exito",
+          description: response.message,
+          // style: {
+          //   backgroundColor: "#52c41a",
+          //   color: "#fff",
+          // },
+        });
+        setIsModalOpen(false);
+        //setRefreshUser(true);
+      })
+      .catch((error) => {
+        notification["error"]({
+          message: "Error",
+          description: error.message,
+          // style: {
+          //   backgroundColor: "#f5222d",
+          //   color: "#fff",
+          // },
+        });
+      });
+
     setDataForm({
       name: user.name,
       lastname: user.lastname,
@@ -326,6 +330,11 @@ const EditForm = ({ dataForm, setDataForm, updateUser }) => {
         variant="standard"
         size="small"
         value={dataForm.name}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => setDataForm({ ...dataForm, name: e.target.value })}
         sx={{ mb: 2, width: "100%" }}
       />
@@ -335,6 +344,11 @@ const EditForm = ({ dataForm, setDataForm, updateUser }) => {
         variant="standard"
         size="small"
         value={dataForm.lastname}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => setDataForm({ ...dataForm, lastname: e.target.value })}
         sx={{ mb: 2, width: "100%" }}
       />

@@ -5,7 +5,7 @@ const projectoSchema = new Schema(
   {
     titulo: {
       type: String,
-      //unique: true,
+      unique: true,
       required: true,
     },
     description: {

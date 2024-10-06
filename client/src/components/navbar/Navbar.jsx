@@ -125,7 +125,7 @@ const Navbar = ({
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Configuraciones">
+          <Tooltip title="Editar Perfil">
             <IconButton onClick={handleUserEdit}>
               <SettingsOutlined></SettingsOutlined>
             </IconButton>
@@ -164,7 +164,7 @@ const Navbar = ({
                   {user && user.role}
                 </Typography>
               </Box>
-              <Tooltip title="Cerrar Sesion">
+              <Tooltip title="Cerrar Sesión">
                 <IconButton
                   onClick={handleLogout}
                   //sx={{ color: theme.palette.secondary[100] }}

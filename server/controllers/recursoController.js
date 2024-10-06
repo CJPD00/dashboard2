@@ -212,15 +212,20 @@ export const sendExtEstatuto = async (req, res) => {
 };
 
 export const getPremioImage = async (req, res) => {
-  const id = req.params.id;
-  const premio = await Premio.findById(id);
-  const filePath = `./uploads/premios/${premio.recurso}`;
+  try {
+    const id = req.params.id;
+    const premio = await Premio.findById(id);
+    const filePath = `./uploads/premios/${premio.recurso}`;
 
-  fs.exists(filePath, (exists) => {
-    if (exists) {
-      res.sendFile(path.resolve(filePath));
-    } else {
-      res.status(404).send({ message: "La imagen no existe" });
-    }
-  });
-}; 
+    fs.exists(filePath, (exists) => {
+      if (exists) {
+        res.sendFile(path.resolve(filePath));
+      } else {
+        res.status(404).send({ message: "La imagen no existe" });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error interno del servidor" });
+  }
+};

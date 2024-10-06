@@ -3,6 +3,7 @@ import { TextField, Alert } from "@mui/material";
 import { useTheme, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useUpdatePremioMutation } from "../../state/api";
+import { notification } from "antd";
 
 const PremioFormEdit = ({
   setIsModalOpen,
@@ -73,7 +74,15 @@ const PremioFormEdit = ({
     } else {
       try {
         const response = await updatePremio(dataForm);
+        if (response.error) {
+          setTextError(true);
+          setMessageError("El nombre ya está en uso");
+          return 
+        }
         setIsModalOpen(false);
+        notification["success"]({
+          message: "Premio actualizado correctamente",
+        })
         //console.log(response);
       } catch (error) {
         setMessageError(error.message);

@@ -14,13 +14,27 @@ const AuthProvider = ({ children }) => {
     user: null,
     isLoading: true,
   });
+  const [refreshUser, setRefreshUser] = useState(false);
+  //const accessToken = getAccessToken();
+  const refreshToken = getRefreshToken();
 
   useEffect(() => {
     checkUserLogin(setUser);
   }, []);
 
+  useEffect(() => {
+    if (refreshUser) {
+      refreshAccessToken(refreshToken);
+      setRefreshUser(false);
+    }
+  }, [refreshUser, refreshToken]);
+
   return (
-    <AuthContext.Provider value={user} setUser={setUser}>
+    <AuthContext.Provider
+      value={user}
+      setUser={setUser}
+      setRefreshUser={setRefreshUser}
+    >
       {children}
     </AuthContext.Provider>
   );

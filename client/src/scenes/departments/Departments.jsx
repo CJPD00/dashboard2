@@ -26,6 +26,7 @@ import DepartmentForm from "../../components/departmentForm/DepartmentForm";
 import { DepartmentFormEdit } from "../../components/departmentFormEdit/DepartmentFormEdit";
 import useModal from "../../hooks/useModal";
 import { useDeleteDepartmentMutation } from "../../state/api";
+import {notification} from "antd";
 
 const Departments = () => {
   const { data, isLoading } = useGetDepartmentsQuery();
@@ -119,6 +120,10 @@ const Department = ({ nombre, cantidadProfesores, description, _id }) => {
     setDialogOpen(false);
     try {
       await deleteDepartment({ nombre });
+      notification.success({
+        message: "Departamento eliminado correctamente",
+        //duration: 3,
+      });
     } catch (error) {
       console.log(error);
     }

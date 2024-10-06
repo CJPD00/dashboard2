@@ -11,6 +11,7 @@ import PublicacionFormEdit from "../../components/publicacionFormEdit/Publicacio
 import useModal from "../../hooks/useModal";
 import { useNavigate } from "react-router-dom";
 import { useDeletePublicacionesMutation } from "../../state/api";
+import { notification } from "antd";
 import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 
 const Posts = () => {
@@ -140,6 +141,9 @@ const Posts = () => {
   const handleDelete = async (id) => {
     try {
       await deletePublicacion({ id });
+      notification.success({
+        message: "Publicación eliminada correctamente",
+      });
     } catch (error) {
       console.log(error);
     }

@@ -19,7 +19,7 @@ export const getAllCarreras = async (req, res) => {
 export const getCarreraById = async (req, res) => {
   try {
     const { id } = req.params;
-    const carrera = await Carrera.findById(id).populate("projectos");
+    const carrera = await Carrera.findById(id).populate("idDepartamento");
     res.status(200).json({ carrera, code: 200 });
   } catch (error) {
     res.status(500).json({
@@ -33,7 +33,7 @@ export const getCarrerasByIdDepartamento = async (req, res) => {
   try {
     const { id } = req.params;
     const carreras = await Carrera.find({ idDepartamento: id }).populate(
-      "projectos"
+      "idDepartamento"
     );
     res.status(200).json({ carreras, code: 200 });
   } catch (error) {

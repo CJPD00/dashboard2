@@ -12,10 +12,12 @@ import {
   useUpdateProjectMutation,
   useUploadProjectDocMutation,
 } from "../../state/api";
+import { notification } from "antd";
 
 const ProjectFormEdit = ({ data, setIsModalOpen }) => {
   //console.log(data);
   const theme = useTheme();
+  const sector = data.projecto.sector ? "Si" : "No";
   const [dataForm, setDataForm] = useState(data.projecto);
   const [file, setFile] = useState(null);
   const [messageError, setMessageError] = useState(null);
@@ -26,9 +28,11 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
   const [helperTextTipo, setHelperTextTipo] = useState("");
   const [autoCompleteErrorSector, setAutocompleteErrorSector] = useState(false);
   const [helperTextSector, setHelperTextSector] = useState("");
-  const [autoCompleteValueSector, setAutoCompleteValueSector] = useState(null);
-  const [autoCompleteValueCarrera, setAutoCompleteValueCarrera] =
-    useState(null);
+  const [autoCompleteValueSector, setAutoCompleteValueSector] =
+    useState(sector);
+  const [autoCompleteValueCarrera, setAutoCompleteValueCarrera] = useState(
+    data.projecto.idCarrera.nombre
+  );
   const [autoCompleteErrorCarrera, setAutocompleteErrorCarrera] =
     useState(false);
   const [helperTextCarrera, setHelperTextCarrera] = useState("");
@@ -186,7 +190,15 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
         }
       }
       const response = await updateProject(dataForm);
+      if (response.error) {
+        setTextError(true);
+        setMessageError("El nombre del proyecto ya existe");
+        return;
+      }
       setIsModalOpen(false);
+      notification["success"]({
+        message: "Proyecto editado exitosamente",
+      });
       //console.log(response);
     } catch (error) {
       setMessageError(error.message);
@@ -274,6 +286,11 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
         error={textError}
         //onBlur={handleBlur}
         value={dataForm.autor}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />

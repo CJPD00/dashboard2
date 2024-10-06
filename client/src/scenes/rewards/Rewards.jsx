@@ -28,6 +28,7 @@ import {
   useDeletePremioMutation,
   useGetPremioImageQuery,
 } from "../../state/api";
+import { notification } from "antd";
 
 const Rewards = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -112,6 +113,9 @@ const Reward = ({ title, description, cantidadProjectos, _id }) => {
     try {
       await deletePremio(_id);
       setDialogOpen(false);
+      notification.success({
+        message: "Premio eliminado con exito",
+      });
     } catch (error) {
       console.log(error);
     }

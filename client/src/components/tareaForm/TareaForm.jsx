@@ -7,6 +7,7 @@ import { useTheme, Button } from "@mui/material";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { useCreateTareaMutation } from "../../state/api";
+import { notification } from "antd";
 
 const TareaForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
@@ -87,6 +88,10 @@ const TareaForm = ({ setIsModalOpen }) => {
 
       const response = await createTarea(DataForm);
       setIsModalOpen(false);
+      notification.success({
+        message: "Tarea Creada",
+        description: "La Tarea ha sido creada exitosamente",
+      });
       //console.log(formatFecha);
     }
   };

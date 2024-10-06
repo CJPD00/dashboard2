@@ -2,6 +2,7 @@
 import { TextField, Button, useTheme, Alert } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useUpdateDepartmentMutation } from "../../state/api";
+import { notification } from "antd";
 
 export const DepartmentFormEdit = ({
   nombre,
@@ -79,7 +80,15 @@ export const DepartmentFormEdit = ({
           cantidadProfesores: dataForm.cantidadProfesores,
           description: dataForm.description,
         });
+        if (response.error) {
+          setTextError(true);
+          setMessageError("El nombre ya está en uso");
+          return;
+        }
         setIsModalOpen(false);
+        notification["success"]({
+          message: "Departamento editado correctamente",
+        });
         console.log(response);
       } catch (error) {
         setMessageError(error.message);
@@ -107,6 +116,11 @@ export const DepartmentFormEdit = ({
         error={textError}
         //onBlur={handleBlur}
         value={dataForm.nombre}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />

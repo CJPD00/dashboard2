@@ -3,6 +3,7 @@ import { TextField, Button, useTheme, Alert } from "@mui/material";
 import { useState } from "react";
 //import { notification } from "antd";
 import { useCreateDepartmentMutation } from "../../state/api";
+import { notification } from "antd";
 
 const DepartmentForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
@@ -60,7 +61,16 @@ const DepartmentForm = ({ setIsModalOpen }) => {
     } else {
       try {
         const response = await createDepartment(dataForm);
+        if (response.error) {
+          setTextError(true);
+          setMessageError("El Departamento ya existe");
+          return;
+        }
         setIsModalOpen(false);
+        notification["success"]({
+          message: "Departamento Creado",
+          description: "El Departamento ha sido creado exitosamente",
+        });
         console.log(response);
       } catch (error) {
         setMessageError(error.message);
@@ -88,6 +98,11 @@ const DepartmentForm = ({ setIsModalOpen }) => {
         error={textError}
         //onBlur={handleBlur}
         value={dataForm.nombre}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />

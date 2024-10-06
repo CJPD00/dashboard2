@@ -6,6 +6,7 @@ import {
   useCreatePublicacionesMutation,
   useGetCareersQuery,
 } from "../../state/api";
+import { notification } from "antd";
 
 const PublicacionForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
@@ -101,7 +102,16 @@ const PublicacionForm = ({ setIsModalOpen }) => {
     } else {
       try {
         const response = await createPublicacion(dataForm);
+        if (response.error) {
+          setTextError(true);
+          setMessageError("La publicación ya existe");
+          return;
+        }
         setIsModalOpen(false);
+        notification.success({
+          message: "Publicación Creada",
+          description: "La publicación ha sido creada exitosamente",
+        });
         //console.log(response);
       } catch (error) {
         setMessageError(error.message);
@@ -141,6 +151,11 @@ const PublicacionForm = ({ setIsModalOpen }) => {
         error={textError}
         onBlur={handleBlur}
         value={dataForm.autor}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         //error={passwordError}
         //onBlur={handleBlurPassword}
         onChange={(e) => handlerChange(e)}

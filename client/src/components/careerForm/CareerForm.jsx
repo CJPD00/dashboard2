@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useGetDepartmentsQuery, usePostCareerMutation } from "../../state/api";
+import { notification } from "antd";
 
 const CareerForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
@@ -89,7 +90,15 @@ const CareerForm = ({ setIsModalOpen }) => {
     } else {
       try {
         const response = await createCareer(dataForm);
+        if (response.error) {
+          setTextError(true);
+          setMessageError("La carrera ya existe");
+          return;
+        }
         setIsModalOpen(false);
+        notification["success"]({
+          message: "Carrera creada con éxito",
+        });
         console.log(response);
       } catch (error) {
         setMessageError(error.message);
@@ -117,6 +126,11 @@ const CareerForm = ({ setIsModalOpen }) => {
         error={textError}
         //onBlur={handleBlur}
         value={dataForm.nombre}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />

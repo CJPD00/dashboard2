@@ -4,6 +4,7 @@ import Carrera from "./carrera.js";
 const publicacionSchema = new Schema({
   title: {
     type: String,
+    unique: true,
     required: true,
   },
   fecha: {

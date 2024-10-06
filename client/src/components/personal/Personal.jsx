@@ -12,6 +12,7 @@ import {
 import PersonalForm from "../personalForm/PersonalForm";
 import PersonalFormEdit from "../personalFormEdit/PersonalFormEdit";
 import DataGridCustomToolbarSimple from "../dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
+import { notification } from "antd";
 
 const Personal = ({ id }) => {
   //console.log(id);
@@ -114,6 +115,10 @@ const Personal = ({ id }) => {
   const handleDelete = async (id) => {
     try {
       await deletePersonal({ id });
+      notification["success"]({
+        message: "Miembro eliminado correctamente",
+        description: "El miembro ha sido eliminado exitosamente.",
+      });
     } catch (error) {
       console.error(error);
     }

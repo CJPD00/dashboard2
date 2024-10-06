@@ -10,6 +10,7 @@ import { useState } from "react";
 import { getNames, getCode } from "country-list";
 import { verifyEmail } from "../../helpers/authHelper";
 import { useCreatePersonalMutation } from "../../state/api";
+import { notification } from "antd";
 
 const PersonalForm = ({ id, setIsModalOpen }) => {
   const theme = useTheme();
@@ -111,6 +112,10 @@ const PersonalForm = ({ id, setIsModalOpen }) => {
           return;
         }
         setIsModalOpen(false);
+        notification.success({
+          message: "Creado con exito",
+          description: "Personal creado con exito",
+        });
         //console.log(response.error);
       } catch (error) {
         setMessageError(error.message);
@@ -139,6 +144,11 @@ const PersonalForm = ({ id, setIsModalOpen }) => {
         error={textError}
         //onBlur={handleBlur}
         value={dataForm.name}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />
@@ -151,6 +161,11 @@ const PersonalForm = ({ id, setIsModalOpen }) => {
         error={textError}
         onBlur={handleBlur}
         value={dataForm.lastname}
+        onKeyDown={(e) => {
+          if (!/[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+          }
+        }}
         //error={passwordError}
         //onBlur={handleBlurPassword}
         onChange={(e) => handlerChange(e)}

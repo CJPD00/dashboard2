@@ -3,6 +3,7 @@ import { useCreatePremioMutation } from "../../state/api";
 import { TextField, Alert } from "@mui/material";
 import { useTheme, Button } from "@mui/material";
 import { useState } from "react";
+import { notification } from "antd";
 
 const PremioForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
@@ -75,10 +76,13 @@ const PremioForm = ({ setIsModalOpen }) => {
         const response = await createPremio(formData);
         if (response.error) {
           setArchivoError(true);
-          setMessageError2("Archivo no permitido");
+          setMessageError2("Archivo no permitido o ya existe el premio");
           return;
         }
         setIsModalOpen(false);
+        notification["success"]({
+          message: "Premio creado correctamente",
+        })
         //console.log(response);
       } catch (error) {
         setMessageError(error.message);

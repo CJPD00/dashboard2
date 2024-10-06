@@ -7,6 +7,7 @@ import { useTheme, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useUpdateTareaMutation, useGetTareaByIdQuery } from "../../state/api";
+import { notification } from "antd";
 
 const TareaFormEdit = ({ setIsModalOpen, id }) => {
   const theme = useTheme();
@@ -102,6 +103,10 @@ const TareaFormEdit = ({ setIsModalOpen, id }) => {
         id,
       });
       setIsModalOpen(false);
+      notification.success({
+        message: "Tarea Actualizada",
+        description: "La Tarea ha sido actualizada exitosamente",
+      });
       //console.log(DataForm);
     }
   };

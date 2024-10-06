@@ -7,6 +7,7 @@ import FlexBetween from "../../components/FlexBetween";
 import useModal from "../../hooks/useModal";
 import CareerForm from "../../components/careerForm/CareerForm";
 import CareerFormEdit from "../../components/careerFormEdit/CareerFormEdit";
+import { notification } from "antd";
 import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 import {
   Dialog,
@@ -45,6 +46,9 @@ const Careers = () => {
 
     try {
       await deleteCareer({ id });
+      notification.success({
+        message: "Carrera eliminada correctamente",
+      });
       //setConfirm(false);
     } catch (error) {
       console.log(error);

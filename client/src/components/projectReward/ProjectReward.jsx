@@ -27,6 +27,7 @@ import {
 } from "../../state/api";
 import FlexBetween from "../FlexBetween";
 import ProjectRewardForm from "../projectoRewardForm/ProjectRewardForm";
+import { notification } from "antd";
 
 const ProjectReward = ({ id }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -119,6 +120,10 @@ const Reward = ({ title, description, cantidadProjectos, id, premioId }) => {
     try {
       await revocarPremio(dataForm);
       setDialogOpen(false);
+      notification["success"]({
+        message: "Premio Revocado con éxito!",
+        // duration: 3,
+      });
     } catch (error) {
       console.log(error);
     }
