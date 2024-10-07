@@ -144,7 +144,7 @@ const ProjectForm = ({ setIsModalOpen }) => {
         //onBlur={handleBlur}
         value={dataForm.autor}
         onKeyDown={(e) => {
-          if (!/[a-zA-Z]/.test(e.key)) {
+          if (!/[a-zA-Z ]/.test(e.key)) {
             e.preventDefault();
           }
         }}

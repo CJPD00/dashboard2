@@ -145,7 +145,7 @@ const PersonalForm = ({ id, setIsModalOpen }) => {
         //onBlur={handleBlur}
         value={dataForm.name}
         onKeyDown={(e) => {
-          if (!/[a-zA-Z]/.test(e.key)) {
+          if (!/[a-zA-Z ]/.test(e.key)) {
             e.preventDefault();
           }
         }}
@@ -162,7 +162,7 @@ const PersonalForm = ({ id, setIsModalOpen }) => {
         onBlur={handleBlur}
         value={dataForm.lastname}
         onKeyDown={(e) => {
-          if (!/[a-zA-Z]/.test(e.key)) {
+          if (!/[a-zA-Z ]/.test(e.key)) {
             e.preventDefault();
           }
         }}

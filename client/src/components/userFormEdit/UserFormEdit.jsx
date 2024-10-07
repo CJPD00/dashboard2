@@ -338,7 +338,7 @@ const EditForm = ({ dataForm, setDataForm, updateUser }) => {
         size="small"
         value={dataForm.name}
         onKeyDown={(e) => {
-          if (!/[a-zA-Z]/.test(e.key)) {
+          if (!/[a-zA-Z ]/.test(e.key)) {
             e.preventDefault();
           }
         }}
@@ -352,7 +352,7 @@ const EditForm = ({ dataForm, setDataForm, updateUser }) => {
         size="small"
         value={dataForm.lastname}
         onKeyDown={(e) => {
-          if (!/[a-zA-Z]/.test(e.key)) {
+          if (!/[a-zA-Z ]/.test(e.key)) {
             e.preventDefault();
           }
         }}

@@ -153,7 +153,7 @@ const SigupForm = () => {
         error={nameError}
         onBlur={handleBlurName}
         onKeyDown={(e) => {
-          if (!/[a-zA-Z]/.test(e.key)) {
+          if (!/[a-zA-Z ]/.test(e.key)) {
             e.preventDefault();
           }
         }}
@@ -174,7 +174,7 @@ const SigupForm = () => {
         error={nameError}
         onBlur={handleBlurName}
         onKeyDown={(e) => {
-          if (!/[a-zA-Z]/.test(e.key)) {
+          if (!/[a-zA-Z ]/.test(e.key)) {
             e.preventDefault();
           }
         }}

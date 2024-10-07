@@ -99,7 +99,7 @@ const DepartmentForm = ({ setIsModalOpen }) => {
         //onBlur={handleBlur}
         value={dataForm.nombre}
         onKeyDown={(e) => {
-          if (!/[a-zA-Z]/.test(e.key)) {
+          if (!/[a-zA-Z ]/.test(e.key)) {
             e.preventDefault();
           }
         }}
