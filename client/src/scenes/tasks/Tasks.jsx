@@ -36,7 +36,7 @@ const Tasks = () => {
   const columns = [
     {
       field: "Titulo",
-      headerName: "Titulo",
+      headerName: "Título",
       flex: 0.2,
     },
     {

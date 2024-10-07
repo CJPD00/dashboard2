@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={user}
       setUser={setUser}
-      setRefreshUser={setRefreshUser}
+      //setRefreshUser={setRefreshUser}
     >
       {children}
     </AuthContext.Provider>

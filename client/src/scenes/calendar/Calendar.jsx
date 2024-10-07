@@ -59,7 +59,7 @@ const Calendar = () => {
   const columns = [
     {
       field: "Titulo",
-      headerName: "Titulo",
+      headerName: "Título",
       flex: 0.2,
     },
     {
@@ -146,7 +146,7 @@ const Calendar = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="Eventos" subtitle="Todos las eventos" />
+        <Header title="Eventos" subtitle="Todos los eventos" />
         <Button
           variant="contained"
           color="secondary"

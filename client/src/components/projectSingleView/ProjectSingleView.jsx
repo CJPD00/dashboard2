@@ -146,7 +146,7 @@ const ProjectSingleView = () => {
         }}
       >
         <StatBox
-          title="Titulo del proyecto"
+          title="Título del proyecto"
           value={data && data.projecto.titulo}
           description=""
           icon={
@@ -201,7 +201,7 @@ const ProjectSingleView = () => {
           increase=""
         />
         <StatBox
-          title="Sector Estrategico"
+          title="Sector Estratégico"
           value={data?.projecto.sector ? "Si" : "no"}
           description=""
           icon={

@@ -115,7 +115,6 @@ const UserFormEdit = ({ setIsModalOpen }) => {
           });
           setIsModalOpen(false);
           //setRefreshUser(true);
-          return;
         })
         .catch((error) => {
           notification["error"]({
@@ -127,6 +126,7 @@ const UserFormEdit = ({ setIsModalOpen }) => {
             // },
           });
         });
+      return;
     }
     if (!verifyPassword(dataForm.password)) {
       notification["error"]({
@@ -231,6 +231,7 @@ const UploadAvatar = ({ avatar, setAvatar }) => {
       {...getRootProps()}
       style={{
         position: "relative",
+        flexDirection: "column",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -273,6 +274,12 @@ const UploadAvatar = ({ avatar, setAvatar }) => {
           src={avatarUrl ? avatarUrl : noAvatar}
         ></Avatar>
       )}
+      <Alert
+        severity="warning"
+        sx={{ marginTop: "1rem", backgroundColor: "transparent" }}
+      >
+        Para ver los cambios necesita cerrar sesión
+      </Alert>
     </div>
   );
 };
@@ -325,7 +332,7 @@ const EditForm = ({ dataForm, setDataForm, updateUser }) => {
       }}
     >
       <TextField
-        label="Name"
+        label="Nombre"
         type="text"
         variant="standard"
         size="small"
@@ -339,7 +346,7 @@ const EditForm = ({ dataForm, setDataForm, updateUser }) => {
         sx={{ mb: 2, width: "100%" }}
       />
       <TextField
-        label="Lastname"
+        label="Apellido"
         type="text"
         variant="standard"
         size="small"
@@ -365,7 +372,7 @@ const EditForm = ({ dataForm, setDataForm, updateUser }) => {
         sx={{ mb: 2, width: "100%" }}
       />
       <TextField
-        label="Repeat password"
+        label="Repetir Contraseña"
         name="repeatPassword"
         type="password"
         variant="standard"

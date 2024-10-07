@@ -52,20 +52,20 @@ const Dashboard = () => {
   //console.log("🚀 ~ file: Dashboard.jsx:Dashboard ~ data3", data3);
 
   const columns = [
-    {
-      field: "_id",
-      headerName: "ID",
-      flex: 0.7,
-    },
+    // {
+    //   field: "_id",
+    //   headerName: "ID",
+    //   flex: 0.7,
+    // },
     {
       field: "name",
-      headerName: "Name",
+      headerName: "Nombre",
       flex: 0.3,
     },
 
     {
-      lastName: "lastName",
-      headerName: "Last Name",
+      field: "lastname",
+      headerName: "Apellido",
       flex: 0.5,
     },
     {
@@ -75,7 +75,7 @@ const Dashboard = () => {
     },
     {
       field: "role",
-      headerName: "Role",
+      headerName: "Rol",
       flex: 0.5,
     },
   ];
@@ -128,7 +128,7 @@ const Dashboard = () => {
       <FlexBetween>
         <Header
           title="Panel De Control"
-          subtitle="Bienvenido a la Catedra Honorífica de Ciencias Tecnicas"
+          subtitle="Bienvenido a la Cátedra Honorífica de Ciencias Técnicas"
         />
         <FlexBetween>
           <Button
@@ -180,7 +180,7 @@ const Dashboard = () => {
         <StatBox
           title="Miembros y Colaboradores"
           value={data && data.totalPersonal}
-          description="El ultimo mes"
+          description="El último mes"
           icon={
             <Groups2Outlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
@@ -191,7 +191,7 @@ const Dashboard = () => {
         <StatBox
           title="Total de departamentos"
           value={data && data.totalDepartamentos}
-          description="El ultimo mes"
+          description="El último mes"
           icon={
             <ApartmentOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
@@ -202,7 +202,7 @@ const Dashboard = () => {
         <StatBox
           title="Total de carreras"
           value={data && data.totalCarreras}
-          description="El ultimo mes"
+          description="El último mes"
           icon={
             <BuildOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
@@ -213,7 +213,7 @@ const Dashboard = () => {
         <StatBox
           title="Total de proyectos"
           value={data && data.totalProjectos}
-          description="El ultimo mes"
+          description="El último mes"
           icon={
             <ReceiptLongOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}

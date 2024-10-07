@@ -18,7 +18,7 @@ const DataGridCustomToolbar = ({ searchInput, setSearchInput, setSearch }) => {
           <GridToolbarExport />
         </FlexBetween>
         <TextField
-          label="Search..."
+          label="Buscar..."
           size="small"
           sx={{ width: "15rem", mb: "0.5rem" }}
           onChange={(e) => setSearchInput(e.target.value)}
