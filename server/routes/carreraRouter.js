@@ -14,7 +14,10 @@ const carreraRouter = Router();
 carreraRouter.get("/", getAllCarreras);
 
 //getCarrerasByIdDepartamento
-carreraRouter.get("/:idDepartamento", getCarrerasByIdDepartamento);
+carreraRouter.get(
+  "/byIdDepartamento/:id",
+  getCarrerasByIdDepartamento
+);
 
 //postCarrera
 carreraRouter.post("/", postCarrera);

@@ -6,13 +6,18 @@ import {
   Alert,
   Autocomplete,
 } from "@mui/material";
-import { useGetCareersQuery } from "../../state/api";
+import {
+  useGetCareersQuery,
+  useGetCareersByIdDepartamentoQuery,
+} from "../../state/api";
 import { useState } from "react";
 import { useCreateProjectMutation } from "../../state/api";
 import { notification } from "antd";
+import useAuth from "../../hooks/useAuth";
 
 const ProjectForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
+  const { user } = useAuth();
   const [dataForm, setDataForm] = useState({});
   const [messageError, setMessageError] = useState(null);
   const [textError, setTextError] = useState(null);
@@ -21,12 +26,24 @@ const ProjectForm = ({ setIsModalOpen }) => {
   const [helperText, setHelperText] = useState("");
 
   const { data, isLoading } = useGetCareersQuery();
+  const { data: data2 } = useGetCareersByIdDepartamentoQuery({
+    id: user?.departamento,
+  });
+
+  console.log(data2);
 
   const [createProject, error] = useCreateProjectMutation();
 
   const opciones =
     data?.carreras?.length > 0
       ? data.carreras.map((item) => {
+          return { label: item?.nombre, value: item?._id };
+        })
+      : [];
+
+  const opciones2 =
+    data2?.carreras?.length > 0
+      ? data2.carreras.map((item) => {
           return { label: item?.nombre, value: item?._id };
         })
       : [];
@@ -169,7 +186,7 @@ const ProjectForm = ({ setIsModalOpen }) => {
       />
 
       <Autocomplete
-        options={opciones}
+        options={user.role === "admin" ? opciones : opciones2}
         value={autocompleteValor}
         onChange={handleAutocompleteChange}
         sx={{ width: "100%", mb: 2 }}

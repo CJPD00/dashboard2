@@ -9,10 +9,15 @@ import {
 import { useState } from "react";
 import { useGetDepartmentsQuery, usePostCareerMutation } from "../../state/api";
 import { notification } from "antd";
+import useAuth from "../../hooks/useAuth";
 
 const CareerForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
-  const [dataForm, setDataForm] = useState({});
+  const { user } = useAuth();
+  //console.log(user);
+  const [dataForm, setDataForm] = useState({
+    idDepartamento: user.departamento,
+  });
   const [messageError, setMessageError] = useState(null);
   const [textError, setTextError] = useState(null);
   const [autocompleteValor, setAutocompleteValor] = useState(null);
@@ -150,22 +155,26 @@ const CareerForm = ({ setIsModalOpen }) => {
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />
+      {user.role === "admin" ? (
+        <Autocomplete
+          options={opciones}
+          value={autocompleteValor}
+          onChange={handleAutocompleteChange}
+          sx={{ width: "100%", mb: 2 }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Departamento"
+              variant="outlined"
+              error={autoCompleteError}
+              helperText={helperText}
+            />
+          )}
+        ></Autocomplete>
+      ) : (
+        <></>
+      )}
 
-      <Autocomplete
-        options={opciones}
-        value={autocompleteValor}
-        onChange={handleAutocompleteChange}
-        sx={{ width: "100%", mb: 2 }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Departamento"
-            variant="outlined"
-            error={autoCompleteError}
-            helperText={helperText}
-          />
-        )}
-      ></Autocomplete>
       {textError ? (
         <Alert
           severity="error"

@@ -12,10 +12,12 @@ import TareaForm from "../../components/tareaForm/TareaForm";
 import TareaFormEdit from "../../components/tareaFormEdit/TareaFormEdit";
 import { notification } from "antd";
 import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
+import useAuth from "../../hooks/useAuth";
 
 const Tasks = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
 
@@ -51,7 +53,7 @@ const Tasks = () => {
     },
     {
       headerName: "Acciones",
-      flex: 0.3,
+      flex: user.role === "admin" ? 0.3 : 0.1,
       renderCell: (params) => (
         <div>
           <Button
@@ -72,41 +74,45 @@ const Tasks = () => {
           >
             Ver
           </Button>
-          <Button
-            variant="contained"
-            color="warning"
-            sx={{
-              ":hover": {
-                backgroundColor: "warning.light",
+          {user.role === "admin" && (
+            <Button
+              variant="contained"
+              color="warning"
+              sx={{
+                ":hover": {
+                  backgroundColor: "warning.light",
+                  color: "neutral.white",
+                },
+                backgroundColor: "warning.main",
                 color: "neutral.white",
-              },
-              backgroundColor: "warning.main",
-              color: "neutral.white",
-              borderRadius: "10px",
-              padding: "0.5rem 1rem",
-              marginRight: "1rem",
-            }}
-            onClick={() => handleEdit(params.row.id)}
-          >
-            Editar
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{
-              ":hover": {
-                backgroundColor: "error.light",
+                borderRadius: "10px",
+                padding: "0.5rem 1rem",
+                marginRight: "1rem",
+              }}
+              onClick={() => handleEdit(params.row.id)}
+            >
+              Editar
+            </Button>
+          )}
+          {user.role === "admin" && (
+            <Button
+              variant="contained"
+              color="error"
+              sx={{
+                ":hover": {
+                  backgroundColor: "error.light",
+                  color: "neutral.white",
+                },
+                backgroundColor: "error.main",
                 color: "neutral.white",
-              },
-              backgroundColor: "error.main",
-              color: "neutral.white",
-              borderRadius: "10px",
-              padding: "0.5rem 1rem",
-            }}
-            onClick={() => handleDelete(params.row.id)}
-          >
-            Eliminar
-          </Button>
+                borderRadius: "10px",
+                padding: "0.5rem 1rem",
+              }}
+              onClick={() => handleDelete(params.row.id)}
+            >
+              Eliminar
+            </Button>
+          )}
         </div>
       ),
       sortable: false,
@@ -146,25 +152,27 @@ const Tasks = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="Tareas" subtitle="Todas las Tareas" />
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<AssignmentOutlined />}
-          sx={{
-            ":hover": {
-              backgroundColor: "secondary.light",
+        <Header title="Tareas" subtitle="Todas las Tareas de la Cátedra" />
+        {user.role === "admin" && (
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<AssignmentOutlined />}
+            sx={{
+              ":hover": {
+                backgroundColor: "secondary.light",
+                color: "neutral.white",
+              },
+              backgroundColor: "secondary.main",
               color: "neutral.white",
-            },
-            backgroundColor: "secondary.main",
-            color: "neutral.white",
-            borderRadius: "10px",
-            padding: "0.5rem 1rem",
-          }}
-          onClick={handlePost}
-        >
-          Agregar tarea
-        </Button>
+              borderRadius: "10px",
+              padding: "0.5rem 1rem",
+            }}
+            onClick={handlePost}
+          >
+            Agregar tarea
+          </Button>
+        )}
       </FlexBetween>
       <Box
         mt="40px"

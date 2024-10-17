@@ -28,9 +28,11 @@ import StatBox from "../../components/statBox/StatBox";
 import { DataGrid } from "@mui/x-data-grid";
 import useModal from "../../hooks/useModal";
 import Estatuto from "../../components/estatutoForm/Estatuto";
+import useAuth from "../../hooks/useAuth";
 
 const Dashboard = () => {
   const theme = useTheme();
+  const { user } = useAuth();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { data, isLoading } = useGetTotalsQuery();
   const { data: data2, isLoading: isLoading2 } = useGetTotalsRecentQuery();
@@ -131,23 +133,25 @@ const Dashboard = () => {
           subtitle="Bienvenido a la Cátedra Honorífica de Ciencias Técnicas"
         />
         <FlexBetween>
-          <Button
-            sx={{
-              ":hover": {
-                backgroundColor: "secondary.light",
+          {user.role === "admin" && (
+            <Button
+              sx={{
+                ":hover": {
+                  backgroundColor: "secondary.light",
+                  color: "neutral.white",
+                },
+                backgroundColor: "secondary.main",
                 color: "neutral.white",
-              },
-              backgroundColor: "secondary.main",
-              color: "neutral.white",
-              borderRadius: "10px",
-              padding: "0.5rem 1rem",
-              marginRight: "1rem",
-            }}
-            startIcon={<UploadOutlined />}
-            onClick={handleUpload}
-          >
-            Subir Estatutos
-          </Button>
+                borderRadius: "10px",
+                padding: "0.5rem 1rem",
+                marginRight: "1rem",
+              }}
+              startIcon={<UploadOutlined />}
+              onClick={handleUpload}
+            >
+              Subir Estatutos
+            </Button>
+          )}
           <Button
             sx={{
               ":hover": {

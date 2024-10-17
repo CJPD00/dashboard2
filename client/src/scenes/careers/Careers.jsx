@@ -2,7 +2,12 @@ import Header from "../../components/Header";
 import { Box, useTheme, Button, Alert } from "@mui/material";
 import { BuildOutlined } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useGetCareersQuery, useDeleteCareerMutation } from "../../state/api";
+import useAuth from "../../hooks/useAuth";
+import {
+  useGetCareersQuery,
+  useDeleteCareerMutation,
+  useGetCareersByIdDepartamentoQuery,
+} from "../../state/api";
 import FlexBetween from "../../components/FlexBetween";
 import useModal from "../../hooks/useModal";
 import CareerForm from "../../components/careerForm/CareerForm";
@@ -19,7 +24,12 @@ import { useState } from "react";
 
 const Careers = () => {
   const theme = useTheme();
+  const { user } = useAuth();
   const { data, isLoading } = useGetCareersQuery();
+  console.log(user.departamento);
+  const { data: careersByIdDepartamento } = useGetCareersByIdDepartamentoQuery({
+    id: user?.departamento,
+  });
   const { setIsModalOpen, setModalContent, setModalTitle, isModalOpen } =
     useModal();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -67,6 +77,15 @@ const Careers = () => {
   const rows =
     data?.carreras?.length > 0
       ? data.carreras.map((row) => ({
+          id: row._id,
+          nombre: row.nombre,
+          departamento: row.departamento,
+        }))
+      : [];
+
+  const rows2 =
+    careersByIdDepartamento?.carreras?.length > 0
+      ? careersByIdDepartamento.carreras.map((row) => ({
           id: row._id,
           nombre: row.nombre,
           departamento: row.departamento,
@@ -140,7 +159,14 @@ const Careers = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="Carreras" subtitle="Todos las carreras" />
+        <Header
+          title="Carreras"
+          subtitle={
+            user.role === "admin"
+              ? "Todas las Carreras"
+              : "Carreras del Departamento"
+          }
+        />
         <Button
           variant="contained"
           color="secondary"
@@ -198,7 +224,7 @@ const Careers = () => {
         <DataGrid
           loading={isLoading || !data}
           getRowId={(row) => row.id}
-          rows={rows}
+          rows={user.role !== "user" ? rows : rows2}
           columns={columns}
           slots={{
             toolbar: DataGridCustomToolbarSimple,

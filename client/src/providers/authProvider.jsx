@@ -22,12 +22,12 @@ const AuthProvider = ({ children }) => {
     checkUserLogin(setUser);
   }, []);
 
-  useEffect(() => {
-    if (refreshUser) {
-      refreshAccessToken(refreshToken);
-      setRefreshUser(false);
-    }
-  }, [refreshUser, refreshToken]);
+  // useEffect(() => {
+  //   if (refreshUser) {
+  //     refreshAccessToken(refreshToken);
+  //     setRefreshUser(false);
+  //   }
+  // }, [refreshUser, refreshToken]);
 
   return (
     <AuthContext.Provider

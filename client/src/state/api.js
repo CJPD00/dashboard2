@@ -114,6 +114,10 @@ export const api = createApi({
       query: ({ id }) => `projecto/byId/${id}`,
       providesTags: ["Projects"],
     }),
+    getProjectsByIdDepartamento: build.query({
+      query: (id) => `projecto/byIdDepartamento/${id}`,
+      providesTags: ["Projects"],
+    }),
     createProject: build.mutation({
       query: (project) => ({
         url: "projecto",
@@ -151,6 +155,10 @@ export const api = createApi({
     }),
     getCareerById: build.query({
       query: (id) => `carrera/byId/${id}`,
+      providesTags: ["Careers"],
+    }),
+    getCareersByIdDepartamento: build.query({
+      query: ({ id }) => `carrera/byIdDepartamento/${id}`,
       providesTags: ["Careers"],
     }),
     postCareer: build.mutation({
@@ -497,11 +505,13 @@ export const {
   useGetUsersQuery,
   useGetProjectsQuery,
   useGetProjectByIdQuery,
+  useGetProjectsByIdDepartamentoQuery,
   useCreateProjectMutation,
   useDeleteProjectMutation,
   useUpdateProjectMutation,
   useGetCareersQuery,
   useGetCareerByIdQuery,
+  useGetCareersByIdDepartamentoQuery,
   usePostCareerMutation,
   useUpdateCareerMutation,
   useDeleteCareerMutation,

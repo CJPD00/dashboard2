@@ -12,9 +12,11 @@ import {
   useGetDepartmentsQuery,
 } from "../../state/api";
 import { notification } from "antd";
+import useAuth from "../../hooks/useAuth";
 
 const CareerFormEdit = ({ setIsModalOpen, id }) => {
   const theme = useTheme();
+  const { user } = useAuth();
   const [dataForm, setDataForm] = useState({});
   const [messageError, setMessageError] = useState(null);
   const [textError, setTextError] = useState(null);
@@ -167,21 +169,23 @@ const CareerFormEdit = ({ setIsModalOpen, id }) => {
         sx={{ mb: 2, width: "100%" }}
       />
 
-      <Autocomplete
-        options={opciones}
-        value={autocompleteValor}
-        onChange={handleAutocompleteChange}
-        sx={{ width: "100%", mb: 2 }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Departamento"
-            variant="outlined"
-            error={autoCompleteError}
-            helperText={helperText}
-          />
-        )}
-      ></Autocomplete>
+      {user.role === "admin" && (
+        <Autocomplete
+          options={opciones}
+          value={autocompleteValor}
+          onChange={handleAutocompleteChange}
+          sx={{ width: "100%", mb: 2 }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Departamento"
+              variant="outlined"
+              error={autoCompleteError}
+              helperText={helperText}
+            />
+          )}
+        ></Autocomplete>
+      )}
       {textError ? (
         <Alert
           severity="error"

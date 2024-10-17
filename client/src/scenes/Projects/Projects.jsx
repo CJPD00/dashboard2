@@ -1,7 +1,10 @@
 import { useState } from "react";
 import FlexBetween from "../../components/FlexBetween";
 import { DataGrid } from "@mui/x-data-grid";
-import { useGetProjectsQuery } from "../../state/api";
+import {
+  useGetProjectsQuery,
+  useGetProjectsByIdDepartamentoQuery,
+} from "../../state/api";
 import Header from "../../components/Header";
 import { useTheme, Box, Button, Alert } from "@mui/material";
 import { ReceiptLongOutlined } from "@mui/icons-material";
@@ -11,10 +14,12 @@ import ProjectForm from "../../components/projectForm/ProjectForm";
 import { useDeleteProjectMutation } from "../../state/api";
 import { useNavigate } from "react-router-dom";
 import { notification } from "antd";
+import useAuth from "../../hooks/useAuth";
 
 const Projects = () => {
   const theme = useTheme();
   const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
+  const { user } = useAuth();
 
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
@@ -30,6 +35,10 @@ const Projects = () => {
     search,
   });
 
+  const { data: data2 } = useGetProjectsByIdDepartamentoQuery(
+    user?.departamento
+  );
+
   const [deleteProject, error] = useDeleteProjectMutation();
 
   const navigate = useNavigate();
@@ -39,6 +48,19 @@ const Projects = () => {
   const rows =
     data?.projectos?.length > 0
       ? data.projectos.map((row) => ({
+          id: row._id,
+          Titulo: row.titulo,
+          Autor: row.autor,
+          Estado: row.estado,
+          Tipo: row.tipo,
+          Sector: row.sector,
+          idCarrera: row?.idCarrera?.nombre || row.carrera,
+        }))
+      : [];
+
+  const rows2 =
+    data2?.projectos?.length > 0
+      ? data2.projectos.map((row) => ({
           id: row._id,
           Titulo: row.titulo,
           Autor: row.autor,
@@ -148,7 +170,14 @@ const Projects = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="Proyectos" subtitle="Todos los proyectos." />
+        <Header
+          title="Proyectos"
+          subtitle={
+            user.role === "admin"
+              ? "Proyectos de la Cátedra"
+              : "Proyectos del Departamento"
+          }
+        />
         <Button
           variant="contained"
           color="secondary"
@@ -210,7 +239,7 @@ const Projects = () => {
         <DataGrid
           loading={isLoading || !data}
           getRowId={(row) => row.id}
-          rows={rows}
+          rows={user.role === "admin" ? rows : rows2}
           columns={columns}
           rowCount={data ? data.total : 0}
           rowsPerPageOptions={[20, 50, 100]}

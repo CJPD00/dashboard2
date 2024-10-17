@@ -28,40 +28,45 @@ import {
 import FlexBetween from "../FlexBetween";
 import ProjectRewardForm from "../projectoRewardForm/ProjectRewardForm";
 import { notification } from "antd";
+import useAuth from "../../hooks/useAuth";
 
 const ProjectReward = ({ id }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const { data, isLoading } = useGetPremiosByIdProjectQuery(id);
   const { setIsModalOpen, setModalContent, setModalTitle } = useModal();
 
+  const { user } = useAuth();
+
   return (
     <Box mt={"3rem"} pb={"5rem"}>
       <FlexBetween>
         <Header title="Premios" subtitle="Todos los Premios." />
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<EmojiEventsOutlined />}
-          onClick={() => {
-            setIsModalOpen(true);
-            setModalContent(
-              <ProjectRewardForm setIsModalOpen={setIsModalOpen} id={id} />
-            );
-            setModalTitle("Otorgar Premio");
-          }}
-          sx={{
-            ":hover": {
-              backgroundColor: "secondary.light",
+        {user.role === "admin" && (
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<EmojiEventsOutlined />}
+            onClick={() => {
+              setIsModalOpen(true);
+              setModalContent(
+                <ProjectRewardForm setIsModalOpen={setIsModalOpen} id={id} />
+              );
+              setModalTitle("Otorgar Premio");
+            }}
+            sx={{
+              ":hover": {
+                backgroundColor: "secondary.light",
+                color: "neutral.white",
+              },
+              backgroundColor: "secondary.main",
               color: "neutral.white",
-            },
-            backgroundColor: "secondary.main",
-            color: "neutral.white",
-            borderRadius: "10px",
-            padding: "0.5rem 1rem",
-          }}
-        >
-          Otorgar Premio
-        </Button>
+              borderRadius: "10px",
+              padding: "0.5rem 1rem",
+            }}
+          >
+            Otorgar Premio
+          </Button>
+        )}
       </FlexBetween>
 
       {!isLoading ? (
@@ -96,6 +101,7 @@ const ProjectReward = ({ id }) => {
 
 const Reward = ({ title, description, cantidadProjectos, id, premioId }) => {
   const theme = useTheme();
+  const { user } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
   const [dataForm, setDataForm] = useState({
     projectId: id,
@@ -182,22 +188,24 @@ const Reward = ({ title, description, cantidadProjectos, id, premioId }) => {
           >
             Evidencia
           </Button>
-          <Button
-            sx={{
-              ":hover": {
-                backgroundColor: "secondary.light",
+          {user.role === "admin" && (
+            <Button
+              sx={{
+                ":hover": {
+                  backgroundColor: "secondary.light",
+                  color: "neutral.white",
+                },
+                backgroundColor: "secondary.main",
                 color: "neutral.white",
-              },
-              backgroundColor: "secondary.main",
-              color: "neutral.white",
-              borderRadius: "10px",
-              padding: "0.5rem 1rem",
-              margin: "0.5rem",
-            }}
-            onClick={handleRevocar}
-          >
-            Revocar
-          </Button>
+                borderRadius: "10px",
+                padding: "0.5rem 1rem",
+                margin: "0.5rem",
+              }}
+              onClick={handleRevocar}
+            >
+              Revocar
+            </Button>
+          )}
         </Stack>
       </Collapse>
       <Dialog open={dialogOpen} onClose={handleCancel}>

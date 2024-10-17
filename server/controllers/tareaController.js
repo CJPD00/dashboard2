@@ -28,6 +28,7 @@ export const createTarea = async (req, res) => {
     await newTarea.save();
     res.status(201).json({ newTarea, code: 201 });
   } catch (error) {
+    console.log(error)
     res.status(409).json({ message: error.message });
   }
 };

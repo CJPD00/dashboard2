@@ -9,14 +9,17 @@ import {
 import { useState } from "react";
 import {
   useGetCareersQuery,
+  useGetCareersByIdDepartamentoQuery,
   useUpdateProjectMutation,
   useUploadProjectDocMutation,
 } from "../../state/api";
 import { notification } from "antd";
+import useAuth from "../../hooks/useAuth";
 
 const ProjectFormEdit = ({ data, setIsModalOpen }) => {
   //console.log(data);
   const theme = useTheme();
+  const { user } = useAuth();
   const sector = data.projecto.sector ? "Si" : "No";
   const [dataForm, setDataForm] = useState(data.projecto);
   const [file, setFile] = useState(null);
@@ -40,6 +43,9 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
   const [messageError2, setMessageError2] = useState("");
 
   const { data: carrerasData, isLoading } = useGetCareersQuery();
+  const { data: carrerasData2 } = useGetCareersByIdDepartamentoQuery({
+    id: user?.departamento,
+  });
   const [updateProject, error] = useUpdateProjectMutation();
   const [uploadProjectDoc, uploadProjectDocResult] =
     useUploadProjectDocMutation();
@@ -47,6 +53,13 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
   const carrerasOpciones =
     carrerasData?.carreras?.length > 0
       ? carrerasData.carreras.map((item) => {
+          return { label: item?.nombre, value: item?._id };
+        })
+      : [];
+
+  const carrerasOpciones2 =
+    carrerasData2?.carreras?.length > 0
+      ? carrerasData2.carreras.map((item) => {
           return { label: item?.nombre, value: item?._id };
         })
       : [];
@@ -357,7 +370,7 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
         )}
       ></Autocomplete>
       <Autocomplete
-        options={carrerasOpciones}
+        options={user.role === "admin" ? carrerasOpciones : carrerasOpciones2}
         value={autoCompleteValueCarrera}
         onChange={handleAutocompleteChangeCarrera}
         sx={{ width: "100%", mb: 2 }}

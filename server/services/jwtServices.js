@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import moment from "moment";
+//import departamento from "../models/departamento";
 
 export const createToken = (user) => {
   const payload = {
@@ -10,7 +11,7 @@ export const createToken = (user) => {
     role: user.role,
     active: user.active,
     avatar: user.avatar,
-    department: user.department,
+    departamento: user.departamento,
     iat: moment().unix(),
     exp: moment().add(14, "days").unix(),
   };

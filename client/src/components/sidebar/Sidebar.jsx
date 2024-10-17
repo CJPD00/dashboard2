@@ -91,6 +91,14 @@ const Sidebar = ({
       text: "Agenda",
       icon: null,
     },
+    // ...(user.role !== "user"
+    //   ? [
+    //       {
+    //         text: "Eventos",
+    //         icon: <CalendarMonthOutlined />,
+    //       },
+    //     ]
+    //   : []),
     {
       text: "Eventos",
       icon: <CalendarMonthOutlined />,

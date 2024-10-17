@@ -22,6 +22,11 @@ const tareaSchema = new Schema(
       type: String,
       required: true,
     },
+    // departamento: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Departamento",
+    //   required: true,
+    // },
   },
   {
     timestamps: true,

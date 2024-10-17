@@ -105,6 +105,27 @@ export const getProjectById = async (req, res) => {
   }
 };
 
+//getProjectosByIdDepartamento
+export const getProjectosByIdDepartamento = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const carreras = await Carrera.find({ idDepartamento: id });
+    if (!carreras) {
+      return res.status(404).json({
+        message: "Carreras no encontradas",
+        code: 404,
+      });
+    }
+    const projectos = await Projecto.find({
+      idCarrera: carreras.map((c) => c._id),
+    }).populate("idCarrera");
+    res.status(200).json({ projectos, code: 200 });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const deleteProjecto = async (req, res) => {
   const { id } = req.params;
   try {
