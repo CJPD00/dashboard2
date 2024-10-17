@@ -67,10 +67,14 @@ const Sidebar = ({
           },
         ]
       : []),
-    {
-      text: "Departamentos",
-      icon: <ApartmentOutlined />,
-    },
+    ...(user.role !== "user"
+      ? [
+          {
+            text: "Departamentos",
+            icon: <ApartmentOutlined />,
+          },
+        ]
+      : []),
     {
       text: "Carreras",
       icon: <BuildOutlined />,
@@ -103,10 +107,14 @@ const Sidebar = ({
       text: "Publicaciones",
       icon: <BorderColorOutlined />,
     },
-    {
-      text: "Premios",
-      icon: <EmojiEventsOutlined />,
-    },
+    ...(user.role !== "user"
+      ? [
+          {
+            text: "Premios",
+            icon: <EmojiEventsOutlined />,
+          },
+        ]
+      : []),
     {
       text: "Estadísticas",
       icon: null,
