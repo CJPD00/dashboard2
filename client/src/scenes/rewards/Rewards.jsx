@@ -87,7 +87,7 @@ const Rewards = () => {
   );
 };
 
-const Reward = ({ title, description, cantidadProjectos, _id }) => {
+const Reward = ({ title, description, cantidadProjectos, _id, tipo }) => {
   const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -130,6 +130,7 @@ const Reward = ({ title, description, cantidadProjectos, _id }) => {
         title={title}
         description={description}
         cantidadProjectos={cantidadProjectos}
+        tipo={tipo}
       />
     );
     setModalTitle("Editar Premio");

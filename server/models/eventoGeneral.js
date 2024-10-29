@@ -24,14 +24,7 @@ const eventoGeneralSchema = new Schema(
     // },
     type: {
       type: String,
-      enum: [
-        "facultad",
-        "universidad",
-        "provincial",
-        "nacional",
-        "internacional",
-      ],
-      default: "facultad",
+      required: true,
     },
   },
   {

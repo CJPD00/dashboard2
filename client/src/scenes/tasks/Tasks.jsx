@@ -13,6 +13,7 @@ import TareaFormEdit from "../../components/tareaFormEdit/TareaFormEdit";
 import { notification } from "antd";
 import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 import useAuth from "../../hooks/useAuth";
+import { esES } from "@mui/x-data-grid/locales";
 
 const Tasks = () => {
   const theme = useTheme();
@@ -210,6 +211,7 @@ const Tasks = () => {
           slots={{
             toolbar: DataGridCustomToolbarSimple,
           }}
+          localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         />
       </Box>
     </Box>

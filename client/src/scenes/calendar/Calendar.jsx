@@ -10,6 +10,7 @@ import EventoGFormEdit from "../../components/eventoGformEdit/EventoGFormEdit";
 import { useNavigate } from "react-router-dom";
 import { notification } from "antd";
 import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
+import { esES } from "@mui/x-data-grid/locales";
 import useAuth from "../../hooks/useAuth";
 
 const Calendar = () => {
@@ -208,6 +209,7 @@ const Calendar = () => {
           rows={rows}
           columns={columns}
           slots={{ toolbar: DataGridCustomToolbarSimple }}
+          localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         />
       </Box>
     </Box>

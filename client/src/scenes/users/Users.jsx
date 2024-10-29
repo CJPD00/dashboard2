@@ -28,6 +28,7 @@ import useModal from "../../hooks/useModal";
 import useAuth from "../../hooks/useAuth";
 import { logout } from "../../state/auth";
 import { notification } from "antd";
+import { esES } from "@mui/x-data-grid/locales";
 
 const Users = () => {
   const theme = useTheme();
@@ -227,6 +228,7 @@ const Users = () => {
           getRowId={(row) => row.id}
           rows={rows}
           columns={columns}
+          localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         />
       </Box>
       {/* <Dialog open={dialogOpen} onClose={handleCancel}>

@@ -14,6 +14,7 @@ import { useDeletePublicacionesMutation } from "../../state/api";
 import { notification } from "antd";
 import DataGridCustomToolbarSimple from "../../components/dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 import useAuth from "../../hooks/useAuth";
+import { esES } from "@mui/x-data-grid/locales";
 
 const Posts = () => {
   const theme = useTheme();
@@ -220,6 +221,7 @@ const Posts = () => {
           slots={{
             toolbar: DataGridCustomToolbarSimple,
           }}
+          localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         />
       </Box>
     </Box>

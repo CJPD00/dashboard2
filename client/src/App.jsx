@@ -23,11 +23,12 @@ import PublicacionSingleView from "./components/publicacionSingleView/Publicacio
 import TareaSingleView from "./components/tareaSingleView/TareaSingleView";
 import ProjectSingleView from "./components/projectSingleView/ProjectSingleView";
 import { ModalProvider } from "./providers/ModalProvider";
+import { esES } from "@mui/x-data-grid/locales";
 import Auth from "./scenes/auth/Auth";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode], esES);
 
   return (
     <div className="app">

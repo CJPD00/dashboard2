@@ -15,6 +15,7 @@ import { useDeleteProjectMutation } from "../../state/api";
 import { useNavigate } from "react-router-dom";
 import { notification } from "antd";
 import useAuth from "../../hooks/useAuth";
+import {esES} from "@mui/x-data-grid/locales";
 
 const Projects = () => {
   const theme = useTheme();
@@ -261,6 +262,7 @@ const Projects = () => {
               setSearch,
             },
           }}
+          localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         />
       </Box>
     </Box>

@@ -1,7 +1,7 @@
 //import React from 'react'
 
 import { useState, useEffect } from "react";
-import { useGetEventoByIdQuery } from "../../state/api";
+import { useGetEventoByIdQuery, useGetTiposEventoQuery } from "../../state/api";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -28,6 +28,7 @@ const EventoGFormEdit = ({ setIsModalOpen, id }) => {
   const [updateEvent, error] = useUpdateEventoGMutation();
 
   const { data } = useGetEventoByIdQuery(id);
+  const { data: dataTipos } = useGetTiposEventoQuery();
 
   useEffect(() => {
     if (data) {
@@ -43,13 +44,12 @@ const EventoGFormEdit = ({ setIsModalOpen, id }) => {
 
   //console.log(dataForm);
 
-  const opciones = [
-    { value: "facultad", label: "Facultad" },
-    { value: "universidad", label: "Universidad" },
-    { value: "provincial", label: "Provincial" },
-    { value: "nacional", label: "Nacional" },
-    { value: "internacional", label: "Internacional" },
-  ];
+  const opciones =
+    dataTipos?.tiposEventos?.length > 0
+      ? dataTipos.tiposEventos.map((item) => {
+          return { label: item?.name, value: item?._id };
+        })
+      : [];
 
   const handleBlur = () => {
     if (
@@ -121,7 +121,7 @@ const EventoGFormEdit = ({ setIsModalOpen, id }) => {
       const DataForm = {
         ...dataForm,
         day: formatFecha,
-        type: autocompleteValor.value,
+        type: autocompleteValor.label,
       };
       console.log(DataForm);
       const response = await updateEvent({
@@ -135,7 +135,7 @@ const EventoGFormEdit = ({ setIsModalOpen, id }) => {
       notification.success({
         message: "Evento actualizado",
         description: "El evento se actualizo correctamente",
-      })
+      });
       console.log(response);
     } catch (error) {
       console.log(error);

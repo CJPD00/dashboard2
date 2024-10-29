@@ -17,6 +17,10 @@ const premioSchema = new Schema(
       required: true,
       default: 0,
     },
+    tipo: {
+      type: String,
+      required: true,
+    },
     projectos: [
       {
         type: mongoose.Schema.Types.ObjectId,

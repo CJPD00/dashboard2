@@ -1,9 +1,10 @@
 //import React from 'react'
 import { useCreatePremioMutation } from "../../state/api";
-import { TextField, Alert } from "@mui/material";
+import { TextField, Alert, Autocomplete } from "@mui/material";
 import { useTheme, Button } from "@mui/material";
 import { useState } from "react";
 import { notification } from "antd";
+import { useGetTiposPremioQuery } from "../../state/api";
 
 const PremioForm = ({ setIsModalOpen }) => {
   const theme = useTheme();
@@ -13,8 +14,27 @@ const PremioForm = ({ setIsModalOpen }) => {
   const [file, setFile] = useState(null);
   const [archivoError, setArchivoError] = useState(false);
   const [messageError2, setMessageError2] = useState(null);
+  const [autoCompleteValor, setAutocompleteValor] = useState(null);
+  const [autoCompleteError, setAutocompleteError] = useState(false);
+  const [helperText, setHelperText] = useState(" ");
 
   const [createPremio, error] = useCreatePremioMutation();
+
+  const { data } = useGetTiposPremioQuery();
+
+  const opciones =
+    data?.tiposPremios?.length > 0
+      ? data.tiposPremios.map((item) => {
+          return { label: item?.name, value: item?._id };
+        })
+      : [];
+
+  const handleAutoCompleteChange = (event, value) => {
+    setAutocompleteValor(value);
+    setAutocompleteError(false);
+    setHelperText(" ");
+    setDataForm({ ...dataForm, tipo: value?.label });
+  };
 
   const handleBlur = () => {
     if (
@@ -62,6 +82,11 @@ const PremioForm = ({ setIsModalOpen }) => {
       setTextError(true);
       return;
     }
+    if (!autoCompleteValor) {
+      setAutocompleteError(true);
+      setHelperText("Por favor, seleccione un tipo de premio");
+      return;
+    }
     if (!file) {
       setArchivoError(true);
       setMessageError2("Por favor seleccione un archivo");
@@ -82,7 +107,7 @@ const PremioForm = ({ setIsModalOpen }) => {
         setIsModalOpen(false);
         notification["success"]({
           message: "Premio creado correctamente",
-        })
+        });
         //console.log(response);
       } catch (error) {
         setMessageError(error.message);
@@ -175,6 +200,21 @@ const PremioForm = ({ setIsModalOpen }) => {
         onChange={(e) => handlerChange(e)}
         sx={{ mb: 2, width: "100%" }}
       />
+      <Autocomplete
+        options={opciones}
+        value={autoCompleteValor}
+        onChange={handleAutoCompleteChange}
+        sx={{ width: "100%", mb: 2 }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Tipo"
+            variant="outlined"
+            error={autoCompleteError}
+            helperText={helperText}
+          />
+        )}
+      ></Autocomplete>
 
       {textError ? (
         <Alert

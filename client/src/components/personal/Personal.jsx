@@ -13,6 +13,7 @@ import PersonalForm from "../personalForm/PersonalForm";
 import PersonalFormEdit from "../personalFormEdit/PersonalFormEdit";
 import DataGridCustomToolbarSimple from "../dataGridCustomToolbarSimple/DataGridCustomToolbarSimple";
 import { notification } from "antd";
+import { esES } from "@mui/x-data-grid/locales";
 
 const Personal = ({ id }) => {
   //console.log(id);
@@ -191,6 +192,7 @@ const Personal = ({ id }) => {
           slots={{
             toolbar: DataGridCustomToolbarSimple,
           }}
+          localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         />
       </Box>
       {/* <Dialog open={dialogOpen} onClose={handleCancel}>

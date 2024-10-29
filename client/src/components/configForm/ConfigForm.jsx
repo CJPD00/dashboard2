@@ -180,7 +180,9 @@ const ConfigForm = () => {
           ))}
         </Paper>
       )}
-      <Divider sx={{ my: 2 }}></Divider>
+      <Divider
+        sx={{ my: 2, backgroundColor: theme.palette.background.alt }}
+      ></Divider>
       <FlexBetween>
         <TextField
           label="Nuevo tipo de premio"

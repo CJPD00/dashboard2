@@ -21,7 +21,8 @@ import {
   DialogActions,
 } from "@mui/material";
 import { useState } from "react";
-
+import {esES} from "@mui/x-data-grid/locales";
+ 
 const Careers = () => {
   const theme = useTheme();
   const { user } = useAuth();
@@ -229,6 +230,7 @@ const Careers = () => {
           slots={{
             toolbar: DataGridCustomToolbarSimple,
           }}
+          localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         />
       </Box>
       {/* <Dialog open={dialogOpen} onClose={handleCancel}>

@@ -6,7 +6,10 @@ import { TextField, Alert } from "@mui/material";
 import { useTheme, Button, Autocomplete } from "@mui/material";
 import { useState } from "react";
 import dayjs from "dayjs";
-import { useCreateEventoGMutation } from "../../state/api";
+import {
+  useCreateEventoGMutation,
+  useGetTiposEventoQuery,
+} from "../../state/api";
 import { notification } from "antd";
 
 const EventoGForm = ({ setIsModalOpen }) => {
@@ -21,15 +24,17 @@ const EventoGForm = ({ setIsModalOpen }) => {
   const [helperText2, setHelperText2] = useState("");
   const [helperText, setHelperText] = useState("");
 
+  const { data } = useGetTiposEventoQuery();
   const [createEvent, error] = useCreateEventoGMutation();
 
-  const opciones = [
-    { value: "facultad", label: "Facultad" },
-    { value: "universidad", label: "Universidad" },
-    { value: "provincial", label: "Provincial" },
-    { value: "nacional", label: "Nacional" },
-    { value: "internacional", label: "Internacional" },
-  ];
+  console.log(data);
+
+  const opciones =
+    data?.tiposEventos?.length > 0
+      ? data.tiposEventos.map((item) => {
+          return { label: item?.name, value: item?._id };
+        })
+      : [];
 
   const handleBlur = () => {
     if (
@@ -66,14 +71,14 @@ const EventoGForm = ({ setIsModalOpen }) => {
 
   const handleAutocompleteChange = (event, newValue) => {
     setAutocompleteValor(newValue);
-    setDataForm({ ...dataForm, type: newValue.value });
+    setDataForm({ ...dataForm, type: newValue.label });
     setAutocompleteError(false);
     setHelperText("");
-    //console.log(dataForm);
+    console.log(newValue.label);
   };
 
   const handleClick = async () => {
-    //console.log(dataForm.day);
+    console.log(dataForm);
     if (!dataForm.type) {
       setAutocompleteError(true);
       setHelperText("elige un tipo de evento");
@@ -101,7 +106,7 @@ const EventoGForm = ({ setIsModalOpen }) => {
       const DataForm = {
         ...dataForm,
         day: formatFecha,
-        type: autocompleteValor.value,
+        type: autocompleteValor.label,
       };
       //console.log(DataForm);
       const response = await createEvent({
