@@ -2,9 +2,10 @@ import {
   LightModeOutlined,
   DarkModeOutlined,
   MenuOutlined,
-  SearchOutlined,
+  //SearchOutlined,
   SettingsOutlined,
   LogoutOutlined,
+  PersonAddAlt1Outlined,
 } from "@mui/icons-material";
 //import { useTheme } from "@mui/material";
 
@@ -27,6 +28,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import UserFormEdit from "../userFormEdit/UserFormEdit";
+import ConfigForm from "../configForm/ConfigForm";
 import { useState } from "react";
 import { useGetAvatarQuery } from "../../state/api";
 
@@ -54,6 +56,12 @@ const Navbar = ({
     setIsModalOpen(true);
     setModalContent(<UserFormEdit setIsModalOpen={setIsModalOpen} />);
     setModalTitle("Editar Perfil");
+  };
+
+  const handleConfigEdit = () => {
+    setIsModalOpen(true);
+    setModalContent(<ConfigForm setIsModalOpen={setIsModalOpen} />);
+    setModalTitle("Configuraciones");
   };
 
   return (
@@ -124,10 +132,18 @@ const Navbar = ({
               )}
             </IconButton>
           </Tooltip>
-
+          {user.role !== "user" && (
+            <Tooltip title="Configuraciones">
+              <IconButton onClick={handleConfigEdit}>
+                <SettingsOutlined sx={{ fontSize: "25px" }}></SettingsOutlined>
+              </IconButton>
+            </Tooltip>
+          )}
           <Tooltip title="Editar Perfil">
             <IconButton onClick={handleUserEdit}>
-              <SettingsOutlined></SettingsOutlined>
+              <PersonAddAlt1Outlined
+                sx={{ fontSize: "25px" }}
+              ></PersonAddAlt1Outlined>
             </IconButton>
           </Tooltip>
           <FlexBetween>

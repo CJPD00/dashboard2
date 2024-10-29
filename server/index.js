@@ -22,6 +22,8 @@ import publicacionRouter from "./routes/publicacionRouter.js";
 import premioRouter from "./routes/premioRouter.js";
 import tareaRouter from "./routes/tareaRouter.js";
 import docRouter from "./routes/docRouter.js";
+import tipoEventoRouter from "./routes/tipoEventoRouter.js";
+import tipoPremioRouter from "./routes/tipoPremioRouter.js";
 
 // configuracion de la aplicacion
 dotenv.config();
@@ -53,6 +55,8 @@ app.use("/publicacion", publicacionRouter);
 app.use("/premio", premioRouter);
 app.use("/tarea", tareaRouter);
 app.use("/doc", docRouter);
+app.use("/tipoEvento", tipoEventoRouter);
+app.use("/tipoPremio", tipoPremioRouter);
 
 //connect to mongodb
 mongoose

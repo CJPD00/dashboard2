@@ -79,7 +79,7 @@ const SigupForm = () => {
       setMessageError("Los campos nombre y apellido son obligatorios");
       return;
     } else if (emailError) {
-      setMessageError("Ingrese un correo valido");
+      setMessageError("Ingrese un correo válido");
       return;
     } else if (passwordError) {
       setMessageError(

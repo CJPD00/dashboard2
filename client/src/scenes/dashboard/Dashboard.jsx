@@ -130,7 +130,7 @@ const Dashboard = () => {
       <FlexBetween>
         <Header
           title="Panel De Control"
-          subtitle="Bienvenido a la Cátedra Honorífica de Ciencias Técnicas"
+          subtitle="Cátedra Honorífica de Ciencias Técnicas"
         />
         <FlexBetween>
           {user.role === "admin" && (

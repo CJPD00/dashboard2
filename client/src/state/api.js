@@ -25,6 +25,8 @@ export const api = createApi({
     "Tareas",
     "Personal",
     "DOCS",
+    "TipoEvento",
+    "TipoPremio",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -490,6 +492,50 @@ export const api = createApi({
       }),
       providesTags: ["Premios"],
     }),
+    getTiposEvento: build.query({
+      query: () => ({
+        url: `tipoEvento`,
+        method: "GET",
+      }),
+      providesTags: ["TipoEvento"],
+    }),
+    postTipoEvento: build.mutation({
+      query: ({ name }) => ({
+        url: `tipoEvento`,
+        method: "POST",
+        body: { name },
+      }),
+      invalidatesTags: ["TipoEvento"],
+    }),
+    deleteTipoEvento: build.mutation({
+      query: ({ id }) => ({
+        url: `tipoEvento/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["TipoEvento"],
+    }),
+    getTiposPremio: build.query({
+      query: () => ({
+        url: `tipoPremio`,
+        method: "GET",
+      }),
+      providesTags: ["TipoPremio"],
+    }),
+    postTipoPremio: build.mutation({
+      query: ({ name }) => ({
+        url: `tipoPremio`,
+        method: "POST",
+        body: { name },
+      }),
+      invalidatesTags: ["TipoPremio"],
+    }),
+    deleteTipoPremio: build.mutation({
+      query: ({ id }) => ({
+        url: `tipoPremio/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["TipoPremio"],
+    }),
   }),
 });
 
@@ -554,4 +600,10 @@ export const {
   useLazyDownloadEstatutoQuery,
   useGetExtEstatutoQuery,
   useGetPremioImageQuery,
+  useGetTiposEventoQuery,
+  usePostTipoEventoMutation,
+  useDeleteTipoEventoMutation,
+  useGetTiposPremioQuery,
+  usePostTipoPremioMutation,
+  useDeleteTipoPremioMutation,
 } = api;
