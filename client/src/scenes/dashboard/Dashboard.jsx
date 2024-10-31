@@ -29,6 +29,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import useModal from "../../hooks/useModal";
 import Estatuto from "../../components/estatutoForm/Estatuto";
 import useAuth from "../../hooks/useAuth";
+import { esES } from "@mui/x-data-grid/locales";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -260,6 +261,7 @@ const Dashboard = () => {
             getRowId={(row) => row._id}
             rows={data3 && data3.users}
             columns={columns}
+            localeText={esES.components.MuiDataGrid.defaultProps.localeText}
           />
         </Box>
 

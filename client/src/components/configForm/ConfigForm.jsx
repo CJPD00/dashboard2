@@ -226,7 +226,7 @@ const ConfigForm = () => {
           component="ul"
         >
           {chips2.map((chip) => (
-            <ListItem key={data.key}>
+            <ListItem key={data?.key}>
               <Chip
                 label={chip.label}
                 onDelete={() => handleDeleteTipoPremio(chip)}
