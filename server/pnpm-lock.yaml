@@ -15,7 +15,7 @@ importers:
         specifier: 1.20.2
         version: 1.20.2
       connect-multiparty:
-        specifier: ^2.2.0
+        specifier: 2.2.0
         version: 2.2.0
       cors:
         specifier: 2.8.5

@@ -33,6 +33,7 @@ export const decodeToken = (token) => {
     const decoded = jwt.verify(token, process.env.SECRET_JWT_SEED);
     return decoded;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
