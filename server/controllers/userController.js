@@ -168,6 +168,12 @@ export const uploadAvatar = async (req, res) => {
         code: 404,
       });
     }
+
+    if (user.avatar) {
+      const filePath = `./uploads/users/${user.avatar}`;
+      fs.unlinkSync(filePath);
+    }
+
     let filePath = req.files.avatar.path;
 
     let filesplit = filePath.split("\\");

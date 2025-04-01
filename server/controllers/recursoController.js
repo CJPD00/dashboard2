@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
+
 export const uploadProjectDoc = async (req, res) => {
   try {
     const { id } = req.params;
@@ -15,6 +16,13 @@ export const uploadProjectDoc = async (req, res) => {
         code: 404,
       });
     }
+
+    if (projecto.recurso) {
+      const filePath = `./uploads/projects/${projecto.recurso}`;
+
+      fs.unlinkSync(filePath);
+    }
+
     let filePath = req.files.recurso.path;
 
     let filesplit = filePath.split("\\");
@@ -40,6 +48,7 @@ export const uploadProjectDoc = async (req, res) => {
       avatarName: projecto.avatar,
     });
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({
       message: error.message,
     });

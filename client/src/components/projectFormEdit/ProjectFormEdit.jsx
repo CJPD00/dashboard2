@@ -199,11 +199,13 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
           //setMessageError("Archivo no aceptado");
           //setTextError(true);
           setArchivoError(true);
+          console.log("estoy aqui")
           return;
         }
       }
       const response = await updateProject(dataForm);
       if (response.error) {
+        console.log("estoy aqui update")
         setTextError(true);
         setMessageError("El nombre del proyecto ya existe");
         return;
@@ -215,6 +217,7 @@ const ProjectFormEdit = ({ data, setIsModalOpen }) => {
       //console.log(response);
     } catch (error) {
       setMessageError(error.message);
+      console.log(error.message)
     }
   };
 

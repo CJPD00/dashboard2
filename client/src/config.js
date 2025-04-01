@@ -1,3 +1,3 @@
 export const config = {
-  baseUrl: "http://localhost:5000",
+  baseUrl: "http://localhost:3000",
 };
