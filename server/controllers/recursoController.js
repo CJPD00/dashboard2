@@ -5,7 +5,6 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-
 export const uploadProjectDoc = async (req, res) => {
   try {
     const { id } = req.params;
@@ -117,6 +116,7 @@ export const downloadProjectDoc = async (req, res) => {
 };
 
 export const uploadEstatutoDoc = async (req, res) => {
+
   let filePath = req.files.recurso.path;
 
   let filesplit = filePath.split("\\");
@@ -130,7 +130,7 @@ export const uploadEstatutoDoc = async (req, res) => {
   if (fileExt !== "docx" && fileExt !== "doc" && fileExt !== "pdf") {
     console.log("Extensión no válida");
     return res.status(400).send({ message: "Extensión no válida" });
-  }
+  } 
 
   //borrar todos los documentos de la coleccion
 

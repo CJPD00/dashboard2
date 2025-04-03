@@ -1,4 +1,4 @@
-import premio from "../models/premio.js";
+//import premio from "../models/premio.js";
 import Premio from "../models/premio.js";
 
 export const getPremios = async (req, res) => {

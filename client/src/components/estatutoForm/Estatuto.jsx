@@ -2,6 +2,7 @@
 import { Button, TextField, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useUploadEstatutoMutation } from "../../state/api";
+import { notification } from "antd";
 
 const Estatuto = ({ setIsModalOpen }) => {
   const [archivoError, setArchivoError] = useState(false);
@@ -27,7 +28,7 @@ const Estatuto = ({ setIsModalOpen }) => {
     }
     const formData = new FormData();
     formData.append("recurso", file, file.name);
-    
+
     try {
       const response = await uploadEstatuto({ file: formData });
       console.log("estoy aqui");
@@ -37,6 +38,9 @@ const Estatuto = ({ setIsModalOpen }) => {
         return;
       }
       setIsModalOpen(false);
+      notification["success"]({
+        message: "Estatuto guardado exitosamente",
+      });
     } catch (error) {
       console.error(error);
     }
