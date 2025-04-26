@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  client:
+    build: ./client
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+  server:
+    build: ./server
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+      - PORT=5000
+    volumes:
+      - server_data:/app/uploads
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  server_data:
+  mongo_data:

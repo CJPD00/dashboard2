@@ -3,8 +3,6 @@
 
 Definir las siguientes variables en el archivo `.env`:
 
-- `PORT`: number
-- `MONGODB_URL`: string
 - `SECRET_JWT_SEED`: string
 - `ADMIN_PASSWORD`: string
 
