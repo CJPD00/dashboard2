@@ -1,9 +1,10 @@
 # Dockerfile para el cliente (React)
-FROM node:18 as builder
+FROM node:21 as builder
 
 WORKDIR /app
 
 COPY package*.json ./
+RUN npm cache clean --force
 RUN npm install
 
 COPY . ./
