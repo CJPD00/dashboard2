@@ -15,9 +15,9 @@ services:
     environment:
       - MONGO_URL=mongodb://mongo:27017
       - PORT=5000
-      - SECRET_JWT_SEED="c00120262364"
-      - ADMIN_EMAIL="example@gmail.com"
-      - ADMIN_PASSWORD="0070AcjD#"
+      - SECRET_JWT_SEED=c00120262364
+      - ADMIN_EMAIL=example@gmail.com
+      - ADMIN_PASSWORD=0070AcjD#
     volumes:
       - server_data:/app/uploads
   mongo:
