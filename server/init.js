@@ -15,7 +15,7 @@ export const init = async () => {
       active: true,
     });
 
-    newUser.password = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10);
+    newUser.password = bcrypt.hashSync(newUser.password, 10);
 
     await newUser.save();
     return true;
