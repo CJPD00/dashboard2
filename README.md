@@ -4,23 +4,23 @@
 
 Este proyecto es el sitio web para la gestión de la información de la Cátedra Honorífica de Ciencias Técnicas de la Universidad Hermanos Saíz Montes de Oca. Permite administrar y mostrar información relevante sobre la cátedra, incluyendo:
 
-*   Personal
-*   Departamentos
-*   Proyectos
-*   Publicaciones
-*   Eventos
-*   Premios
-*   Tareas
-*   Estatutos
-*   Configuración general
+- Personal
+- Departamentos
+- Proyectos
+- Publicaciones
+- Eventos
+- Premios
+- Tareas
+- Estatutos
+- Configuración general
 
 ## Tecnologías Utilizadas
 
-*   **Frontend:** React
-*   **Backend:** Node.js
-*   **Base de Datos:** MongoDB
-*   **Servidor Web:** Nginx
-*   **Contenedorización:** Docker
+- **Frontend:** React
+- **Backend:** Node.js
+- **Base de Datos:** MongoDB
+- **Servidor Web:** Nginx
+- **Contenedorización:** Docker
 
 ## Configuración
 
@@ -36,26 +36,24 @@ Para ejecutar este proyecto, necesitas tener instalado Docker y Docker Compose.
 
 Las siguientes variables de entorno son necesarias para ejecutar el proyecto:
 
-*   **MONGO\_URL:** URL de la base de datos MongoDB.
+- **MONGO_URL:** URL de la base de datos MongoDB.
 
-*   **PORT:** Puerto en el que se ejecutará el servidor web.
+- **PORT:** Puerto en el que se ejecutará el servidor web.
+
+- **SECRET_JWT\_:** Clave secreta para firmar los tokens JWT.\_SEED
+
+- **ADMIN_EMAIL\_:** Correo electrónica del administrador del sitio web.
+
+- **ADMIN_PASSWORD\_:** Contraseña del administrador del sitio web.
 
 Estas variables se definen en el archivo `docker-compose.yml`.
 
-Las siguientes variables de entorno se definen en el archivo `.env` dentro del directorio `server`:
-
-*   **SECRET\_JWT\_:** Clave secreta para firmar los tokens JWT._SEED
-
-*   **ADMIN\_EMAIL\_:** Correo electrónica del administrador del sitio web.
-
-*   **ADMIN\_PASSWORD\_:** Contraseña del administrador del sitio web.
-
 ## Estructura del Proyecto
 
-*   `client/`: Contiene el código fuente del frontend (React).
-*   `server/`: Contiene el código fuente del backend (Node.js).
-*   `docker-compose.yml`: Define los servicios, redes y volúmenes para la ejecución del proyecto con Docker Compose.
-*   `README.md`: Este archivo.
+- `client/`: Contiene el código fuente del frontend (React).
+- `server/`: Contiene el código fuente del backend (Node.js).
+- `docker-compose.yml`: Define los servicios, redes y volúmenes para la ejecución del proyecto con Docker Compose.
+- `README.md`: Este archivo.
 
 ## Contribución
 
