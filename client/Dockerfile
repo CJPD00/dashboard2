@@ -5,12 +5,11 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN npm cache clean --force
-RUN npm install -g pnpm
-RUN pnpm install
+RUN npm install --force
 
 COPY . ./
 
-RUN pnpm run build
+RUN npm run build
 
 FROM nginx:alpine
 
