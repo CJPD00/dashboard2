@@ -224,6 +224,7 @@ export const getPremioImage = async (req, res) => {
   try {
     const id = req.params.id;
     const premio = await Premio.findById(id);
+    console.log(premio)
     const filePath = `./uploads/premios/${premio.recurso}`;
 
     fs.exists(filePath, (exists) => {
