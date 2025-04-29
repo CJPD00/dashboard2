@@ -24,7 +24,7 @@ export const uploadProjectDoc = async (req, res) => {
 
     let filePath = req.files.recurso.path;
 
-    let filesplit = filePath.split("\\");
+    let filesplit = filePath.split("/");
 
     let fileName = filesplit[filesplit.length - 1];
 
@@ -119,7 +119,7 @@ export const uploadEstatutoDoc = async (req, res) => {
 
   let filePath = req.files.recurso.path;
 
-  let filesplit = filePath.split("\\");
+  let filesplit = filePath.split("/");
 
   let fileName = filesplit[filesplit.length - 1];
 
