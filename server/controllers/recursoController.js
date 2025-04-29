@@ -77,7 +77,7 @@ export const downloadProjectDoc = async (req, res) => {
     const __dirname = path.dirname(__filename);
     const filePath = path.join(
       __dirname,
-      `../${projecto.recurso}`
+      `../uploads/projects/${projecto.recurso}`
     );
 
     // Verifica si el archivo existe
@@ -167,7 +167,7 @@ export const downloadEstatutoDoc = async (req, res) => {
     const __dirname = path.dirname(__filename);
     const filePath = path.join(
       __dirname,
-      `../${estatuto[0].recurso}`
+      `../uploads/estatutos/${estatuto[0].recurso}`
     );
 
     if (!fs.existsSync(filePath)) {
@@ -225,7 +225,7 @@ export const getPremioImage = async (req, res) => {
     const id = req.params.id;
     const premio = await Premio.findById(id);
     console.log(premio)
-    const filePath = `./${premio.recurso}`;
+    const filePath = `./uploads/premios/${premio.recurso}`;
 
     fs.exists(filePath, (exists) => {
       if (exists) {

@@ -20,7 +20,7 @@ export const createPremio = async (req, res) => {
   console.log(premio.title, premio.description);
   console.log(filePath);
 
-  let filesplit = filePath.split("\\");
+  let filesplit = filePath.split("/");
 
   console.log(filesplit);
 
