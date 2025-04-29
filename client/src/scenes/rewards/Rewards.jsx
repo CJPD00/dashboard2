@@ -138,6 +138,7 @@ const Reward = ({ title, description, cantidadProjectos, _id, tipo }) => {
 
   const handleEvidencia = () => {
     window.open(data?.url, "_blank").focus();
+    console.log(data?.url);
   };
 
   return (

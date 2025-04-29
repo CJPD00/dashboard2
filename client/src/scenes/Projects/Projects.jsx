@@ -238,6 +238,7 @@ const Projects = () => {
         }}
       >
         <DataGrid
+          
           loading={isLoading || !data}
           getRowId={(row) => row.id}
           rows={user.role === "admin" ? rows : rows2}

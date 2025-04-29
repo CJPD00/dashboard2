@@ -1,3 +1,7 @@
 export const config = {
-  baseUrl: "http://localhost:3000",
+  baseUrl: "/api",
 };
+
+// export const config={
+//   baseUrl: "http://localhost:3001",
+// }

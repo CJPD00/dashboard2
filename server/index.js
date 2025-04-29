@@ -25,6 +25,9 @@ import docRouter from "./routes/docRouter.js";
 import tipoEventoRouter from "./routes/tipoEventoRouter.js";
 import tipoPremioRouter from "./routes/tipoPremioRouter.js";
 
+//config
+import { init } from "./init.js";
+
 // configuracion de la aplicacion
 dotenv.config();
 const app = express();
@@ -60,8 +63,14 @@ app.use("/tipoPremio", tipoPremioRouter);
 
 //connect to mongodb
 mongoose
-  .connect(process.env.MONGODB_URL)
+  .connect(process.env.MONGO_URL)
   .then(() => {
+    const confirm = init();
+    if (!confirm) {
+      console.log("Error al iniciar la base de datos");
+      process.exit(1);
+      return;
+    }
     app.listen(process.env.PORT, () => {
       console.log(`Backend server is running on port ${process.env.PORT}`);
     });

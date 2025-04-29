@@ -18,14 +18,23 @@ export const createPremio = async (req, res) => {
   let filePath = req.files.recurso.path;
 
   console.log(premio.title, premio.description);
+  console.log(filePath);
 
-  let filesplit = filePath.split("\\");
+  let filesplit = filePath.split("/");
+
+  console.log(filesplit);
 
   let fileName = filesplit[filesplit.length - 1];
 
+  console.log(fileName);
+
   let extSplit = fileName.split(".");
 
+  console.log(extSplit);
+
   let fileExt = extSplit[1];
+
+  console.log(fileExt);
 
   if (fileExt !== "png" && fileExt !== "jpg") {
     console.log("Extensión no válida");
